@@ -284,7 +284,7 @@ main {
 
 footer {
   width: 100%;
-  background: rgb(40,40,40);
+  background: rgb(20,20,20);
   transition: .2s all;
   position: fixed;
   bottom: 0;
