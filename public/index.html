@@ -20,16 +20,22 @@
   <nav>
     <input type="text" ng-model="search" placeholder="Search Jobs">
     <i class="material-icons cancel" ng-show="search" ng-click="searchFor('');">clear</i>
-    <div class="link taglink" ng-click="openTags = !openTags;">Tags</div>
-    <div class="tags" ng-class="{open: openTags}">
-      <div ng-repeat="tag in tags" class="link {{tag.color}}" ng-class="{off: tag.off}" ng-click="tagOff(tag)">{{tag.name}}</div>
-    </div>
   </nav>
   <h1>Daily Tech Jobs</h1>
   <div class="hero">
     <input type="text" ng-model="search" placeholder="Search Jobs">
   </div>
-  <aside></aside>
+  <aside>
+    <div class="link taglink" ng-click="openSources = !openSources;">Sources</div>
+    <div class="tags" ng-class="{open: openSources}">
+      <div ng-repeat="src in sources" class="link {{src.color}}" ng-class="{off: src.off}" ng-click="tagOff(src)">{{src.name}}</div>
+    </div>
+    <div class="link taglink" ng-click="openTags = !openTags;">Tags</div>
+    <div class="tags" ng-class="{open: openTags}">
+      <div ng-repeat="tag in fromContent" class="link {{tag.color}}" ng-class="{off: tag.off}" ng-click="tagOff(tag)">{{tag.name}}</div>
+    </div>
+    <div class="link taglink" ng-click="clearTags();" ng-show="openTags || openSources">Clear</div>
+  </aside>
   <main>
     <div ng-repeat="company in companies | filter:search | filter:companyFilter | orderBy: '-latest' | limitTo:companyLimit" class="company" ng-class="{off: company.off}">
       <div class="company-name" ng-click="company.off = !company.off">{{company.name}}</div>

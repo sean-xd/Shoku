@@ -1,7 +1,7 @@
 module.exports = function getTags(obj){
   var content = obj.content.toLowerCase(),
     title = obj.title.toLowerCase(),
-    tags = ["javascript", "developer", "design", "engineer", "aws", "full stack", "ios",
+    tags = ["javascript", "developer", "designer", "engineer", "aws", "full stack", "ios",
       "rails", "python", "android", "nodejs", "react", "angular", ".net", "manager", "java"];
   return tags.filter(tag => {
     if(tag === "java"){

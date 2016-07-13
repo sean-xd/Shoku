@@ -42,7 +42,7 @@ header img {
 }
 
 h1 {
-  transition: .2s all;
+  transition: .4s all;
   position: fixed;
   margin: 0;
   padding: 140px 0 40px 0;
@@ -52,10 +52,11 @@ h1 {
   text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black;
   width: 100%;
 }
-.scroll1 h1 {transform: translate3d(0,-320px,0);}
+.scroll1 h1 {transform: translate3d(0,-370px,0);}
 
 .hero {
-  transition: .2s all;
+  transition: .3s all;
+  z-index: 1;
   position: fixed;
   top: 310px;
   width: 100%;
@@ -73,8 +74,7 @@ h1 {
   font: 16px "Roboto";
   width: 100%;
 }
-.scroll1 .hero {transform: translate3d(0, -320px, 0);}
-
+.scroll1 .hero {transform: translate3d(0, -370px, 0);}
 .cancel {
   position: absolute;
   top: 0;
@@ -86,9 +86,9 @@ h1 {
   transition: .2s all;
   display: inline-block;
   text-align: center;
-  width: 105px;
+  width: 110px;
   position: fixed;
-  z-index: 2;
+  z-index: 4;
   font-size: 0;
   color: white;
 }
@@ -96,10 +96,9 @@ h1 {
   transition: .2s all;
   text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black;
 }
-.sbo .sideclick {width: 220px;}
+.sbo .sideclick {transform: translate3d(55px,0,0);}
 
 .auth {
-  background: rgba(20,20,20,.9);
   box-sizing: border-box;
   padding: 10px;
   display: inline-block;
@@ -114,28 +113,21 @@ h1 {
 }
 
 nav {
-  background: rgba(40,40,40,.9);
+  background: white;
   top: -40px;
   transition: .2s all;
   box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5);
   color: white;
-  font-size: 0px;
   position: fixed;
-  box-sizing: border-box;
-  padding-left: 105px;
-  width: 100%;
+  border-left: 110px solid rgb(20,20,20);
+  padding-right: 110px;
+  width: calc(100% - 220px);
+  z-index: 2;
   right: 0;
-  z-index: 1;
 }
 .scroll1 nav {transform: translate3d(0,40px,0);}
-.sbo nav {padding-left: 220px;}
-nav .link {width: 105px;}
-nav input {
-  transition: .2s all;
-  border: 0;
-  height: 40px;
-  width: calc(100% - 105px);
-}
+.sbo.scroll1 nav {transform: translate3d(110px,40px,0);}
+nav input {border: 0; height: 40px; width: 100%;}
 
 .link, nav input {
   box-sizing: border-box;
@@ -148,48 +140,61 @@ nav input {
 .link.off {opacity: .4; text-decoration: line-through;}
 .title {
   padding: 7px 5px;
-  width: 65px !important;
+  width: 70px !important;
   font: 19px "Yellowtail";
   text-align: left;
 }
-.taglink {background: rgba(40,40,40,.9); height: 40px;}
+.taglink {
+  color: white;
+  width: 100%;
+  height: 40px;
+}
+.taglink:hover {
+  background: black;
+}
 
 .tags {
-  position: absolute;
-  right: 0;
-  background: rgba(40,40,40,.9);
-  transition: .2s all;
-  max-height: 0px;
+  transition: .2s all ease-out;
   width: 100%;
   overflow-y: hidden;
   text-align: center;
+  max-height: 0px;
 }
-.sbo .tags {width: calc(100% - 220px);}
 .tags.open {
-  max-height: 117px;
-  overflow-y: scroll;
+  transition: .2s all ease-in;
+  max-height: 333px;
 }
+
 .tags .link {
   font-size: 14px;
   padding: 10px 0px;
+  width: 110px;
 }
 
 aside {
   transition: .2s all;
   position: fixed;
   z-index: 3;
-  top: 40px;
-  width: 0px;
+  top: 0px;
+  left: -220px;
+  width: 220px;
   bottom: 0;
-  background: rgba(20,20,20,.9);
+  background: rgb(20,20,20);
   overflow-y: scroll;
+  box-sizing: border-box;
+  padding: 40px 0 0 0;
 }
-.sbo aside {width: 220px;}
+.sbo aside {transform: translate3d(220px,0,0);}
 
 main {
   transition: .2s all;
   width: 100%;
-  padding: 360px 0 40px 0;
+  padding: 370px 0 40px 0;
+}
+@media (min-width: 1025px){
+  .sbo:not(.noScroll) main {transform: translate3d(110px,0,0);}
+  .sbo .hero, .sbo h1 {transform: translate3d(110px,0,0);}
+  .sbo.scroll1 .hero, .sbo.scroll1 h1 {transform: translate3d(110px,-370px,0);}
 }
 
 .job {
@@ -202,9 +207,10 @@ main {
   text-align: left;
 }
 .job.big {
-  z-index: 2;
+  z-index: 1;
   position: fixed;
   top: 40px;
+  padding-top: 10px;
   left: 0;
   margin: 0px !important;
   width: 100%;
@@ -267,7 +273,7 @@ main {
   width: 90%;
   margin: 0 auto;
   padding: 5px 10px 100px 10px;
-  height: calc(100% - 45px);
+  height: calc(100vh - 80px);
   overflow-y: scroll;
 }
 .job-description img {width: 200px;}
@@ -276,14 +282,15 @@ main {
 
 footer {
   width: 100%;
-  background: rgba(40,40,40,.9);
+  background: rgb(40,40,40);
   transition: .2s all;
   position: fixed;
   bottom: 0;
   color: white;
+  z-index: 1;
   box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5);
 }
-footer .link {width: 105px;}
+footer .link {width: 110px;}
 .scroll1 footer {transform: translate3d(0, 40px, 0);}
 
 @media (max-width: 800px) {

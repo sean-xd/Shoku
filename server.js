@@ -14,10 +14,11 @@ app.get("/jobs", sendJobs);
 app.get("/jobs/:page", sendJobs);
 
 function sendJobs(req, res){
-  var page = req.params.page || 0;
+  var page = req.params.page || 0,
+    mult = 200;
   if(db.ttl < Date.now()) getJobs();
   else if(!isUpdated && !isUpdating) updateJobs();
-  res.send(JSON.stringify(db.jobs.slice(page * 100, (page * 100) + 100)));
+  res.send(JSON.stringify(db.jobs.slice(page * mult, (page * mult) + mult)));
 }
 
 function getJobs(){
