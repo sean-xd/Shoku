@@ -2,6 +2,7 @@
 html, body {height: 100%; margin: 0; width: 100%;}
 body {background: rgb(40,40,40);}
 a {text-decoration: none;}
+input {outline: none !important;}
 ::-webkit-scrollbar {display: none;}
 ::-moz-scrollbar {display: none;}
 
@@ -76,9 +77,10 @@ h1 {
 }
 .scroll1 .hero {transform: translate3d(0, -370px, 0);}
 .cancel {
-  position: absolute;
+  position: fixed;
+  z-index: 4;
   top: 0;
-  right: 105px;
+  right: 0px;
   color: black;
 }
 
@@ -107,7 +109,7 @@ h1 {
   position: fixed;
   bottom: 0;
   right: 0;
-  z-index: 2;
+  z-index: 5;
   font: 16px "Roboto";
   color: white;
 }
@@ -219,7 +221,7 @@ main {
   max-height: 100%;
 }
 
-.job-info {position: relative;}
+.job-info {position: relative; height: 60px;}
 .big .job-info {
   max-width: 800px;
   width: 90%;
@@ -241,11 +243,10 @@ main {
 .company-name {
   box-sizing: border-box;
   overflow: hidden;
-  height: 49px;
   cursor: default;
   color: white;
   padding: 10px;
-  font: 700 24px "Roboto";
+  font: 700 20px "Roboto";
   background: rgb(40,40,40);
 }
 
@@ -254,7 +255,7 @@ main {
 .job.ng-enter-active {max-height: 61px; opacity: 1;}
 .company.ng-leave.ng-leave-active, .job.ng-leave.ng-leave-active {max-height: 0px; opacity: 0;}
 .job:first-child {margin: -100px auto 20px auto;}
-.job-title {display: inline-block; font: 18px "Roboto"; padding: 5px 10px; cursor: pointer;}
+.job-title {display: inline-block; font: 17px "Roboto"; padding: 8px 10px 4px 10px; cursor: pointer;}
 .job-date {font: 14px "Roboto"; padding: 5px 10px;}
 .job-tags {display: inline-block; position: absolute; right: 0; top: 30px; padding: 3px;}
 .job-apply, .job-close {
@@ -266,6 +267,7 @@ main {
 }
 .job-tags div {font: 12px "Roboto"; padding: 5px; display: inline-block; margin: 0px 5px; cursor: pointer;}
 .job-tags div:last-child {margin: 0px 10px 0px 5px;}
+.job-tags div:hover {opacity: 1 !important;}
 .job-description {
   box-sizing: border-box;
   font: 16px "Roboto";
@@ -287,7 +289,7 @@ footer {
   position: fixed;
   bottom: 0;
   color: white;
-  z-index: 1;
+  z-index: 4;
   box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5);
 }
 footer .link {width: 110px;}
