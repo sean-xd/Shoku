@@ -1,0 +1,212 @@
+/* Shadows */
+.sideclick i, .title, .heading, .signin {text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black;}
+.search, .hero, footer, aside {box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5);}
+
+/* Body */
+body {background: rgb(40,40,40);}
+body.activeJob {overflow: hidden;}
+
+/* Background Image */
+.background {
+  min-height: 100%;
+  min-width: 100%;
+  position: fixed;
+  transition: 1s all;
+  z-index: -1;
+}
+.isScrolled .background {-webkit-filter: blur(5px); filter: blur(5px);}
+
+/* Sidebar Button */
+.sideclick {
+  color: white;
+  font-size: 0;
+  position: fixed;
+  text-align: center;
+  transition: .2s all;
+  width: 110px;
+  z-index: 4;
+}
+.title {
+  font: 19px "Yellowtail";
+  padding: 7px 5px;
+  text-align: left;
+  width: 70px;
+}
+.sideclick i {padding: 10px 5px;}
+
+/* Top Search */
+.search {
+  background: white;
+  border-left: 110px solid rgb(20,20,20);
+  position: fixed;
+  right: 0;
+  text-align: left !important;
+  top: -40px;
+  transition: .2s all;
+  width: 100%;
+  z-index: 2;
+}
+.isScrolled .search {transform: translate3d(0,40px,0);}
+.sidebarOpen.isScrolled .search {transform: translate3d(110px,40px,0);}
+.cancel {
+  color: black;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 4;
+}
+
+/* Heading */
+.heading {
+  color: white;
+  font: 700 100px "Yellowtail";
+  padding: 120px 0 20px 0;
+  text-align: center;
+  transition: .4s all;
+}
+.isScrolled .heading, .isScrolled .hero {transform: translate3d(0,-340px,0);}
+.hero {
+  background: rgba(245,245,245,.9);
+  display: block;
+  margin: 0 auto;
+  max-width: 800px;
+  transition: .3s all;
+  width: 90%;
+}
+.hero input {font: 16px "Roboto"; padding: 15px; width: 100%;}
+
+/* Sidebar */
+aside {
+  transition: .2s all;
+  position: fixed;
+  z-index: 3;
+  top: 0px;
+  left: -220px;
+  width: 220px;
+  bottom: 0;
+  background: rgb(20,20,20);
+  overflow-y: scroll;
+  box-sizing: border-box;
+  padding: 40px 0 0 0;
+}
+.sidebarOpen aside {transform: translate3d(220px,0,0);}
+.taglink {color: white; height: 40px; padding: 10px 0px 10px 40px; text-align: left; width: 100%;}
+.taglink:hover {background: black;}
+.tags {
+  overflow-y: hidden;
+  max-height: 0px;
+  text-align: center;
+  transition: .2s all ease-out;
+}
+.tags.open {max-height: 333px; transition: .2s all ease-in;}
+.tags .link {font-size: 14px; padding: 10px 0px; width: 110px;}
+.tags .link.off {opacity: .4; text-decoration: line-through;}
+
+/* Main */
+main {
+  transition: .2s all;
+  width: 100%;
+  padding: 20px 0 40px 0;
+}
+
+/* Each Company */
+.company {
+  transition: .2s all;
+  position: relative;
+  margin: 10px auto;
+  max-width: 800px;
+  width: 90%;
+  opacity: 1;
+  height: auto;
+  overflow: hidden;
+}
+.company.off {opacity: 0.5;}
+
+.company-name {
+  box-sizing: border-box;
+  overflow: hidden;
+  cursor: default;
+  color: white;
+  padding: 10px;
+  font: 700 20px "Roboto";
+  background: rgb(40,40,40);
+}
+.company.ng-enter, .job.ng-enter {max-height: 0px; opacity: 0;}
+.company.ng-enter-active {max-height: 49px; opacity: 1;}
+.job.ng-enter-active {max-height: 61px; opacity: 1;}
+.company.ng-leave.ng-leave-active, .job.ng-leave.ng-leave-active {max-height: 0px; opacity: 0;}
+
+/* Each Job */
+.job {
+  transition: .2s all;
+  background: white;
+  border-bottom: 1px solid rgb(40,40,40);
+  position: relative;
+  height: 60px;
+  overflow: hidden;
+  text-align: left;
+}
+.job.big {
+  z-index: 1;
+  position: fixed;
+  top: 40px;
+  padding-top: 10px;
+  left: 0;
+  margin: 0px !important;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+}
+.off .job {height: 0px;}
+
+/* Job Internals */
+.job-info {position: relative; height: 60px;}
+.big .job-info {
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+}
+.job:first-child {margin: -100px auto 20px auto;}
+.job-title {display: inline-block; font: 17px "Roboto"; padding: 8px 10px 4px 10px; cursor: pointer;}
+.job-date {font: 14px "Roboto"; padding: 5px 10px;}
+.job-tags {display: inline-block; position: absolute; right: 0; top: 30px; padding: 3px;}
+.job-apply, .job-close {
+  background: rgba(200,200,200,.5);
+  cursor: pointer;
+  display: inline-block;
+  font: 14px "Roboto";
+  padding: 5px;
+}
+.job-tags div {font: 12px "Roboto"; padding: 5px; display: inline-block; margin: 0px 5px; cursor: pointer;}
+.job-tags div:last-child {margin: 0px 10px 0px 5px;}
+.job-tags div:hover {opacity: 1 !important;}
+.job-description {
+  box-sizing: border-box;
+  font: 16px "Roboto";
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 5px 10px 100px 10px;
+  height: calc(100vh - 80px);
+  overflow-y: scroll;
+}
+.job-description img {width: 200px;}
+
+/* Footer */
+footer, .signin {bottom: 0; color: white; position: fixed;}
+footer {
+  background: rgb(20,20,20);
+  transition: .2s all;
+  width: 100%;
+  z-index: 4;
+}
+footer .link {width: 110px;}
+.isScrolled footer {transform: translate3d(0, 40px, 0);}
+.signin {right: 0; width: 110px; z-index: 5;}
+
+/* Media Queries*/
+@media (min-width: 1025px){
+  .sidebarOpen:not(.activeJob) main {transform: translate3d(110px,0,0);}
+  .sidebarOpen .hero, .sidebarOpen .heading {transform: translate3d(110px,0,0);}
+  .sidebarOpen.isScrolled .hero, .sidebarOpen.isScrolled .heading {transform: translate3d(110px,-370px,0);}
+}
