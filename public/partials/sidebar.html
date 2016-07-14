@@ -1,0 +1,11 @@
+<aside>
+  <div class="link taglink" ng-click="openSources = !openSources;">Sources</div>
+  <div class="tags" ng-class="{open: openSources}">
+    <div ng-repeat="src in sources" class="link {{src.color}}" ng-class="{off: src.off}" ng-click="tagOff(src)">{{src.name}}</div>
+  </div>
+  <div class="link taglink" ng-click="openTags = !openTags;">Tags</div>
+  <div class="tags" ng-class="{open: openTags}">
+    <div ng-repeat="tag in fromContent" class="link {{tag.color}}" ng-class="{off: tag.off}" ng-click="tagOff(tag)">{{tag.name}}</div>
+  </div>
+  <div class="link taglink" ng-click="clearTags();" ng-show="openTags || openSources">Clear</div>
+</aside>

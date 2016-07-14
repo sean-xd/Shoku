@@ -1,0 +1,82 @@
+/* Shadows */
+.menu, .title, .heading, .signin {text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black;}
+.search, .hero, footer {box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5);}
+
+/* Body */
+body {background: rgb(40,40,40);}
+body.activeJob {overflow: hidden;}
+
+/* Background Image */
+.background {
+  min-height: 100%;
+  min-width: 100%;
+  position: fixed;
+  transition: 1s all;
+  z-index: -1;
+}
+.isScrolled .background {-webkit-filter: blur(5px); filter: blur(5px);}
+
+/* Top Nav */
+.title, .menu {color: white; position: fixed; z-index: 4;}
+.title {cursor: default; font: 19px "Yellowtail"; left: 40px; padding: 7px 5px 7px 0px;}
+.search {
+  background: white;
+  border-left: 110px solid rgb(20,20,20);
+  position: fixed;
+  right: 0;
+  text-align: left !important;
+  top: -40px;
+  transition: .2s all;
+  width: 100%;
+  z-index: 2;
+}
+.isScrolled .search {transform: translate3d(0,40px,0);}
+.sidebarOpen.isScrolled .search {transform: translate3d(110px,40px,0);}
+.cancel {
+  color: black;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 4;
+}
+
+/* Heading */
+.heading {
+  color: white;
+  font: 700 100px "Yellowtail";
+  padding: 120px 0 20px 0;
+  text-align: center;
+  transition: .4s all;
+}
+.isScrolled .heading, .isScrolled .hero {transform: translate3d(0,-340px,0);}
+.hero {
+  background: rgba(245,245,245,.9);
+  display: block;
+  margin: 0 auto;
+  max-width: 800px;
+  transition: .3s all;
+  width: 90%;
+}
+.hero input {font: 16px "Roboto"; padding: 15px; width: 100%;}
+
+/* Main */
+main {transition: .2s all; width: 100%;}
+
+/* Footer */
+footer, .signin {bottom: 0; color: white; position: fixed;}
+footer {
+  background: rgb(20,20,20);
+  transition: .2s all;
+  width: 100%;
+  z-index: 4;
+}
+footer .link {width: 110px;}
+.isScrolled footer {transform: translate3d(0, 40px, 0);}
+.signin {right: 0; width: 110px; z-index: 5;}
+
+/* Media Queries*/
+@media (min-width: 1025px){
+  .sidebarOpen:not(.activeJob) main {transform: translate3d(110px,0,0);}
+  .sidebarOpen .hero, .sidebarOpen .heading {transform: translate3d(110px,0,0);}
+  .sidebarOpen.isScrolled .hero, .sidebarOpen.isScrolled .heading {transform: translate3d(110px,-370px,0);}
+}

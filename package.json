@@ -1,0 +1,16 @@
+{
+  "name": "Shoku",
+  "version": "0.0.1",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "request": "^2.73.0",
+    "rss-parser": "^2.5.0",
+    "xml2js": "^0.4.17"
+  },
+  "description": "Daily Tech Job Aggregator",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0"
+  }
+}

@@ -1,4 +1,4 @@
 {
   "execMap": {"js": "node --harmony"},
-  "watch": ["server.js"]
+  "watch": ["server.js", "db/*.js"]
 }

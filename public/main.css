@@ -1,6 +1,90 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  width: 100%;
+}
+
+a {text-decoration: none;}
+
+input {
+  outline: none !important;
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {display: none;}
+::-moz-scrollbar {display: none;}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v15/CWB0XYA8bzo0kSThX0UTuA.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+@font-face {
+  font-family: 'Yellowtail';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yellowtail'), url(https://fonts.gstatic.com/s/yellowtail/v6/GcIHC9QEwVkrA19LJU1qlPk_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+.red {background: rgb(125, 25, 25); color: white;}
+.green {background: rgb(60, 175, 100); color: white;}
+.blue {background: rgb(25, 25, 125); color: white;}
+.yellow {background: yellow; color: black;}
+.white {background: white; color: black;}
+.grey {background: rgb(80,80,80); color: white;}
+.lightgrey {background: rgb(200,200,200); color: black;}
+.darkgrey {background: rgb(40,40,40); color: white;}
+.purple {background: rgb(125,25,125); color: white;}
+.orange {background: rgb(180, 100, 50); color: white;}
+
+.opaque {opacity: .8;}
+
+.link {
+  box-sizing: border-box;
+  display: inline-block;
+  font: 16px "Roboto";
+  padding: 10px;
+  vertical-align: top;
+  cursor: pointer;
+  text-align: center;
+}
+
 /* Shadows */
-.sideclick i, .title, .heading, .signin {text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black;}
-.search, .hero, footer, aside {box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5);}
+.menu, .title, .heading, .signin {text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black;}
+.search, .hero, footer {box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5);}
 
 /* Body */
 body {background: rgb(40,40,40);}
@@ -16,25 +100,9 @@ body.activeJob {overflow: hidden;}
 }
 .isScrolled .background {-webkit-filter: blur(5px); filter: blur(5px);}
 
-/* Sidebar Button */
-.sideclick {
-  color: white;
-  font-size: 0;
-  position: fixed;
-  text-align: center;
-  transition: .2s all;
-  width: 110px;
-  z-index: 4;
-}
-.title {
-  font: 19px "Yellowtail";
-  padding: 7px 5px;
-  text-align: left;
-  width: 70px;
-}
-.sideclick i {padding: 10px 5px;}
-
-/* Top Search */
+/* Top Nav */
+.title, .menu {color: white; position: fixed; z-index: 4;}
+.title {cursor: default; font: 19px "Yellowtail"; left: 40px; padding: 7px 5px 7px 0px;}
 .search {
   background: white;
   border-left: 110px solid rgb(20,20,20);
@@ -75,8 +143,30 @@ body.activeJob {overflow: hidden;}
 }
 .hero input {font: 16px "Roboto"; padding: 15px; width: 100%;}
 
-/* Sidebar */
+/* Main */
+main {transition: .2s all; width: 100%;}
+
+/* Footer */
+footer, .signin {bottom: 0; color: white; position: fixed;}
+footer {
+  background: rgb(20,20,20);
+  transition: .2s all;
+  width: 100%;
+  z-index: 4;
+}
+footer .link {width: 110px;}
+.isScrolled footer {transform: translate3d(0, 40px, 0);}
+.signin {right: 0; width: 110px; z-index: 5;}
+
+/* Media Queries*/
+@media (min-width: 1025px){
+  .sidebarOpen:not(.activeJob) main {transform: translate3d(110px,0,0);}
+  .sidebarOpen .hero, .sidebarOpen .heading {transform: translate3d(110px,0,0);}
+  .sidebarOpen.isScrolled .hero, .sidebarOpen.isScrolled .heading {transform: translate3d(110px,-370px,0);}
+}
+
 aside {
+  box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5);
   transition: .2s all;
   position: fixed;
   z-index: 3;
@@ -90,26 +180,25 @@ aside {
   padding: 40px 0 0 0;
 }
 .sidebarOpen aside {transform: translate3d(220px,0,0);}
-.taglink {color: white; height: 40px; padding: 10px 0px 10px 40px; text-align: left; width: 100%;}
+
+.taglink {
+  color: white;
+  height: 40px;
+  padding: 10px 0px 10px 40px;
+  text-align: left;
+  width: 100%;
+}
 .taglink:hover {background: black;}
 .tags {
   overflow-y: hidden;
   max-height: 0px;
   text-align: center;
-  transition: .2s all ease-out;
+  transition: .2s all;
 }
-.tags.open {max-height: 333px; transition: .2s all ease-in;}
+.tags.open {max-height: 333px;}
 .tags .link {font-size: 14px; padding: 10px 0px; width: 110px;}
 .tags .link.off {opacity: .4; text-decoration: line-through;}
 
-/* Main */
-main {
-  transition: .2s all;
-  width: 100%;
-  padding: 20px 0 40px 0;
-}
-
-/* Each Company */
 .company {
   transition: .2s all;
   position: relative;
@@ -136,7 +225,6 @@ main {
 .job.ng-enter-active {max-height: 61px; opacity: 1;}
 .company.ng-leave.ng-leave-active, .job.ng-leave.ng-leave-active {max-height: 0px; opacity: 0;}
 
-/* Each Job */
 .job {
   transition: .2s all;
   background: white;
@@ -191,22 +279,3 @@ main {
   overflow-y: scroll;
 }
 .job-description img {width: 200px;}
-
-/* Footer */
-footer, .signin {bottom: 0; color: white; position: fixed;}
-footer {
-  background: rgb(20,20,20);
-  transition: .2s all;
-  width: 100%;
-  z-index: 4;
-}
-footer .link {width: 110px;}
-.isScrolled footer {transform: translate3d(0, 40px, 0);}
-.signin {right: 0; width: 110px; z-index: 5;}
-
-/* Media Queries*/
-@media (min-width: 1025px){
-  .sidebarOpen:not(.activeJob) main {transform: translate3d(110px,0,0);}
-  .sidebarOpen .hero, .sidebarOpen .heading {transform: translate3d(110px,0,0);}
-  .sidebarOpen.isScrolled .hero, .sidebarOpen.isScrolled .heading {transform: translate3d(110px,-370px,0);}
-}

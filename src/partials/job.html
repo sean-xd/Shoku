@@ -1,0 +1,15 @@
+<div class="job-info">
+
+  <div class="job-title" href="{{job.url}}" ng-click="activateJob(job)">{{job.title}}</div>
+
+  <a class="job-apply" href="{{job.url}}" ng-show="activeJob">Apply</a>
+  <div class="job-close" ng-click="activateJob(job)" ng-show="activeJob">Close</div>
+
+  <div class="job-tags">
+    <div ng-repeat="tag in job.tags" ng-click="searchFor(tag);" class="{{getColor(tag)}} opaque">{{tag}}</div>
+  </div>
+
+  <div class="job-date">{{job.date | date:"EEE, MMM d 'at' h:mm a"}}</div>
+</div>
+
+<div class="job-description" ng-bind-html="job.content | trust"></div>

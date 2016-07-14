@@ -82,6 +82,13 @@ app.controller("BodyController", ["$scope", "$http", "$sce", ($scope, $http, $sc
     return result;
   };
 
+  $scope.toggleSidebar = () => $scope.sidebarOpen = !$scope.sidebarOpen;
+
+  $scope.activateJob = job => {
+    job.active = !job.active;
+    $scope.activeJob = !$scope.activeJob;
+  };
+
   document.addEventListener("scroll", e => {
     var apply = false;
 
@@ -90,19 +97,12 @@ app.controller("BodyController", ["$scope", "$http", "$sce", ($scope, $http, $sc
       apply = true;
     }
 
-    if(document.body.scrollTop === 0 || (document.body.scrollTop > 0 && !$scope.h1px)){
-      $scope.h1px = !$scope.h1px;
+    if(document.body.scrollTop === 0 || (document.body.scrollTop > 0 && !$scope.isScrolled)){
+      $scope.isScrolled = !$scope.isScrolled;
       apply = true;
     }
     if(apply) $scope.$apply();
   });
-
-  $scope.toggleSidebar = () => $scope.sidebarOpen = !$scope.sidebarOpen;
-
-  $scope.activateJob = job => {
-    job.active = !job.active;
-    $scope.activeJob = !$scope.activeJob;
-  };
 
   $http.get('/jobs').then(data => {
     $scope.jobs = data.data;
@@ -117,3 +117,7 @@ app.controller("BodyController", ["$scope", "$http", "$sce", ($scope, $http, $sc
 }]);
 
 app.filter('trust', $sce => val => $sce.trustAs("html", val.replace(/<br ?\/?>/g, "")));
+
+app.directive("job", () => ({templateUrl: "partials/job.html"}));
+app.directive("company", () => ({templateUrl: "partials/company.html"}));
+app.directive("sidebar", () => ({templateUrl: "partials/sidebar.html"}));

@@ -1,0 +1,80 @@
+.company {
+  transition: .2s all;
+  position: relative;
+  margin: 10px auto;
+  max-width: 800px;
+  width: 90%;
+  opacity: 1;
+  height: auto;
+  overflow: hidden;
+}
+.company.off {opacity: 0.5;}
+
+.company-name {
+  box-sizing: border-box;
+  overflow: hidden;
+  cursor: default;
+  color: white;
+  padding: 10px;
+  font: 700 20px "Roboto";
+  background: rgb(40,40,40);
+}
+.company.ng-enter, .job.ng-enter {max-height: 0px; opacity: 0;}
+.company.ng-enter-active {max-height: 49px; opacity: 1;}
+.job.ng-enter-active {max-height: 61px; opacity: 1;}
+.company.ng-leave.ng-leave-active, .job.ng-leave.ng-leave-active {max-height: 0px; opacity: 0;}
+
+.job {
+  transition: .2s all;
+  background: white;
+  border-bottom: 1px solid rgb(40,40,40);
+  position: relative;
+  height: 60px;
+  overflow: hidden;
+  text-align: left;
+}
+.job.big {
+  z-index: 1;
+  position: fixed;
+  top: 40px;
+  padding-top: 10px;
+  left: 0;
+  margin: 0px !important;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+}
+.off .job {height: 0px;}
+
+/* Job Internals */
+.job-info {position: relative; height: 60px;}
+.big .job-info {
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+}
+.job:first-child {margin: -100px auto 20px auto;}
+.job-title {display: inline-block; font: 17px "Roboto"; padding: 8px 10px 4px 10px; cursor: pointer;}
+.job-date {font: 14px "Roboto"; padding: 5px 10px;}
+.job-tags {display: inline-block; position: absolute; right: 0; top: 30px; padding: 3px;}
+.job-apply, .job-close {
+  background: rgba(200,200,200,.5);
+  cursor: pointer;
+  display: inline-block;
+  font: 14px "Roboto";
+  padding: 5px;
+}
+.job-tags div {font: 12px "Roboto"; padding: 5px; display: inline-block; margin: 0px 5px; cursor: pointer;}
+.job-tags div:last-child {margin: 0px 10px 0px 5px;}
+.job-tags div:hover {opacity: 1 !important;}
+.job-description {
+  box-sizing: border-box;
+  font: 16px "Roboto";
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 5px 10px 100px 10px;
+  height: calc(100vh - 80px);
+  overflow-y: scroll;
+}
+.job-description img {width: 200px;}
