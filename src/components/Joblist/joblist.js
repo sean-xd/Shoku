@@ -8,7 +8,7 @@ app.directive("joblist", () => ({
     $scope.searchFor = tag => $rootScope.search = tag;
     $scope.activateJob = job => {
       job.active = !job.active;
-      $scope.activeJob = !$scope.activeJob;
+      $rootScope.activeJob = !$rootScope.activeJob;
     };
   }
 }));

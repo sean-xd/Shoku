@@ -4,6 +4,7 @@
 .search {
   background: white;
   border-left: 110px solid rgb(20,20,20);
+  height: 40px;
   position: fixed;
   right: 0;
   text-align: left !important;
