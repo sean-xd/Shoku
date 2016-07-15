@@ -25,12 +25,12 @@ body.activeJob {overflow: hidden;}
   position: fixed;
   right: 0;
   text-align: left !important;
-  top: -40px;
+  top: -41px;
   transition: .2s all;
   width: 100%;
   z-index: 2;
 }
-.isScrolled .search {transform: translate3d(0,40px,0);}
+.isScrolled .search {transform: translate3d(0,41px,0);}
 .sidebarOpen.isScrolled .search {transform: translate3d(110px,40px,0);}
 .cancel {
   color: black;
@@ -57,7 +57,11 @@ body.activeJob {overflow: hidden;}
   transition: .3s all;
   width: 90%;
 }
-.hero input {font: 16px "Roboto"; padding: 15px; width: 100%;}
+.hero input {
+  font: 16px "Segoe UI", "Helvetica Neue", "Roboto";
+  padding: 15px;
+  width: 100%;
+}
 
 /* Main */
 main {transition: .2s all; width: 100%;}
@@ -68,7 +72,7 @@ footer {
   bottom: 0;
   box-sizing: border-box;
   color: white;
-  font: 16px "Roboto";
+  font: 16px "Segoe UI", "Helvetica Neue", "Roboto";
   padding: 10px;
   position: fixed;
   text-align: center;

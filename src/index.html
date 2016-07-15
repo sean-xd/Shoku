@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Shoku - Job Search</title>
+  <title>Shoku | Daily Tech Jobs</title>
   <link rel="stylesheet" href="main.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>
@@ -32,9 +32,10 @@
 
   <!-- Main -->
   <main>
-    <div ng-repeat="company in companies | filter:search | filter:companyFilter | orderBy: '-latest' | limitTo:companyLimit" class="company" ng-class="{off: company.off}">
-      <company></company>
-    </div>
+    <company
+      ng-repeat="company in companies | filter:search | filter:companyFilter | orderBy: '-latest' | limitTo:companyLimit"
+      ng-class="{off: company.off}">
+    </company>
   </main>
 
   <!-- Footer -->

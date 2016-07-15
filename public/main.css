@@ -75,7 +75,7 @@ input {
 .link {
   box-sizing: border-box;
   display: inline-block;
-  font: 16px "Roboto";
+  font: 16px "Segoe UI";
   padding: 10px;
   vertical-align: top;
   cursor: pointer;
@@ -109,12 +109,12 @@ body.activeJob {overflow: hidden;}
   position: fixed;
   right: 0;
   text-align: left !important;
-  top: -40px;
+  top: -41px;
   transition: .2s all;
   width: 100%;
   z-index: 2;
 }
-.isScrolled .search {transform: translate3d(0,40px,0);}
+.isScrolled .search {transform: translate3d(0,41px,0);}
 .sidebarOpen.isScrolled .search {transform: translate3d(110px,40px,0);}
 .cancel {
   color: black;
@@ -141,7 +141,11 @@ body.activeJob {overflow: hidden;}
   transition: .3s all;
   width: 90%;
 }
-.hero input {font: 16px "Roboto"; padding: 15px; width: 100%;}
+.hero input {
+  font: 16px "Segoe UI", "Helvetica Neue", "Roboto";
+  padding: 15px;
+  width: 100%;
+}
 
 /* Main */
 main {transition: .2s all; width: 100%;}
@@ -152,7 +156,7 @@ footer {
   bottom: 0;
   box-sizing: border-box;
   color: white;
-  font: 16px "Roboto";
+  font: 16px "Segoe UI", "Helvetica Neue", "Roboto";
   padding: 10px;
   position: fixed;
   text-align: center;
@@ -203,83 +207,68 @@ aside {
 .tags .link {font-size: 14px; padding: 10px 0px; width: 110px;}
 .tags .link.off {opacity: .4; text-decoration: line-through;}
 
-.company {
-  transition: .2s all;
-  position: relative;
+company {
+  display: block;
+  font-family: "Segoe UI", "Helvetica Neue", "Roboto";
   margin: 10px auto;
   max-width: 800px;
-  width: 90%;
   opacity: 1;
-  height: auto;
-  overflow: hidden;
+  width: 90%;
 }
-.company.off {opacity: 0.5;}
-
+company.off {opacity: 0.5;}
 .company-name {
-  box-sizing: border-box;
-  overflow: hidden;
-  cursor: default;
-  color: white;
-  padding: 10px;
-  font: 700 20px "Roboto";
   background: rgb(40,40,40);
+  color: white;
+  cursor: default;
+  font-size: 20px;
+  padding: 10px;
 }
-.company.ng-enter, .job.ng-enter {max-height: 0px; opacity: 0;}
-.company.ng-enter-active {max-height: 49px; opacity: 1;}
-.job.ng-enter-active {max-height: 61px; opacity: 1;}
-.company.ng-leave.ng-leave-active, .job.ng-leave.ng-leave-active {max-height: 0px; opacity: 0;}
 
-.job {
-  transition: .2s all;
+job {
   background: white;
   border-bottom: 1px solid rgb(40,40,40);
-  position: relative;
+  display: block;
   height: 60px;
   overflow: hidden;
-  text-align: left;
+  position: relative;
 }
-.job.big {
-  z-index: 1;
-  position: fixed;
-  top: 40px;
-  padding-top: 10px;
-  left: 0;
-  margin: 0px !important;
-  width: 100%;
-  max-width: 100%;
+job.big {
   height: 100%;
+  left: 0;
+  padding-top: 10px;
+  position: fixed;
+  top: 39px;
+  width: calc(100% - 39px);
+  z-index: 1;
 }
-.off .job {height: 0px;}
+.off .job {border-bottom: 0px solid black; height: 0px;}
 
-/* Job Internals */
-.job-info {position: relative; height: 60px;}
-.big .job-info {
-  max-width: 800px;
-  width: 90%;
-  margin: 0 auto;
-}
-.job:first-child {margin: -100px auto 20px auto;}
-.job-title {display: inline-block; font: 17px "Roboto"; padding: 8px 10px 4px 10px; cursor: pointer;}
-.job-date {font: 14px "Roboto"; padding: 5px 10px;}
-.job-tags {display: inline-block; position: absolute; right: 0; top: 30px; padding: 3px;}
-.job-apply, .job-close {
-  background: rgba(200,200,200,.5);
+.job-info {height: 60px; position: relative;}
+.big .job-info, .job-description {margin: 0 auto; max-width: 800px; width: 90%;}
+.job-title {
   cursor: pointer;
   display: inline-block;
-  font: 14px "Roboto";
-  padding: 5px;
+  font-size: 17px;
+  padding: 8px 10px 4px 10px;
 }
-.job-tags div {font: 12px "Roboto"; padding: 5px; display: inline-block; margin: 0px 5px; cursor: pointer;}
+.job-date {font-size: 14px; padding: 2px 10px;}
+.job-tags {
+  display: inline-block;
+  padding: 3px;
+  position: absolute;
+  right: 0;
+  top: 30px;
+}
+.job-apply, .job-close, .job-tags div {cursor: pointer; display: inline-block; padding: 4px;}
+.job-apply, .job-close {background: rgb(220,220,220); font-size: 14px;}
+.job-tags div {font-size: 12px; margin: 0px 5px;}
 .job-tags div:last-child {margin: 0px 10px 0px 5px;}
-.job-tags div:hover {opacity: 1 !important;}
+.job-tags div:hover {opacity: 1;}
 .job-description {
   box-sizing: border-box;
-  font: 16px "Roboto";
-  max-width: 800px;
-  width: 90%;
-  margin: 0 auto;
-  padding: 5px 10px 100px 10px;
+  font-size: 16px;
   height: calc(100vh - 80px);
   overflow-y: scroll;
+  padding: 5px 10px 100px 10px;
 }
 .job-description img {width: 200px;}

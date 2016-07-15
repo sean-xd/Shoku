@@ -1,5 +1,7 @@
-<div class="company-name" ng-click="company.off = !company.off">{{company.name}}</div>
-
-<div ng-repeat="job in company.jobs | filter:search | filter:tagFilter | orderBy:'-date'" class="job" ng-class="{big: job.active}">
-  <job></job>
+<div class="company-name" ng-click="company.off = !company.off">
+  <strong>{{company.name}}</strong>
 </div>
+<job
+  ng-repeat="job in company.jobs | filter: search | filter:jobFilter | orderBy: '-date'"
+  ng-class="{big: job.active}">
+</job>
