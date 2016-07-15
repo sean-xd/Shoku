@@ -1,0 +1,6 @@
+<div class="company"
+  ng-repeat="company in companies | filter:search | filter:companyFilter | orderBy: '-latest' | limitTo:companyLimit"
+  ng-class="{off: company.off}">
+  <div class="company-name" ng-click="company.off = !company.off"><strong>{{company.name}}</strong></div>
+  <joblist></joblist>
+</div> 

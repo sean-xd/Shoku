@@ -11,34 +11,12 @@
 </head>
 
 <body ng-controller="BodyController" ng-class="{activeJob, sidebarOpen, isScrolled}">
-
-  <!-- Background Image -->
   <img class="background" src="https://source.unsplash.com/random">
-
-  <!-- Top Nav -->
-  <i class="material-icons menu" ng-click="toggleSidebar();">menu</i>
-  <div class="link title">Shoku</div>
-  <input class="link search" type="text" ng-model="search" placeholder="Search Jobs">
-  <i class="material-icons cancel" ng-show="search" ng-click="searchFor('');">clear</i>
-
-  <!-- Heading -->
-  <div class="heading">Daily Tech Jobs</div>
-  <div class="hero">
-    <input type="text" ng-model="search" placeholder="Search Jobs">
-  </div>
-
-  <!-- Sidebar -->
+  <heading></heading>
   <sidebar></sidebar>
-
-  <!-- Main -->
   <main>
-    <company
-      ng-repeat="company in companies | filter:search | filter:companyFilter | orderBy: '-latest' | limitTo:companyLimit"
-      ng-class="{off: company.off}">
-    </company>
+    <companylist></companylist>
   </main>
-
-  <!-- Footer -->
   <footer>Daily tech job aggregator built by <a href="http://sean.mu">Sean.mu</a> in Boulder, CO.</footer>
 </body>
 </html>

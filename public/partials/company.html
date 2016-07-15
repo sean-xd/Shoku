@@ -1,7 +1,0 @@
-<div class="company-name" ng-click="company.off = !company.off">
-  <strong>{{company.name}}</strong>
-</div>
-<job
-  ng-repeat="job in company.jobs | filter: search | filter:jobFilter | orderBy: '-date'"
-  ng-class="{big: job.active}">
-</job>

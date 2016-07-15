@@ -1,0 +1,16 @@
+.company {
+  display: block;
+  font-family: "Segoe UI", "Helvetica Neue", "Roboto";
+  margin: 10px auto;
+  max-width: 800px;
+  opacity: 1;
+  width: 90%;
+}
+.company.off {opacity: 0.5;}
+.company-name {
+  background: rgb(40,40,40);
+  color: white;
+  cursor: default;
+  font-size: 20px;
+  padding: 10px;
+}
