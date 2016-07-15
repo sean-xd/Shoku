@@ -63,16 +63,20 @@ body.activeJob {overflow: hidden;}
 main {transition: .2s all; width: 100%;}
 
 /* Footer */
-footer, .signin {bottom: 0; color: white; position: fixed;}
 footer {
   background: rgb(20,20,20);
+  bottom: 0;
+  box-sizing: border-box;
+  color: white;
+  font: 16px "Roboto";
+  padding: 10px;
+  position: fixed;
+  text-align: center;
   transition: .2s all;
   width: 100%;
   z-index: 4;
 }
-footer .link {width: 110px;}
 .isScrolled footer {transform: translate3d(0, 40px, 0);}
-.signin {right: 0; width: 110px; z-index: 5;}
 
 /* Media Queries*/
 @media (min-width: 1025px){

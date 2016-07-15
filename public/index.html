@@ -10,7 +10,7 @@
   <script src="app.js"></script>
 </head>
 
-<body ng-controller="BodyController" ng-class="{activeJob: activeJob, sidebarOpen: sidebarOpen, isScrolled: isScrolled}">
+<body ng-controller="BodyController" ng-class="{activeJob, sidebarOpen, isScrolled}">
 
   <!-- Background Image -->
   <img class="background" src="https://source.unsplash.com/random">
@@ -38,9 +38,6 @@
   </main>
 
   <!-- Footer -->
-  <footer>
-    <div class="link">About</div>
-  </footer>
-  <div class="link signin">Sign in/up</div>
+  <footer>Daily tech job aggregator built by <a href="http://sean.mu">Sean.mu</a> in Boulder, CO.</footer>
 </body>
 </html>

@@ -30,7 +30,7 @@ function getJobs(){
 function updateJobs(){
   isUpdating = true;
   fs.readFile("./db/db.json", (err, data) => {
-    if(JSON.stringify(db) === data) return;
+    if(JSON.stringify(db) === data) return isUpdating = false;
     db = JSON.parse(data);
     isUpdated = true;
     isUpdating = false;

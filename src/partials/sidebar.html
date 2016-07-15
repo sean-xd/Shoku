@@ -5,7 +5,7 @@
   </div>
   <div class="link taglink" ng-click="openTags = !openTags;">Tags</div>
   <div class="tags" ng-class="{open: openTags}">
-    <div ng-repeat="tag in fromContent" class="link {{tag.color}}" ng-class="{off: tag.off}" ng-click="tagOff(tag)">{{tag.name}}</div>
+    <div ng-repeat="tag in tags" class="link {{tag.color}}" ng-class="{off: tag.off}" ng-click="tagOff(tag)">{{tag.name}}</div>
   </div>
   <div class="link taglink" ng-click="clearTags();" ng-show="openTags || openSources">Clear</div>
 </aside>
