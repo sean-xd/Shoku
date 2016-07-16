@@ -4,7 +4,7 @@ var gulp = require("gulp"),
   src = {
     html: "src/index.html",
     partials: ["src/components/**/*.html"],
-    css: ["src/css/*.css", "src/components/**/*.css"],
+    css: ["src/css/fonts.css", "src/css/classes.css", "src/css/main.css", "src/components/**/*.css", "src/css/mediaQueries.css"],
     js: ["src/js/*.js", "src/components/**/*.js"]
   },
   dest = {html: "public/", partials: "public/partials/", css: "public/", js: "public/"};

@@ -1,0 +1,22 @@
+@media(min-width: 1025px){
+  /*.sidebarOpen:not(.activeJob) main {transform: translate3d(110px,0,0);}*/
+  .sidebarOpen main {transform: translate3d(110px,0,0);}
+  .sidebarOpen .hero, .sidebarOpen .heading {transform: translate3d(110px,0,0);}
+  .sidebarOpen.isScrolled .hero, .sidebarOpen.isScrolled .heading {transform: translate3d(110px,-370px,0);}
+}
+
+@media(max-width: 650px){
+  .heading {font-size: 80px;}
+}
+
+@media(max-width: 500px){
+  .heading {font-size: 60px;}
+  footer {font-size: 14px;}
+  .job-title {font-size: 14px;}
+  .job-date {font-size: 12px;}
+}
+
+@media(max-width: 400px){
+  .heading {font-size: 50px;}
+  footer {font-size: 13px;}
+}

@@ -48,11 +48,3 @@ footer {
   z-index: 4;
 }
 .isScrolled footer {transform: translate3d(0, 40px, 0);}
-
-/* Media Queries*/
-@media (min-width: 1025px){
-  .sidebarOpen:not(.activeJob) main {transform: translate3d(110px,0,0);}
-  /*.sidebarOpen main {transform: translate3d(110px,0,0);}*/
-  .sidebarOpen .hero, .sidebarOpen .heading {transform: translate3d(110px,0,0);}
-  .sidebarOpen.isScrolled .hero, .sidebarOpen.isScrolled .heading {transform: translate3d(110px,-370px,0);}
-}
