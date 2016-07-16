@@ -11,7 +11,7 @@ app.controller("BodyController", ["$scope", ($scope) => {
     {name: "github", color: "darkgrey", off: false}
   ];;
   $scope.tags = ls.tags ? JSON.parse(ls.tags) : [
-    {name: "nodejs", color: "green", off: false},
+    {name: "node", color: "green", off: false},
     {name: "rails", color: "red", off: false},
     {name: "python", color: "blue", off: false},
     {name: "javascript", color: "yellow", off: false},
@@ -53,20 +53,22 @@ app.directive("companylist", () => ({
       if(almostBottom || topToggle) $scope.$apply();
     });
 
-    $http.get('/jobs').then(data => {
-      $scope.companies = data.data.reduce((arr, job) => {
-        var company = arr.find(e => e.name === job.company) || {name: job.company, jobs: [], latest: 0};
-        if(!company.latest) arr.push(company);
-        if(job.date > company.latest) company.latest = job.date;
-        company.jobs.push(job);
-        return arr;
-      }, []);
-    });
-  }
-}));
+    $scope.companies = ls.companies ? JSON.parse(ls.companies) : [];
 
-app.directive("heading", () => ({
-  templateUrl: "partials/heading.html"
+    if(!$scope.companies.length || ls.ttl < Date.now()){
+      $http.get('/jobs').then(data => {
+        $scope.companies = data.data.reduce((arr, job) => {
+          var company = arr.find(e => e.name === job.company) || {name: job.company, jobs: [], latest: 0};
+          if(!company.latest) arr.push(company);
+          if(job.date > company.latest) company.latest = job.date;
+          company.jobs.push(job);
+          return arr;
+        }, []);
+        ls.companies = JSON.stringify($scope.companies);
+        ls.ttl = Date.now() + (1000 * 60 * 5);
+      });
+    }
+  }
 }));
 
 app.directive("joblist", () => ({
@@ -114,6 +116,10 @@ function buildChecker($scope, job){
 }
 
 app.filter('trust', $sce => val => $sce.trustAs("html", val.replace(/<br ?\/?>/g, "")));
+
+app.directive("heading", () => ({
+  templateUrl: "partials/heading.html"
+}));
 
 app.directive("sidebar", () => ({
   templateUrl: "partials/sidebar.html",

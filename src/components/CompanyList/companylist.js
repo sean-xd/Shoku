@@ -19,14 +19,20 @@ app.directive("companylist", () => ({
       if(almostBottom || topToggle) $scope.$apply();
     });
 
-    $http.get('/jobs').then(data => {
-      $scope.companies = data.data.reduce((arr, job) => {
-        var company = arr.find(e => e.name === job.company) || {name: job.company, jobs: [], latest: 0};
-        if(!company.latest) arr.push(company);
-        if(job.date > company.latest) company.latest = job.date;
-        company.jobs.push(job);
-        return arr;
-      }, []);
-    });
+    $scope.companies = ls.companies ? JSON.parse(ls.companies) : [];
+
+    if(!$scope.companies.length || ls.ttl < Date.now()){
+      $http.get('/jobs').then(data => {
+        $scope.companies = data.data.reduce((arr, job) => {
+          var company = arr.find(e => e.name === job.company) || {name: job.company, jobs: [], latest: 0};
+          if(!company.latest) arr.push(company);
+          if(job.date > company.latest) company.latest = job.date;
+          company.jobs.push(job);
+          return arr;
+        }, []);
+        ls.companies = JSON.stringify($scope.companies);
+        ls.ttl = Date.now() + (1000 * 60 * 5);
+      });
+    }
   }
 }));

@@ -11,7 +11,7 @@ app.controller("BodyController", ["$scope", ($scope) => {
     {name: "github", color: "darkgrey", off: false}
   ];;
   $scope.tags = ls.tags ? JSON.parse(ls.tags) : [
-    {name: "nodejs", color: "green", off: false},
+    {name: "node", color: "green", off: false},
     {name: "rails", color: "red", off: false},
     {name: "python", color: "blue", off: false},
     {name: "javascript", color: "yellow", off: false},

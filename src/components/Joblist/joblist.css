@@ -29,16 +29,16 @@
 }
 .job-date {font-size: 14px; padding: 2px 10px;}
 .job-tags {
+  border-left: 1px solid rgb(40,40,40);
+  border-top: 1px solid rgb(40,40,40);
+  bottom: 0;
   display: inline-block;
-  padding: 3px;
   position: absolute;
   right: 0;
-  top: 30px;
 }
 .job-apply, .job-close, .job-tags div {cursor: pointer; display: inline-block; padding: 4px;}
 .job-apply, .job-close {background: rgb(220,220,220); font-size: 14px;}
-.job-tags div {font-size: 12px; margin: 0px 5px;}
-.job-tags div:last-child {margin: 0px 10px 0px 5px;}
+.job-tags div {border-right: 1px solid rgb(40,40,40); font-size: 12px;}
 .job-tags div:hover {opacity: 1;}
 .job-description {
   box-sizing: border-box;
