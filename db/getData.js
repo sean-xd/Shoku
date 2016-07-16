@@ -15,7 +15,8 @@ var fs = require("fs"),
   coroflot = require("./coroflot.js"),
   stackoverflow = require("./stackoverflow.js"),
   github = require("./github.js"),
-  sourcesLength = 9;
+  smashingjobs = require("./smashingjobs.js"),
+  sourcesLength = 10;
 
 var pushJobs = Magic(sourcesLength, data => {
   var result = {};
@@ -33,3 +34,4 @@ remoteok("https://remoteok.io/index.json", pushJobs);
 coroflot("http://feeds.feedburner.com/coroflot/AllJobs?format=xml", pushJobs);
 stackoverflow("https://stackoverflow.com/jobs/feed", pushJobs);
 github("https://jobs.github.com/positions.json", pushJobs);
+smashingjobs("http://jobs.smashingmagazine.com/rss/all/all", pushJobs);

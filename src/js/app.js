@@ -8,7 +8,8 @@ app.controller("BodyController", ["$scope", ($scope) => {
     {name: "remoteok", color: "blue", off: false},
     {name: "coroflot", color: "orange", off: false},
     {name: "stackoverflow", color: "white", off: false},
-    {name: "github", color: "darkgrey", off: false}
+    {name: "github", color: "darkgrey", off: false},
+    {name: "smashingjobs", color: "orange", off: false}
   ];;
   $scope.tags = ls.tags ? JSON.parse(ls.tags) : [
     {name: "node", color: "green", off: false},

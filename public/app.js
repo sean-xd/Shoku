@@ -8,7 +8,8 @@ app.controller("BodyController", ["$scope", ($scope) => {
     {name: "remoteok", color: "blue", off: false},
     {name: "coroflot", color: "orange", off: false},
     {name: "stackoverflow", color: "white", off: false},
-    {name: "github", color: "darkgrey", off: false}
+    {name: "github", color: "darkgrey", off: false},
+    {name: "smashingjobs", color: "orange", off: false}
   ];;
   $scope.tags = ls.tags ? JSON.parse(ls.tags) : [
     {name: "node", color: "green", off: false},
@@ -71,6 +72,10 @@ app.directive("companylist", () => ({
   }
 }));
 
+app.directive("heading", () => ({
+  templateUrl: "partials/heading.html"
+}));
+
 app.directive("joblist", () => ({
   templateUrl: "partials/joblist.html",
   controller: ($scope, $rootScope) => {
@@ -116,10 +121,6 @@ function buildChecker($scope, job){
 }
 
 app.filter('trust', $sce => val => $sce.trustAs("html", val.replace(/<br ?\/?>/g, "")));
-
-app.directive("heading", () => ({
-  templateUrl: "partials/heading.html"
-}));
 
 app.directive("sidebar", () => ({
   templateUrl: "partials/sidebar.html",

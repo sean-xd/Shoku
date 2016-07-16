@@ -19,5 +19,7 @@
   color: white;
   cursor: default;
   font-size: 20px;
-  padding: 10px;
+  max-height: 27px;
+  overflow: hidden;
+  padding: 5px 10px;
 }
