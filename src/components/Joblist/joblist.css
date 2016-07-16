@@ -1,6 +1,6 @@
 .job {
   background: white;
-  border-bottom: 1px solid rgb(40,40,40);
+  border-bottom: 1px solid rgb(20,20,20);
   display: block;
   height: 60px;
   overflow: hidden;
@@ -29,16 +29,26 @@
 }
 .job-date {font-size: 14px; padding: 2px 10px;}
 .job-tags {
-  border-left: 1px solid rgb(40,40,40);
-  border-top: 1px solid rgb(40,40,40);
-  bottom: 0;
+  bottom: -1px;
   display: inline-block;
+  height: 26px;
+  overflow: hidden;
   position: absolute;
   right: 0;
+  max-width: 75%;
+  text-align: right;
 }
 .job-apply, .job-close, .job-tags div {cursor: pointer; display: inline-block; padding: 4px;}
 .job-apply, .job-close {background: rgb(220,220,220); font-size: 14px;}
-.job-tags div {border-right: 1px solid rgb(40,40,40); font-size: 12px;}
+.job-tags div {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  font-size: 12px;
+}
+.job-tags div:first-child {
+  border-left: 1px solid black;
+}
 .job-tags div:hover {opacity: 1;}
 .job-description {
   box-sizing: border-box;
