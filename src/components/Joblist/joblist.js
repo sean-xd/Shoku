@@ -5,7 +5,6 @@ app.directive("joblist", () => ({
       var checker = buildChecker($scope, job);
       return checker("sources", "source") && checker("tags", "content") && checker("tags", "title");
     }
-    $scope.searchFor = tag => $rootScope.search = tag;
     $scope.activateJob = job => {
       job.active = !job.active;
       $rootScope.activeJob = !$rootScope.activeJob;

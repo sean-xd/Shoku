@@ -2,6 +2,7 @@ var ls = localStorage,
   app = angular.module("app", ["ngAnimate"]);
 
 app.controller("BodyController", ["$scope", ($scope) => {
+  $scope.searchFor = tag => $scope.search = tag;
   $scope.sources =  ls.sources ? JSON.parse(ls.sources) : [
     {name: "wfhio", color: "darkgrey", off: false},
     {name: "weworkremotely", color: "lightgrey", off: false},
@@ -32,10 +33,6 @@ app.controller("BodyController", ["$scope", ($scope) => {
     {name: "manager", color: "red", off: false}
   ];
 }]);
-
-app.directive("heading", () => ({
-  templateUrl: "partials/heading.html"
-}));
 
 app.directive("companylist", () => ({
   templateUrl: "partials/companylist.html",
@@ -76,26 +73,8 @@ app.directive("companylist", () => ({
   }
 }));
 
-app.directive("sidebar", () => ({
-  templateUrl: "partials/sidebar.html",
-  controller: $scope => {
-    $scope.getColor = name => {
-      var findSource = $scope.sources.find(e => e.name === name),
-        findTag = $scope.tags.find(e => e.name === name);
-      if(findSource || findTag) return (findSource || findTag).color;
-    };
-    $scope.tagOff = tag => {
-      var type = ($scope.tags.find(e => e.name === tag.name)) ? "tags" : "sources";
-      tag.off = !tag.off;
-      ls[type] = JSON.stringify($scope[type]);
-    };
-    $scope.clearTags = () => {
-      $scope.tags.forEach(e => e.off = false);
-      $scope.sources.forEach(e => e.off = false);
-      ls.sources = JSON.stringify($scope.sources);
-      ls.tags = JSON.stringify($scope.tags);
-    };
-  }
+app.directive("heading", () => ({
+  templateUrl: "partials/heading.html"
 }));
 
 app.directive("joblist", () => ({
@@ -105,7 +84,6 @@ app.directive("joblist", () => ({
       var checker = buildChecker($scope, job);
       return checker("sources", "source") && checker("tags", "content") && checker("tags", "title");
     }
-    $scope.searchFor = tag => $rootScope.search = tag;
     $scope.activateJob = job => {
       job.active = !job.active;
       $rootScope.activeJob = !$rootScope.activeJob;
@@ -143,3 +121,25 @@ function buildChecker($scope, job){
 }
 
 app.filter('trust', $sce => val => $sce.trustAs("html", val.replace(/<br ?\/?>/g, "")));
+
+app.directive("sidebar", () => ({
+  templateUrl: "partials/sidebar.html",
+  controller: $scope => {
+    $scope.getColor = name => {
+      var findSource = $scope.sources.find(e => e.name === name),
+        findTag = $scope.tags.find(e => e.name === name);
+      if(findSource || findTag) return (findSource || findTag).color;
+    };
+    $scope.tagOff = tag => {
+      var type = ($scope.tags.find(e => e.name === tag.name)) ? "tags" : "sources";
+      tag.off = !tag.off;
+      ls[type] = JSON.stringify($scope[type]);
+    };
+    $scope.clearTags = () => {
+      $scope.tags.forEach(e => e.off = false);
+      $scope.sources.forEach(e => e.off = false);
+      ls.sources = JSON.stringify($scope.sources);
+      ls.tags = JSON.stringify($scope.tags);
+    };
+  }
+}));

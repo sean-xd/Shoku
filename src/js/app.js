@@ -2,6 +2,7 @@ var ls = localStorage,
   app = angular.module("app", ["ngAnimate"]);
 
 app.controller("BodyController", ["$scope", ($scope) => {
+  $scope.searchFor = tag => $scope.search = tag;
   $scope.sources =  ls.sources ? JSON.parse(ls.sources) : [
     {name: "wfhio", color: "darkgrey", off: false},
     {name: "weworkremotely", color: "lightgrey", off: false},
