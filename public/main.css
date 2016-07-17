@@ -192,25 +192,17 @@ footer {
   background: white;
   border-bottom: 1px solid rgb(20,20,20);
   display: block;
-  height: 50px;
+  max-height: 50px;
   overflow: hidden;
   position: relative;
   transition: .2s all;
 }
 
-.job.big {
-  height: 100%;
-  left: 0;
-  padding-top: 10px;
-  position: fixed;
-  top: 39px;
-  width: 100%;
-  z-index: 1;
-}
+.job.big {max-height: 400px;}
 .off .job {border-bottom: 0px solid black; height: 0px;}
 
 .job-info {height: 50px; position: relative;}
-.big .job-info, .job-description {margin: 0 auto; max-width: 800px; width: 90%;}
+/*.big .job-info, .job-description {margin: 0 auto; max-width: 800px; width: 90%;}*/
 .job-title {
   box-sizing: border-box;
   cursor: pointer;
@@ -247,10 +239,10 @@ footer {
 .job-tags div:hover {opacity: 1;}
 .job-description {
   box-sizing: border-box;
-  font-size: 16px;
-  height: calc(100vh - 80px);
+  font-size: 14px;
+  max-height: 340px;
   overflow-y: scroll;
-  padding: 5px 10px 100px 10px;
+  padding: 5px 40px 20px 40px;
 }
 .job-description img {width: 200px;}
 
