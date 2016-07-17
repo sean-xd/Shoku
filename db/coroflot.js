@@ -1,22 +1,27 @@
 var request = require("request"),
-  parseString = require("xml2js").parseString,
+  parseURL = require("rss-parser").parseURL,
+  cheerio = require("cheerio"),
+  Magic = (num, cb, arr) => data => (arr.length === num - 1) ? cb(arr.concat([data])) : arr.push(data),
   getTags = require("./getTags.js");
 
 module.exports = function coroflot(url, magic){
-  request(url, (err1, response, body) => {
-    parseString(body, (err2, result) => {
-      result = result.rss.channel[0].item.map(e => {
-        var date = new Date(e.pubDate[0]).getTime(),
-          companyAndTitle = e.title[0].match(/(.+) is seeking an? (.+)/),
-          title = companyAndTitle[2],
-          company = companyAndTitle[1],
-          content = e.description[0],
-          url = e["feedburner:origLink"][0],
-          source = "coroflot",
+  parseURL(url, (err, data) => {
+    var results = data.feed.entries;
+      inception = Magic(data.feed.entries.length, magic, []);
+    data.feed.entries.map(e => {
+      var date = new Date(e.pubDate).getTime(),
+        companyAndTitle = e.title.match(/(.+) is seeking an? (.+)/),
+        title = companyAndTitle[2],
+        company = companyAndTitle[1],
+        location = e.contentSnippet,
+        url = e.guid,
+        source = "coroflot";
+      request(url, (err2, response, body) => {
+        var $ = cheerio.load(body),
+          content = $("#job_description_public p").html(),
           tags = getTags({title, content});
-        return {date, title, company, content, url, source, tags};
+        inception({date, title, company, location, content, url, source, tags});
       });
-      magic(result);
     });
   });
 };
