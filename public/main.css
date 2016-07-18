@@ -86,7 +86,6 @@ body.activeJob {overflow: hidden;}
 
 /* Background Image */
 .background {
-  -webkit-filter: blur(5px); filter: blur(5px);
   min-height: 100%;
   min-width: 100%;
   opacity: 0;
@@ -94,7 +93,10 @@ body.activeJob {overflow: hidden;}
   transition: .3s all;
   z-index: -1;
 }
-.background.show {opacity: .9;}
+.background.show {
+  opacity: .9;
+  -webkit-filter: blur(5px); filter: blur(5px);
+}
 
 /* Main */
 main {padding-bottom: 100px; transition: .2s all; width: 100%;}

@@ -35,11 +35,6 @@ app.controller("BodyController", ["$scope", ($scope) => {
   ];
 }]);
 
-function showbg(e){
-  e.classList.add("show");
-  console.log(e);
-}
-
 app.directive("companylist", () => ({
   templateUrl: "partials/companylist.html",
   controller: ($scope, $http) => {
@@ -104,6 +99,10 @@ app.directive("companylist", () => ({
   }
 }));
 
+app.directive("heading", () => ({
+  templateUrl: "partials/heading.html"
+}));
+
 app.directive("joblist", () => ({
   templateUrl: "partials/joblist.html",
   controller: ($scope, $rootScope) => {
@@ -157,10 +156,6 @@ function checker($scope, job, prop, x){
 }
 
 app.filter('trust', $sce => val => $sce.trustAs("html", val.replace(/<br ?\/?>/g, "")));
-
-app.directive("heading", () => ({
-  templateUrl: "partials/heading.html"
-}));
 
 app.directive("sidebar", () => ({
   templateUrl: "partials/sidebar.html",

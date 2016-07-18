@@ -34,8 +34,3 @@ app.controller("BodyController", ["$scope", ($scope) => {
     {name: "manager", color: "red", off: false, on: false}
   ];
 }]);
-
-function showbg(e){
-  e.classList.add("show");
-  console.log(e);
-}
