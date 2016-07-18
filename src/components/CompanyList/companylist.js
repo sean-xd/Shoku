@@ -6,8 +6,9 @@ app.directive("companylist", () => ({
     $scope.companyFilter = company => {
       return company.jobs.reduce((check, job) => {
         if(!check || !job) return false;
-        var checker = buildChecker($scope, job);
-        return checker("sources", "source") && checker("tags", "content") && checker("tags", "title");
+        var checkSource = checker($scope, job, "sources", "source"),
+          checkContent = checker($scope, job, "tags", "content");
+        return checkSource && checkContent;
       }, true);
     };
 

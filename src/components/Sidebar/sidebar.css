@@ -28,5 +28,6 @@ sidebar {
   transition: .2s all;
 }
 .tags.open {max-height: 351px;}
-.tags .link {font-size: 14px; padding: 10px 0px; width: 110px; height: 39px;}
-.tags .link.off {opacity: .4; text-decoration: line-through;}
+.tags .link {font-size: 14px; padding: 10px 0px; width: 110px; height: 39px; opacity: .5;}
+.tags .link.off {opacity: .25; text-decoration: line-through;}
+.tags .link.on {opacity: 1; font-weight: 500;}

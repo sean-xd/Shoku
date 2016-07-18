@@ -2,8 +2,9 @@ app.directive("joblist", () => ({
   templateUrl: "partials/joblist.html",
   controller: ($scope, $rootScope) => {
     $scope.jobFilter = job => {
-      var checker = buildChecker($scope, job);
-      return checker("sources", "source") && checker("tags", "content") && checker("tags", "title");
+      var checkSource = checker($scope, job, "sources", "source"),
+        checkContent = checker($scope, job, "tags", "content");
+      return checkSource && checkContent;
     }
     $scope.activateJob = job => job.active = !job.active;
   }
@@ -30,12 +31,23 @@ app.filter("dateFilter", () => input => {
   return "just now";
 });
 
-function buildChecker($scope, job){
-  return (prop, x) => $scope[prop].filter(e => e.off).map(e => e.name).reduce((check, name) => {
-    if(!check) return false;
-    var jobProp = (name === "java") ? job[x].replace(/javascript/g, "") : job[x];
-    return jobProp.toLowerCase().indexOf(name) === -1;
-  }, true);
+function checker($scope, job, prop, x){
+  var offs = $scope[prop].filter(e => e.off).map(e => e.name),
+    ons = $scope[prop].filter(e => e.on).map(e => e.name),
+    check = !ons.length,
+    buildChecker = result => name => {
+      var jobProp = name === "java" ? job[x].replace(/javascript/g, "") : job[x];
+      if(jobProp.toLowerCase().indexOf(name) > -1) check = result;
+    };
+  if(!check) ons.forEach(name => {
+    var jobProp = name === "java" ? job[x].replace(/javascript/g, "") : job[x];
+    if(jobProp.toLowerCase().indexOf(name) > -1) check = true;
+  });
+  offs.forEach(name => {
+    var jobProp = name === "java" ? job[x].replace(/javascript/g, "") : job[x];
+    if(jobProp.toLowerCase().indexOf(name) > -1) check = false;
+  });
+  return check;
 }
 
 app.filter('trust', $sce => val => $sce.trustAs("html", val.replace(/<br ?\/?>/g, "")));

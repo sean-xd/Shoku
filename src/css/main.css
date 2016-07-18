@@ -31,7 +31,7 @@ body.activeJob {overflow: hidden;}
 .isScrolled .background {-webkit-filter: blur(5px); filter: blur(5px);}
 
 /* Main */
-main {transition: .2s all; width: 100%;}
+main {padding-bottom: 100px; transition: .2s all; width: 100%;}
 
 /* Footer */
 footer {

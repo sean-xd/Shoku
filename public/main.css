@@ -45,7 +45,6 @@
 .yellow {background: yellow; color: black;}
 .white {background: white; color: black;}
 .grey {background: rgb(80,80,80); color: white;}
-.lightgrey {background: rgb(200,200,200); color: black;}
 .darkgrey {background: rgb(40,40,40); color: white;}
 .purple {background: rgb(125,25,125); color: white;}
 .orange {background: rgb(180, 100, 50); color: white;}
@@ -96,7 +95,7 @@ body.activeJob {overflow: hidden;}
 .isScrolled .background {-webkit-filter: blur(5px); filter: blur(5px);}
 
 /* Main */
-main {transition: .2s all; width: 100%;}
+main {padding-bottom: 100px; transition: .2s all; width: 100%;}
 
 /* Footer */
 footer {
@@ -124,10 +123,10 @@ footer {
   width: 90%;
 }
 
-.company.ng-enter {transform: translate3d(0,-100px,0); opacity: 0;}
+/*.company.ng-enter {transform: translate3d(0,-100px,0); opacity: 0;}
 .company.ng-enter-stagger {transition-delay: 0.1s; transition-duration: 0s;}
 .company.ng-enter-active {transform: translate3d(0,0,0); opacity: 1;}
-.company.ng-leave-active {transform: translate3d(0,100px,0); opacity: 0;}
+.company.ng-leave-active {transform: translate3d(0,100px,0); opacity: 0;}*/
 
 .company.off {opacity: 0.5;}
 .company-name {
@@ -276,8 +275,9 @@ sidebar {
   transition: .2s all;
 }
 .tags.open {max-height: 351px;}
-.tags .link {font-size: 14px; padding: 10px 0px; width: 110px; height: 39px;}
-.tags .link.off {opacity: .4; text-decoration: line-through;}
+.tags .link {font-size: 14px; padding: 10px 0px; width: 110px; height: 39px; opacity: .5;}
+.tags .link.off {opacity: .25; text-decoration: line-through;}
+.tags .link.on {opacity: 1; font-weight: 500;}
 
 @media(min-width: 1025px){
   .sidebarOpen:not(.activeJob) main {transform: translate3d(110px,0,0);}

@@ -4,33 +4,34 @@ var ls = localStorage,
 app.controller("BodyController", ["$scope", ($scope) => {
   $scope.searchFor = tag => $scope.search = tag;
   $scope.sources =  ls.sources ? JSON.parse(ls.sources) : [
-    {name: "wfhio", color: "darkgrey", off: false},
-    {name: "weworkremotely", color: "lightgrey", off: false},
-    {name: "remoteok", color: "blue", off: false},
-    {name: "coroflot", color: "orange", off: false},
-    {name: "stackoverflow", color: "white", off: false},
-    {name: "github", color: "darkgrey", off: false},
-    {name: "smashingjobs", color: "orange", off: false}
-  ];;
+    {name: "wfhio", color: "darkgrey", off: false, on: false},
+    {name: "weworkremotely", color: "white", off: false, on: false},
+    {name: "remoteok", color: "blue", off: false, on: false},
+    {name: "coroflot", color: "orange", off: false, on: false},
+    {name: "stackoverflow", color: "white", off: false, on: false},
+    {name: "github", color: "darkgrey", off: false, on: false},
+    {name: "smashingjobs", color: "orange", off: false, on: false},
+    {name: "dribbble", color: "green", off: false, on: false}
+  ];
   $scope.tags = ls.tags ? JSON.parse(ls.tags) : [
-    {name: "node", color: "green", off: false},
-    {name: "rails", color: "red", off: false},
-    {name: "python", color: "blue", off: false},
-    {name: "javascript", color: "yellow", off: false},
-    {name: ".net", color: "grey", off: false},
-    {name: "java", color: "orange", off: false},
-    {name: "angular", color: "red", off: false},
-    {name: "react", color: "blue", off: false},
-    {name: "android", color: "green", off: false},
-    {name: "ios", color: "white", off: false},
-    {name: "aws", color: "darkgrey", off: false},
-    {name: "full stack", color: "grey", off: false},
-    {name: "frontend", color: "lightgrey", off: false},
-    {name: "backend", color: "darkgrey", off: false},
-    {name: "developer", color: "yellow", off: false},
-    {name: "designer", color: "purple", off: false},
-    {name: "engineer", color: "blue", off: false},
-    {name: "manager", color: "red", off: false}
+    {name: "node", color: "green", off: false, on: false},
+    {name: "rails", color: "red", off: false, on: false},
+    {name: "python", color: "blue", off: false, on: false},
+    {name: "javascript", color: "yellow", off: false, on: false},
+    {name: ".net", color: "grey", off: false, on: false},
+    {name: "java", color: "orange", off: false, on: false},
+    {name: "angular", color: "red", off: false, on: false},
+    {name: "react", color: "blue", off: false, on: false},
+    {name: "android", color: "green", off: false, on: false},
+    {name: "ios", color: "white", off: false, on: false},
+    {name: "aws", color: "darkgrey", off: false, on: false},
+    {name: "full stack", color: "grey", off: false, on: false},
+    {name: "frontend", color: "white", off: false, on: false},
+    {name: "backend", color: "darkgrey", off: false, on: false},
+    {name: "developer", color: "yellow", off: false, on: false},
+    {name: "designer", color: "purple", off: false, on: false},
+    {name: "engineer", color: "blue", off: false, on: false},
+    {name: "manager", color: "red", off: false, on: false}
   ];
 }]);
 
@@ -42,8 +43,9 @@ app.directive("companylist", () => ({
     $scope.companyFilter = company => {
       return company.jobs.reduce((check, job) => {
         if(!check || !job) return false;
-        var checker = buildChecker($scope, job);
-        return checker("sources", "source") && checker("tags", "content") && checker("tags", "title");
+        var checkSource = checker($scope, job, "sources", "source"),
+          checkContent = checker($scope, job, "tags", "content");
+        return checkSource && checkContent;
       }, true);
     };
 
@@ -81,8 +83,9 @@ app.directive("joblist", () => ({
   templateUrl: "partials/joblist.html",
   controller: ($scope, $rootScope) => {
     $scope.jobFilter = job => {
-      var checker = buildChecker($scope, job);
-      return checker("sources", "source") && checker("tags", "content") && checker("tags", "title");
+      var checkSource = checker($scope, job, "sources", "source"),
+        checkContent = checker($scope, job, "tags", "content");
+      return checkSource && checkContent;
     }
     $scope.activateJob = job => job.active = !job.active;
   }
@@ -109,12 +112,23 @@ app.filter("dateFilter", () => input => {
   return "just now";
 });
 
-function buildChecker($scope, job){
-  return (prop, x) => $scope[prop].filter(e => e.off).map(e => e.name).reduce((check, name) => {
-    if(!check) return false;
-    var jobProp = (name === "java") ? job[x].replace(/javascript/g, "") : job[x];
-    return jobProp.toLowerCase().indexOf(name) === -1;
-  }, true);
+function checker($scope, job, prop, x){
+  var offs = $scope[prop].filter(e => e.off).map(e => e.name),
+    ons = $scope[prop].filter(e => e.on).map(e => e.name),
+    check = !ons.length,
+    buildChecker = result => name => {
+      var jobProp = name === "java" ? job[x].replace(/javascript/g, "") : job[x];
+      if(jobProp.toLowerCase().indexOf(name) > -1) check = result;
+    };
+  if(!check) ons.forEach(name => {
+    var jobProp = name === "java" ? job[x].replace(/javascript/g, "") : job[x];
+    if(jobProp.toLowerCase().indexOf(name) > -1) check = true;
+  });
+  offs.forEach(name => {
+    var jobProp = name === "java" ? job[x].replace(/javascript/g, "") : job[x];
+    if(jobProp.toLowerCase().indexOf(name) > -1) check = false;
+  });
+  return check;
 }
 
 app.filter('trust', $sce => val => $sce.trustAs("html", val.replace(/<br ?\/?>/g, "")));
@@ -127,16 +141,35 @@ app.directive("sidebar", () => ({
         findTag = $scope.tags.find(e => e.name === name);
       if(findSource || findTag) return (findSource || findTag).color;
     };
+    $scope.tagOn = tag => {
+      var type = ($scope.tags.find(e => e.name === tag.name)) ? "tags" : "sources";
+      tag.on = !tag.on;
+      tag.off = false;
+      ls[type] = JSON.stringify($scope[type]);
+    };
     $scope.tagOff = tag => {
       var type = ($scope.tags.find(e => e.name === tag.name)) ? "tags" : "sources";
       tag.off = !tag.off;
+      tag.on = false;
       ls[type] = JSON.stringify($scope[type]);
     };
     $scope.clearTags = () => {
-      $scope.tags.forEach(e => e.off = false);
-      $scope.sources.forEach(e => e.off = false);
+      $scope.tags.forEach(e => {e.off = false; e.on = false;});
+      $scope.sources.forEach(e => {e.off = false; e.on = false;});
       ls.sources = JSON.stringify($scope.sources);
       ls.tags = JSON.stringify($scope.tags);
     };
   }
 }));
+
+app.directive('ngRightClick', $parse => {
+  return (scope, element, attrs) => {
+    var fn = $parse(attrs.ngRightClick);
+    element.bind('contextmenu', event => {
+      scope.$apply(() => {
+        event.preventDefault();
+        fn(scope, {$event:event});
+      });
+    });
+  };
+});
