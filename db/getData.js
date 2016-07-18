@@ -17,7 +17,7 @@ var fs = require("fs"),
   github = require("./github.js"),
   smashingjobs = require("./smashingjobs.js"),
   dribbble = require("./dribbble.js"),
-  sourcesLength = 11;
+  sourcesLength = 12;
 
 var pushJobs = Magic(sourcesLength, data => {
   var result = {};
@@ -37,3 +37,4 @@ stackoverflow("https://stackoverflow.com/jobs/feed", pushJobs);
 github("https://jobs.github.com/positions.json", pushJobs);
 smashingjobs("http://jobs.smashingmagazine.com/rss/all/all", pushJobs);
 dribbble("https://dribbble.com/jobs.rss", pushJobs);
+jobspresso("https://jobspresso.co/?feed=job_feed&job_types=designer%2Cdeveloper%2Cmarketing%2Cproject-mgmt%2Csupport%2Csys-admin%2Cvarious%2Cwriting&search_location&job_categories&search_keywords", pushJobs);
