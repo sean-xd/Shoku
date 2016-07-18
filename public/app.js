@@ -7,11 +7,13 @@ app.controller("BodyController", ["$scope", ($scope) => {
     {name: "wfhio", color: "darkgrey", off: false, on: false},
     {name: "weworkremotely", color: "white", off: false, on: false},
     {name: "remoteok", color: "blue", off: false, on: false},
-    {name: "coroflot", color: "orange", off: false, on: false},
     {name: "stackoverflow", color: "white", off: false, on: false},
     {name: "github", color: "darkgrey", off: false, on: false},
+    {name: "hackernews", color: "orange", off: false, on: false},
+    {name: "coroflot", color: "darkgrey", off: false, on: false},
     {name: "smashingjobs", color: "orange", off: false, on: false},
-    {name: "dribbble", color: "green", off: false, on: false}
+    {name: "dribbble", color: "green", off: false, on: false},
+    {name: "jobspresso", color: "orange", off: false, on: false}
   ];
   $scope.tags = ls.tags ? JSON.parse(ls.tags) : [
     {name: "node", color: "green", off: false, on: false},

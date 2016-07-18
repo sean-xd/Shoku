@@ -47,7 +47,7 @@
 .grey {background: rgb(80,80,80); color: white;}
 .darkgrey {background: rgb(40,40,40); color: white;}
 .purple {background: rgb(125,25,125); color: white;}
-.orange {background: rgb(180, 100, 50); color: white;}
+.orange {background: rgb(210, 130, 40); color: white;}
 
 .opaque {opacity: .8;}
 
@@ -232,6 +232,7 @@ footer {
   border-right: 1px solid black;
   border-top: 1px solid black;
   font-size: 12px;
+  height: 100%;
 }
 .job-tags div:first-child {
   border-left: 1px solid black;
