@@ -4,8 +4,8 @@
   ng-class="{big: job.active}">
   <div class="job-info">
     <div class="job-title" href="{{job.url}}" ng-click="activateJob(job)">{{job.title}}</div>
-    <a class="job-apply" href="{{job.url}}" ng-show="activeJob">Apply</a>
-    <div class="job-close" ng-click="activateJob(job)" ng-show="activeJob">Close</div>
+    <a class="job-apply" href="{{job.url}}" ng-show="job.active">Apply</a>
+    <div class="job-close" ng-click="activateJob(job)" ng-show="job.active">Close</div>
     <div class="job-location">{{job.location || "Remote"}}</div>
     <div class="job-tags">
       <div ng-repeat="tag in job.tags" ng-click="searchFor(tag);" class="{{getColor(tag)}} opaque">{{tag}}</div>
