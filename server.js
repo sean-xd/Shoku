@@ -23,7 +23,7 @@ function sendJobs(req, res){
 
 function getJobs(){
   isUpdated = false;
-  db.ttl = Date.now() + (1000 * 60 * 60);
+  db.ttl = Date.now() + (1000 * 60 * 30);
   spawn("node", ["./db/getData.js"]);
 }
 
