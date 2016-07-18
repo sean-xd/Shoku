@@ -17,6 +17,7 @@ var fs = require("fs"),
   github = require("./github.js"),
   smashingjobs = require("./smashingjobs.js"),
   dribbble = require("./dribbble.js"),
+  jobspresso = require("./jobspresso.js"),
   sourcesLength = 12;
 
 var pushJobs = Magic(sourcesLength, data => {
