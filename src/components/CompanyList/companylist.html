@@ -3,4 +3,8 @@
   ng-class="{off: company.off}">
   <div class="company-name" ng-click="company.off = !company.off"><strong>{{company.name}}</strong></div>
   <joblist></joblist>
-</div> 
+</div>
+
+<div class="more-container">
+  <div class="link more" ng-click="loadMore(page)" ng-show="atBottom">Load More Jobs</div>
+</div>

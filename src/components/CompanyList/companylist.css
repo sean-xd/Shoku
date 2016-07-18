@@ -4,14 +4,8 @@
   margin: 10px auto;
   max-width: 800px;
   opacity: 1;
-  transition: .2s ease-in all;
   width: 90%;
 }
-
-/*.company.ng-enter {transform: translate3d(0,-100px,0); opacity: 0;}
-.company.ng-enter-stagger {transition-delay: 0.1s; transition-duration: 0s;}
-.company.ng-enter-active {transform: translate3d(0,0,0); opacity: 1;}
-.company.ng-leave-active {transform: translate3d(0,100px,0); opacity: 0;}*/
 
 .company.off {opacity: 0.5;}
 .company-name {
@@ -23,3 +17,6 @@
   overflow: hidden;
   padding: 5px 10px;
 }
+
+.more-container {text-align: center;}
+.more {background: lightgrey; color: black;}

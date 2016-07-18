@@ -5,14 +5,12 @@
   max-height: 50px;
   overflow: hidden;
   position: relative;
-  transition: .2s all;
 }
 
 .job.big {max-height: 400px;}
 .off .job {border-bottom: 0px solid black; height: 0px;}
 
 .job-info {height: 50px; position: relative;}
-/*.big .job-info, .job-description {margin: 0 auto; max-width: 800px; width: 90%;}*/
 .job-title {
   box-sizing: border-box;
   cursor: pointer;

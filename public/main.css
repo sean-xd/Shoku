@@ -78,10 +78,10 @@ input {
 
 /* Shadows */
 .menu, .title, .heading, .signin {text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black;}
-.search, .hero, footer {box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5);}
+.search, .hero, .more, footer {box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5);}
 
 /* Body */
-body {background: rgb(40,40,40);}
+body {background: rgb(40,40,40); overflow-x: hidden;}
 body.activeJob {overflow: hidden;}
 
 /* Background Image */
@@ -112,32 +112,6 @@ footer {
   z-index: 4;
 }
 .isScrolled footer {transform: translate3d(0, 40px, 0);}
-
-.company {
-  display: block;
-  font-family: "Segoe UI", "Helvetica Neue", "Roboto";
-  margin: 10px auto;
-  max-width: 800px;
-  opacity: 1;
-  transition: .2s ease-in all;
-  width: 90%;
-}
-
-/*.company.ng-enter {transform: translate3d(0,-100px,0); opacity: 0;}
-.company.ng-enter-stagger {transition-delay: 0.1s; transition-duration: 0s;}
-.company.ng-enter-active {transform: translate3d(0,0,0); opacity: 1;}
-.company.ng-leave-active {transform: translate3d(0,100px,0); opacity: 0;}*/
-
-.company.off {opacity: 0.5;}
-.company-name {
-  background: rgb(40,40,40);
-  color: white;
-  cursor: default;
-  font-size: 20px;
-  max-height: 27px;
-  overflow: hidden;
-  padding: 5px 10px;
-}
 
 /* Top Nav */
 .title, .menu {color: white; position: fixed; z-index: 4;}
@@ -187,6 +161,29 @@ footer {
   width: 100%;
 }
 
+.company {
+  display: block;
+  font-family: "Segoe UI", "Helvetica Neue", "Roboto";
+  margin: 10px auto;
+  max-width: 800px;
+  opacity: 1;
+  width: 90%;
+}
+
+.company.off {opacity: 0.5;}
+.company-name {
+  background: rgb(40,40,40);
+  color: white;
+  cursor: default;
+  font-size: 20px;
+  max-height: 27px;
+  overflow: hidden;
+  padding: 5px 10px;
+}
+
+.more-container {text-align: center;}
+.more {background: lightgrey; color: black;}
+
 .job {
   background: white;
   border-bottom: 1px solid rgb(20,20,20);
@@ -194,14 +191,12 @@ footer {
   max-height: 50px;
   overflow: hidden;
   position: relative;
-  transition: .2s all;
 }
 
 .job.big {max-height: 400px;}
 .off .job {border-bottom: 0px solid black; height: 0px;}
 
 .job-info {height: 50px; position: relative;}
-/*.big .job-info, .job-description {margin: 0 auto; max-width: 800px; width: 90%;}*/
 .job-title {
   box-sizing: border-box;
   cursor: pointer;
