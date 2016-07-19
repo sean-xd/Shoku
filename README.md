@@ -1,16 +1,16 @@
 #Shoku - Daily Tech Jobs
 Shoku is a tech job aggregator. It currently gets jobs from:
 
-* Github
-* StackOverflow
-* wfh.io
-* We Work Remotely
-* Remote Ok
-* Coroflot
-* Dribbble
-* Smashing jobs
-* Jobspresso
-* Hacker News (almost)
+* [Github](https://jobs.github.com/)
+* [StackOverflow](https://stackoverflow.com/jobs)
+* [wfh.io](https://www.wfh.io/)
+* [We Work Remotely](https://weworkremotely.com/)
+* [Remote Ok](https://remoteok.io/)
+* [Coroflot](http://www.coroflot.com/)
+* [Dribbble](https://dribbble.com/jobs)
+* [Smashing jobs](http://jobs.smashingmagazine.com/)
+* [Jobspresso](https://jobspresso.co/)
+* [Hacker News (almost)](https://github.com/HackerNews/API)
 
 I only keep jobs for the past two weeks. Most sites have paid postings that last 30 days, but since the list updates every 30 minutes those jobs are constantly torpedoed. My use case is new jobs every day, so it doesn't make sense for people to pay to post jobs just to see them fall off the front page every 24 hours.
 
