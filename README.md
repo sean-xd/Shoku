@@ -19,8 +19,11 @@ Also many job boards prohibit paid postings since they offer that themselves, wh
 ##Technology Used
 It's a web application so HTML5, CSS3, Javascript / ES6.
 
+###Angular
 On the frontend I used Angular because it makes certain MVP features a lot simpler. I intend to replace Angular with native ES6 once MVP is complete.
 
+###Express
 On the backend I used Express for the same reason and intentions. I wrote my own Database adapter for storing information as JSON. If there are ever any bugs I can switch to a real database but I don't like including that overhead initially. It's a lot easier to map a JSON object to some DB schema when you can control the entire database from a text editor.
 
+###request, cheerio, parse-rss, rss-parser
 I'm using a few libraries for parsing Atom / RSS feeds. Most of the boards I'm using have feeds or JSON endpoints or APIs so I'm doing very little "scraping". Using the hacker news api feels like scraping because I have to make 3 nested requests but they say in their docs that they intend for people to use it inefficiently because of the way it was designed.
