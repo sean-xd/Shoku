@@ -22,7 +22,7 @@ var fs = require("fs"),
 
 var pushJobs = Magic(sourcesLength, data => {
   var result = {};
-  result.jobs = data.reduce(concat, []).reduce(noDupes, []).filter(notTwoWeeks).sort((a, b) => b.date - a.date),
+  result.jobs = data.reduce(concat, []).reduce(noDupes, []).filter(notTwoWeeks).sort((a, b) => b.date - a.date);
   result.ttl = Date.now() + (1000 * 60 * 60);
   fs.writeFileSync("./db/db.json", JSON.stringify(result));
 }, []);
