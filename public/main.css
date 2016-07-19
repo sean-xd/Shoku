@@ -231,6 +231,7 @@ footer {
   border-bottom: 1px solid black;
   border-right: 1px solid black;
   border-top: 1px solid black;
+  box-sizing: border-box;
   font-size: 12px;
   height: 100%;
 }
