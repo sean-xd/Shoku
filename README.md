@@ -10,7 +10,11 @@ Shoku is a tech job aggregator. It currently gets jobs from:
 * [Dribbble](https://dribbble.com/jobs)
 * [Smashing jobs](http://jobs.smashingmagazine.com/)
 * [Jobspresso](https://jobspresso.co/)
-* [Hacker News (almost)](https://github.com/HackerNews/API)
+
+A few sources I wrote data formatters for but they aren't operable currently for various reasons.
+
+* [Hacker News](https://github.com/HackerNews/API) - Doesn't standardize submissions. Different posts order "title", "company", "location" differently.
+* [Remotive](http://jobs.remotive.io/) - Doesn't include dates so I'd have to keep track of what's new myself.
 
 I only keep jobs for the past two weeks. Most sites have paid postings that last 30 days, but since the list updates every 30 minutes those jobs are constantly torpedoed. My use case is new jobs every day, so it doesn't make sense for people to pay to post jobs just to see them fall off the front page every 24 hours.
 
