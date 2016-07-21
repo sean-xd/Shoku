@@ -10,6 +10,8 @@ app.controller("BodyController", ["$scope", ($scope) => {
     {name: "stackoverflow", color: "white", off: false, on: false},
     {name: "github", color: "darkgrey", off: false, on: false},
     {name: "hackernews", color: "orange", off: false, on: false},
+    {name: "indeed", color: "blue", off: false, on: false},
+    {name: "themuse", color: "white", off: false, on: false},
     {name: "coroflot", color: "darkgrey", off: false, on: false},
     {name: "smashingjobs", color: "orange", off: false, on: false},
     {name: "dribbble", color: "green", off: false, on: false},

@@ -2,6 +2,8 @@ var request = require("request"),
   cheerio = require("cheerio"),
   Magic = (num, cb, arr) => data => (arr.length === num - 1) ? cb(arr.concat([data])) : arr.push(data);
 
+
+
 // function hackernews(url, magic){
 //   request(url, (err, response, body) => {
 //     var ids = JSON.parse(body).submitted.slice(0,3);
@@ -23,12 +25,11 @@ var request = require("request"),
 //
 // hackernews("https://hacker-news.firebaseio.com/v0/user/whoishiring.json", e => console.log(e[0]));
 
-function remotive(url, magic){
-  request(url, (err, res, body) => {
-    var $ = cheerio.load(body),
-      data =
-    magic(data);
-  });
-}
-
-remotive("http://jobs.remotive.io/", e => console.log(e[0]));
+// function remotive(url, magic){
+//   request(url, (err, res, body) => {
+//     var $ = cheerio.load(body);
+//     magic(data);
+//   });
+// }
+//
+// remotive("http://jobs.remotive.io/", e => console.log(e[0]));

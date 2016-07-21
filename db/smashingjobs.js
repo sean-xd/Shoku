@@ -3,6 +3,7 @@ var parseURL = require("rss-parser").parseURL,
 
 module.exports = function smashingjobs(url, magic){
   parseURL(url, (err, data) => {
+    if(!data) return magic([]);
     var result = data.feed.entries.map(e => {
       var date = new Date(e.pubDate).getTime(),
         titleSplit = e.title.split(" - "),

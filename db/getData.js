@@ -18,7 +18,9 @@ var fs = require("fs"),
   smashingjobs = require("./smashingjobs.js"),
   dribbble = require("./dribbble.js"),
   jobspresso = require("./jobspresso.js"),
-  sourcesLength = 12;
+  themuse = require("./themuse.js"),
+  indeed = require("./indeed.js"),
+  sourcesLength = 14;
 
 var pushJobs = Magic(sourcesLength, data => {
   var result = {};
@@ -39,3 +41,5 @@ github("https://jobs.github.com/positions.json", pushJobs);
 smashingjobs("http://jobs.smashingmagazine.com/rss/all/all", pushJobs);
 dribbble("https://dribbble.com/jobs.rss", pushJobs);
 jobspresso("https://jobspresso.co/?feed=job_feed&job_types=designer%2Cdeveloper%2Cmarketing%2Cproject-mgmt%2Csupport%2Csys-admin%2Cvarious%2Cwriting&search_location&job_categories&search_keywords", pushJobs);
+themuse("https://api-v2.themuse.com/jobs?apikey=9c304380251958ecfca7eb079b370c0b0c422d8fa75f59a27c5895dd0463e671&page=", pushJobs);
+indeed("http://api.indeed.com/ads/apisearch?publisher=4583798790245950&v=2&q=developer&sort=date", pushJobs);
