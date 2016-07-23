@@ -18,7 +18,6 @@ input {
 
 /* Body */
 body {background: rgb(40,40,40); overflow-x: hidden;}
-body.activeJob {overflow: hidden;}
 
 /* Background Image */
 .background {
@@ -46,11 +45,14 @@ footer {
   box-sizing: border-box;
   color: white;
   font: 14px "Segoe UI", "Helvetica Neue", "Roboto";
+  height: 40px;
   padding: 10px;
   position: fixed;
   text-align: center;
   transition: .2s all;
   width: 100%;
-  z-index: 4;
+  z-index: 2;
 }
 .isScrolled footer {transform: translate3d(0, 40px, 0);}
+footer div {transition: .2s all;}
+.sidebarOpen footer div {transform: translate3d(110px, 0, 0);}

@@ -2,30 +2,31 @@ app.directive("sidebar", () => ({
   templateUrl: "partials/sidebar.html",
   controller: $scope => {
     $scope.getColor = name => {
-      var findSource = $scope.sources.find(e => e.name === name),
-        findTag = $scope.tags.find(e => e.name === name);
+      var findSource = $scope.filters.sources.find(e => e.name === name),
+        findTag = $scope.filters.tags.find(e => e.name === name);
       if(findSource || findTag) return (findSource || findTag).color;
     };
-    $scope.tagOn = tag => {
-      var type = ($scope.tags.find(e => e.name === tag.name)) ? "tags" : "sources";
+    $scope.tagOn = (tag, type) => {
       tag.on = !tag.on;
       tag.off = false;
-      ls[type] = JSON.stringify($scope[type]);
+      ls[type] = JSON.stringify($scope.filters[type]);
     };
-    $scope.tagOff = tag => {
-      var type = ($scope.tags.find(e => e.name === tag.name)) ? "tags" : "sources";
+    $scope.tagOff = (tag, type) => {
       tag.off = !tag.off;
       tag.on = false;
-      ls[type] = JSON.stringify($scope[type]);
+      ls[type] = JSON.stringify($scope.filters[type]);
     };
-    $scope.clearTags = () => {
-      $scope.tags.forEach(e => {e.off = false; e.on = false;});
-      $scope.sources.forEach(e => {e.off = false; e.on = false;});
-      ls.sources = JSON.stringify($scope.sources);
-      ls.tags = JSON.stringify($scope.tags);
+    $scope.clearTags = type => {
+      $scope.filters[type].forEach(tag => {
+        tag.off = false;
+        tag.on = false;
+      });
+      ls[type] = JSON.stringify($scope.filters[type]);
     };
   }
 }));
+
+app.filter("upperFirst", () => input => input[0].toUpperCase() + input.substr(1));
 
 app.directive('ngRightClick', $parse => {
   return (scope, element, attrs) => {

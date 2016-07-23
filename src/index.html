@@ -11,13 +11,15 @@
   <script src="app.js"></script>
 </head>
 
-<body ng-controller="BodyController" ng-class="{activeJob, sidebarOpen, isScrolled}">
+<body ng-controller="BodyController" ng-class="{sidebarOpen, isScrolled}">
   <img class="background" src="https://source.unsplash.com/random" onload="this.classList.add('show')">
-  <heading></heading>
-  <sidebar></sidebar>
+  <heading id="heading"></heading>
+  <sidebar id="sidebar"></sidebar>
   <main>
-    <companylist></companylist>
+    <companylist id="companylist"></companylist>
   </main>
-  <footer>Daily tech job aggregator built by <a href="http://sean.mu">Sean.mu</a> in Boulder, CO.</footer>
+  <footer>
+    <div>Daily tech job tracker built by <a href="http://sean.mu">Sean.mu</a> in Boulder, CO.</div>
+  </footer>
 </body>
 </html>

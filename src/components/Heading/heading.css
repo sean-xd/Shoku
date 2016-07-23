@@ -13,7 +13,7 @@
   width: 100%;
   z-index: 2;
 }
-.isScrolled .search {transform: translate3d(0,41px,0);}
+.isScrolled .search {transform: translate3d(0,40px,0);}
 .sidebarOpen.isScrolled .search {transform: translate3d(110px,40px,0);}
 .cancel {
   color: black;
@@ -45,3 +45,22 @@
   padding: 10px;
   width: 100%;
 }
+
+/* Sign in */
+#signin {
+  background: rgb(20,20,20);
+  top: 0px;
+  font-size: 0px;
+  height: 40px;
+  position: fixed;
+  right: 0px;
+  width: 220px;
+  z-index: 3;
+}
+#signin .link {
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  width: 110px;
+}
+#signin .link:hover {background: black;}

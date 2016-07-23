@@ -32,8 +32,8 @@ app.filter("dateFilter", () => input => {
 });
 
 function checker($scope, job, prop, x){
-  var offs = $scope[prop].filter(e => e.off).map(e => e.name),
-    ons = $scope[prop].filter(e => e.on).map(e => e.name),
+  var offs = $scope.filters[prop].filter(e => e.off).map(e => e.name),
+    ons = $scope.filters[prop].filter(e => e.on).map(e => e.name),
     check = !ons.length,
     buildChecker = result => name => {
       var jobProp = name === "java" ? job[x].replace(/javascript/g, "") : job[x];

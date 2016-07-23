@@ -2,7 +2,7 @@ var request = require("request"),
   cheerio = require("cheerio"),
   Magic = (num, cb, arr) => data => (arr.length === num - 1) ? cb(arr.concat([data])) : arr.push(data);
 
-
+function pushJobs(e){console.log(e[0]);}
 
 // function hackernews(url, magic){
 //   request(url, (err, response, body) => {

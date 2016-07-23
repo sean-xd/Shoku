@@ -1,4 +1,5 @@
-<div class="link taglink" ng-click="openSources = !openSources;">Sources</div>
+<!-- <div class="link taglink" ng-click="openSources = !openSources;">Sources</div>
+<div class="link clear-tags" ng-click="clearTags();" ng-show="openSources">Clear</div>
 <div class="tags" ng-class="{open: openSources}">
   <div ng-repeat="src in sources"
     class="link {{src.color}}"
@@ -6,12 +7,25 @@
     ng-click="tagOn(src)"
     ng-right-click="tagOff(src)">{{src.name}}</div>
 </div>
+
 <div class="link taglink" ng-click="openTags = !openTags;">Tags</div>
+<div class="link clear-tags" ng-click="clearTags();" ng-show="openTags">Clear</div>
 <div class="tags" ng-class="{open: openTags}">
   <div ng-repeat="tag in tags"
     class="link {{tag.color}}"
     ng-class="{off: tag.off, on: tag.on}"
     ng-click="tagOn(tag)"
     ng-right-click="tagOff(tag)">{{tag.name}}</div>
+</div> -->
+
+<div class="tag-group" ng-repeat="(type, list) in filters">
+  <div class="link taglink" ng-click="open[type] = !open[type];">{{type | upperFirst}}</div>
+  <div class="link clear-tags" ng-click="clearTags(type);" ng-show="open[type]">Clear</div>
+  <div class="tags" ng-class="{open: open[type]}">
+    <div ng-repeat="tag in list"
+      class="link {{tag.color}}"
+      ng-class="{off: tag.off, on: tag.on}"
+      ng-click="tagOn(tag, type)"
+      ng-right-click="tagOff(tag, type)">{{tag.name}}</div>
+  </div>
 </div>
-<div class="link taglink" ng-click="clearTags();" ng-show="openTags || openSources">Clear</div>
