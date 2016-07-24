@@ -1,8 +1,8 @@
 var parseURL = require("rss-parser").parseURL,
   getTags = require("./getTags.js");
 
-module.exports = function smashingjobs(url, magic){
-  parseURL(url, (err, data) => {
+module.exports = function smashingjobs(magic){
+  parseURL("http://jobs.smashingmagazine.com/rss/all/all", (err, data) => {
     if(!data) return magic([]);
     var result = data.feed.entries.map(e => {
       var date = new Date(e.pubDate).getTime(),

@@ -1,8 +1,8 @@
 var parseURL = require("rss-parser").parseURL,
   getTags = require("./getTags.js");
 
-module.exports = function dribbble(url, magic){
-  parseURL(url, (err, data) => {
+module.exports = function dribbble(magic){
+  parseURL("https://dribbble.com/jobs.rss", (err, data) => {
     var result = data.feed.entries.map(e => {
       var date = new Date(e.pubDate).getTime(),
         titleReg = e.title.match(/(.+) is hiring an? (.+)/),

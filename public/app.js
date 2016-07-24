@@ -42,6 +42,10 @@ app.controller("BodyController", ["$scope", ($scope) => {
   };
 }]);
 
+app.directive("heading", () => ({
+  templateUrl: "partials/heading.html"
+}));
+
 app.directive("companylist", () => ({
   templateUrl: "partials/companylist.html",
   controller: ($scope, $http) => {
@@ -104,10 +108,6 @@ app.directive("companylist", () => ({
 
     if(!$scope.companies.length || ls.ttl < Date.now()) $scope.loadMore();
   }
-}));
-
-app.directive("heading", () => ({
-  templateUrl: "partials/heading.html"
 }));
 
 app.directive("joblist", () => ({

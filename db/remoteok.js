@@ -1,8 +1,8 @@
 var request = require("request"),
   getTags = require("./getTags.js");
 
-module.exports = function remoteok(url, magic){
-  request(url, (e, r, body) => {
+module.exports = function remoteok(magic){
+  request("https://remoteok.io/index.json", (e, r, body) => {
     var result = JSON.parse(body).map(obj => {
       var date = new Date(obj.date).getTime(),
         title = obj.position,
@@ -14,8 +14,10 @@ module.exports = function remoteok(url, magic){
         source = "remoteok",
         tags = getTags({title, content});
       if(company.length > 50) company = company.slice(0,50) + "...";
+      if(!title || !company || !content) return false;
       return {date, title, company, content, url, source, tags};
     });
+    result = result.filter(e => e);
     result = result.filter(e => e.date < Date.now());
     magic(result);
   });

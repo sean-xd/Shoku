@@ -1,8 +1,9 @@
 var request = require("request"),
-  getTags = require("./getTags.js");
+  getTags = require("./getTags.js"),
+  apikey = require("./apikeys").authenticjobs;
 
-module.exports = function authenticjobs(url, magic){
-	request(url, (err, res, body) => {
+module.exports = function authenticjobs(magic){
+	request(`https://authenticjobs.com/api/?api_key=${apikey}&method=aj.jobs.search&format=json&perpage=10`, (err, res, body) => {
 		var result = JSON.parse(body).listings.listing.map(e => {
 			var date = new Date(e.post_date).getTime(),
 				title = e.title.split(" @")[0] || e.title,

@@ -121,29 +121,6 @@ footer {
 footer div {transition: .2s all;}
 .sidebarOpen footer div {transform: translate3d(110px, 0, 0);}
 
-.company {
-  display: block;
-  font-family: "Segoe UI", "Helvetica Neue", "Roboto";
-  margin: 10px auto;
-  max-width: 800px;
-  opacity: 1;
-  width: 90%;
-}
-
-.company.off {opacity: 0.5;}
-.company-name {
-  background: rgb(40,40,40);
-  color: white;
-  cursor: default;
-  font-size: 20px;
-  max-height: 27px;
-  overflow: hidden;
-  padding: 5px 10px;
-}
-
-.more-container {text-align: center;}
-.more {background: lightgrey; color: black;}
-
 /* Top Nav */
 .title, .menu {color: white; position: fixed; z-index: 4;}
 .title {cursor: default; font: 19px "Yellowtail"; left: 40px; padding: 7px 5px 7px 0px;}
@@ -210,6 +187,29 @@ footer div {transition: .2s all;}
   width: 110px;
 }
 #signin .link:hover {background: black;}
+
+.company {
+  display: block;
+  font-family: "Segoe UI", "Helvetica Neue", "Roboto";
+  margin: 10px auto;
+  max-width: 800px;
+  opacity: 1;
+  width: 90%;
+}
+
+.company.off {opacity: 0.5;}
+.company-name {
+  background: rgb(40,40,40);
+  color: white;
+  cursor: default;
+  font-size: 20px;
+  max-height: 27px;
+  overflow: hidden;
+  padding: 5px 10px;
+}
+
+.more-container {text-align: center;}
+.more {background: lightgrey; color: black;}
 
 .job {
   background: white;
