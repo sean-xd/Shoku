@@ -1,13 +1,20 @@
 var ls = localStorage,
-  app = angular.module("app", ["ngAnimate"]);
+  app = angular.module("app", []);
 
-app.controller("BodyController", ["$scope", ($scope) => {
+app.controller("BodyController", ($scope, $http) => {
   $scope.searchFor = tag => $scope.search = tag;
   $scope.open = {};
+  $scope.sign = {};
   $scope.activeSign = "";
   $scope.activateSign = type => $scope.activeSign = $scope.activeSign === type ? "" : type;
   $scope.submitSign = () => {
-    
+    $http.post("/sign" + $scope.activeSign, JSON.stringify($scope.sign)).then(data => {
+      ls.token = JSON.stringify(data.data.token);
+      $scope.user = data.data.user;
+      console.log(data.data);
+    });
+    $scope.sign = {};
+    $scope.activeSign = "";
   };
   $scope.filters = {
     sources: ls.sources ? JSON.parse(ls.sources) : [
@@ -45,4 +52,4 @@ app.controller("BodyController", ["$scope", ($scope) => {
       {name: "manager", color: "red", off: false, on: false}
     ]
   };
-}]);
+});

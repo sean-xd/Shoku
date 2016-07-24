@@ -59,7 +59,7 @@
   width: 120px;
   z-index: 3;
 }
-#signin.active {height: 160px; width: 160px;}
+#signin.active {height: 160px; width: 160px; background: black;}
 
 #signin i {
   color: white;
@@ -78,7 +78,6 @@
   transition: .2s all;
   width: 50%;
 }
-/*#signin .link.fill {width: 100%; padding: 10px 40px 10px 10px;}*/
 #signin .link.hide {height: 0px; width: 0px; padding: 0px; opacity: 0; pointer-events: none;}
 #signin .link:hover {background: black;}
 #signin button {width: 100% !important;}
@@ -87,4 +86,16 @@
   height: 40px;
   padding: 10px;
   width: 100%;
+}
+
+#signout {
+  background: rgb(20,20,20);
+  font: 14px "Segoe UI", "Helvetica Neue", "Roboto";
+  top: 0px;
+  height: 40px;
+  position: fixed;
+  right: 0px;
+  transition: .2s all;
+  width: 120px;
+  z-index: 3;
 }

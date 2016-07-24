@@ -1,13 +1,20 @@
 var ls = localStorage,
-  app = angular.module("app", ["ngAnimate"]);
+  app = angular.module("app", []);
 
-app.controller("BodyController", ["$scope", ($scope) => {
+app.controller("BodyController", ($scope, $http) => {
   $scope.searchFor = tag => $scope.search = tag;
   $scope.open = {};
+  $scope.sign = {};
   $scope.activeSign = "";
   $scope.activateSign = type => $scope.activeSign = $scope.activeSign === type ? "" : type;
   $scope.submitSign = () => {
-    
+    $http.post("/sign" + $scope.activeSign, JSON.stringify($scope.sign)).then(data => {
+      ls.token = JSON.stringify(data.data.token);
+      $scope.user = data.data.user;
+      console.log(data.data);
+    });
+    $scope.sign = {};
+    $scope.activeSign = "";
   };
   $scope.filters = {
     sources: ls.sources ? JSON.parse(ls.sources) : [
@@ -45,7 +52,7 @@ app.controller("BodyController", ["$scope", ($scope) => {
       {name: "manager", color: "red", off: false, on: false}
     ]
   };
-}]);
+});
 
 app.directive("companylist", () => ({
   templateUrl: "partials/companylist.html",
@@ -115,48 +122,6 @@ app.directive("heading", () => ({
   templateUrl: "partials/heading.html"
 }));
 
-app.directive("sidebar", () => ({
-  templateUrl: "partials/sidebar.html",
-  controller: $scope => {
-    $scope.getColor = name => {
-      var findSource = $scope.filters.sources.find(e => e.name === name),
-        findTag = $scope.filters.tags.find(e => e.name === name);
-      if(findSource || findTag) return (findSource || findTag).color;
-    };
-    $scope.tagOn = (tag, type) => {
-      tag.on = !tag.on;
-      tag.off = false;
-      ls[type] = JSON.stringify($scope.filters[type]);
-    };
-    $scope.tagOff = (tag, type) => {
-      tag.off = !tag.off;
-      tag.on = false;
-      ls[type] = JSON.stringify($scope.filters[type]);
-    };
-    $scope.clearTags = type => {
-      $scope.filters[type].forEach(tag => {
-        tag.off = false;
-        tag.on = false;
-      });
-      ls[type] = JSON.stringify($scope.filters[type]);
-    };
-  }
-}));
-
-app.filter("upperFirst", () => input => input[0].toUpperCase() + input.substr(1));
-
-app.directive('ngRightClick', $parse => {
-  return (scope, element, attrs) => {
-    var fn = $parse(attrs.ngRightClick);
-    element.bind('contextmenu', event => {
-      scope.$apply(() => {
-        event.preventDefault();
-        fn(scope, {$event:event});
-      });
-    });
-  };
-});
-
 app.directive("joblist", () => ({
   templateUrl: "partials/joblist.html",
   controller: ($scope, $rootScope) => {
@@ -210,3 +175,45 @@ function checker($scope, job, prop, x){
 }
 
 app.filter('trust', $sce => val => $sce.trustAs("html", val.replace(/<br ?\/?>/g, "")));
+
+app.directive("sidebar", () => ({
+  templateUrl: "partials/sidebar.html",
+  controller: $scope => {
+    $scope.getColor = name => {
+      var findSource = $scope.filters.sources.find(e => e.name === name),
+        findTag = $scope.filters.tags.find(e => e.name === name);
+      if(findSource || findTag) return (findSource || findTag).color;
+    };
+    $scope.tagOn = (tag, type) => {
+      tag.on = !tag.on;
+      tag.off = false;
+      ls[type] = JSON.stringify($scope.filters[type]);
+    };
+    $scope.tagOff = (tag, type) => {
+      tag.off = !tag.off;
+      tag.on = false;
+      ls[type] = JSON.stringify($scope.filters[type]);
+    };
+    $scope.clearTags = type => {
+      $scope.filters[type].forEach(tag => {
+        tag.off = false;
+        tag.on = false;
+      });
+      ls[type] = JSON.stringify($scope.filters[type]);
+    };
+  }
+}));
+
+app.filter("upperFirst", () => input => input[0].toUpperCase() + input.substr(1));
+
+app.directive('ngRightClick', $parse => {
+  return (scope, element, attrs) => {
+    var fn = $parse(attrs.ngRightClick);
+    element.bind('contextmenu', event => {
+      scope.$apply(() => {
+        event.preventDefault();
+        fn(scope, {$event:event});
+      });
+    });
+  };
+});

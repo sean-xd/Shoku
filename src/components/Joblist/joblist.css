@@ -34,7 +34,7 @@
   max-width: 75%;
 }
 .job-apply, .job-close, .job-tags div {cursor: pointer; display: inline-block; padding: 4px;}
-.job-apply, .job-close {background: rgb(220,220,220); font-size: 14px;}
+.job-apply, .job-close {background: rgb(220,220,220); font-size: 14px; vertical-align: top; transform: translate3d(0,3px,0);}
 .job-tags div {
   border-bottom: 1px solid black;
   border-right: 1px solid black;
