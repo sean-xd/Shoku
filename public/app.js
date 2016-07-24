@@ -4,6 +4,10 @@ var ls = localStorage,
 app.controller("BodyController", ["$scope", ($scope) => {
   $scope.searchFor = tag => $scope.search = tag;
   $scope.open = {};
+  $scope.activeSign = "";
+  $scope.activateSign = type => {
+    $scope.activeSign = $scope.activeSign === type ? "" : type;
+  };
   $scope.filters = {
     sources: ls.sources ? JSON.parse(ls.sources) : [
       {name: "wfhio", color: "darkgrey", off: false, on: false},
@@ -41,10 +45,6 @@ app.controller("BodyController", ["$scope", ($scope) => {
     ]
   };
 }]);
-
-app.directive("heading", () => ({
-  templateUrl: "partials/heading.html"
-}));
 
 app.directive("companylist", () => ({
   templateUrl: "partials/companylist.html",
@@ -108,6 +108,10 @@ app.directive("companylist", () => ({
 
     if(!$scope.companies.length || ls.ttl < Date.now()) $scope.loadMore();
   }
+}));
+
+app.directive("heading", () => ({
+  templateUrl: "partials/heading.html"
 }));
 
 app.directive("joblist", () => ({
