@@ -12,6 +12,7 @@ Shoku is a tech job aggregator. It currently gets jobs from:
 * [Jobspresso](https://jobspresso.co/)
 * [Indeed](http://www.indeed.com/)
 * [The Muse](https://www.themuse.com/)
+* [Authentic Jobs](https://authenticjobs.com/)
 
 A few sources I wrote data formatters for but they aren't operable currently for various reasons.
 
