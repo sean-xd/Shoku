@@ -59,8 +59,13 @@
   width: 120px;
   z-index: 3;
 }
-#signin.active {
-  height: 160px;
+#signin.active {height: 160px; width: 160px;}
+
+#signin i {
+  color: white;
+  position: absolute;
+  right: 0px;
+  top: 0px;
 }
 
 #signin .link {
@@ -71,12 +76,12 @@
   padding: 10px 5px;
   text-align: center;
   transition: .2s all;
-  width: 60px;
+  width: 50%;
 }
-#signin .link.fill {width: 100%;}
-#signin .link.hide {width: 0px; padding: 0px; opacity: 0;}
+/*#signin .link.fill {width: 100%; padding: 10px 40px 10px 10px;}*/
+#signin .link.hide {height: 0px; width: 0px; padding: 0px; opacity: 0; pointer-events: none;}
 #signin .link:hover {background: black;}
-
+#signin button {width: 100% !important;}
 #signin input {
   font: 14px "Segoe UI", "Helvetica Neue", "Roboto";
   height: 40px;

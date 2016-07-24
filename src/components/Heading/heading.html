@@ -9,8 +9,8 @@
 <form id="signin" ng-class="{active: !!activeSign}" ng-submit="submitSign()">
   <div class="link" ng-click="activateSign('up')" ng-class="{fill: activeSign === 'up', hide: activeSign === 'in'}">Signup</div>
   <div class="link" ng-click="activateSign('in')" ng-class="{fill: activeSign === 'in', hide: activeSign === 'up'}">Signin</div>
-  <input type="text" placeholder="Enter Username" required>
-  <input type="text" placeholder="Enter Password" required>
+  <i class="material-icons" ng-click="activeSign = '';" ng-show="!!activeSign">clear</i>
+  <input type="text" placeholder="Email" required>
+  <input type="text" placeholder="Password" required>
   <button class="link green" type="submit">Submit</button>
-  <div class="link red" ng-click="activeSign = '';">Cancel</div>
 </form>
