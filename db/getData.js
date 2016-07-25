@@ -17,11 +17,20 @@ var fs = require("fs"),
   ],
   pushJobs = Magic(sources.length, data => {
     var result = {};
-    result.jobs = data.reduce(concat, []).reduce(noDupes, []).filter(notTwoWeeks).sort((a, b) => b.date - a.date);
+    result.jobs = data.reduce(concat, []).reduce(noDupes, []).filter(notTwoWeeks).sort((a, b) => b.date - a.date).reduce(reduceCompanies, []);
     result.ttl = Date.now() + (1000 * 60 * 60);
     fs.writeFile("./db/db.json", JSON.stringify(result), () => {
-      request.post({url: "http://localhost:3000/jobs/update", body: JSON.stringify({db: result, secret: require("./apikeys.js").secret})});
+      request({method: "POST", url: "http://localhost:3000/jobs/update", body: require("./apikeys.js").secret});
     });
   }, []);
 
 sources.forEach(name => require(`./${name}.js`)(pushJobs));
+
+function reduceCompanies(arr, job){
+  var company = arr.find(e => e.name === job.company) || {name: job.company, jobs: [], latest: 0},
+    isntDupe = !company.jobs.find(e => e.title.indexOf(job.title) > -1 || job.title.indexOf(e.title) > -1);
+  if(!company.latest) arr.push(company);
+  if(job.date > company.latest) company.latest = job.date;
+  if(isntDupe) company.jobs.push(job);
+  return arr;
+}
