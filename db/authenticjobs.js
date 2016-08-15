@@ -1,6 +1,6 @@
 var request = require("request"),
   getTags = require("./getTags.js"),
-  apikey = require("./apikeys").authenticjobs;
+  apikey = process.env.AUTHENTIC || require("./apikeys").authenticjobs;
 
 module.exports = function authenticjobs(magic){
 	request(`https://authenticjobs.com/api/?api_key=${apikey}&method=aj.jobs.search&format=json&perpage=10`, (err, res, body) => {

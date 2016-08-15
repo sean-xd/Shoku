@@ -10,7 +10,7 @@ var fs = require("fs"),
   app = express(),
   db = require("./db/db.json"),
   users = require("./db/users.json"),
-  secret = require("./db/apikeys.js").secret,
+  secret = process.env.SECRET || require("./db/apikeys.js").secret,
   timer = {time: 0},
   hash = str => crypto.createHmac("sha256", secret).update(str).digest("base64"),
   since = () => (Date.now() - timer.time) / 1000,
@@ -114,4 +114,4 @@ app.get("/signToken", (req, res) => {
 });
 
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);

@@ -1,7 +1,7 @@
 var request = require("request"),
   Magic = (num, cb, arr) => data => (arr.length === num - 1) ? cb(arr.concat([data])) : arr.push(data),
   getTags = require("./getTags.js"),
-  apikey = require("./apikeys.js").themuse;
+  apikey = process.env.THEMUSE || require("./apikeys.js").themuse;
 
 module.exports = function themuse(magic){
   var inception = Magic(5, data => magic(data.reduce((arr, e) => arr.concat(e))), []);

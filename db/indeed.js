@@ -1,7 +1,7 @@
 var request = require("request"),
   parseString = require("xml2js").parseString,
   getTags = require("./getTags.js"),
-  apikey = require("./apikeys.js").indeed;
+  apikey = process.env.INDEED || require("./apikeys.js").indeed;
 
 module.exports = function indeed(magic){
   request(`http://api.indeed.com/ads/apisearch?publisher=${apikey}&v=2&q=developer&sort=date`, (err1, res, body) => {
