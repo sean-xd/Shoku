@@ -8,6 +8,7 @@
     "express": "^4.14.0",
     "express-bearer-token": "^2.1.0",
     "jsonwebtoken": "^7.1.9",
+    "parse-rss": "^1.0.3",
     "request": "^2.73.0",
     "rss-parser": "^2.5.0",
     "xml2js": "^0.4.17"
