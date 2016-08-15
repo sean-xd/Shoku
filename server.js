@@ -4,7 +4,6 @@ var fs = require("fs"),
   bodyParser = require("body-parser"),
   jwt = require('jsonwebtoken'),
   bearerToken = require('express-bearer-token'),
-  request = require("request"),
   jwt = require("jsonwebtoken"),
   app = express(),
   db = require(__dirname + "/db/db.json"),
@@ -17,8 +16,9 @@ var fs = require("fs"),
   sources = [
     "wfhio", "weworkremotely", "remoteok", "coroflot",
     "stackoverflow", "github", "smashingjobs", "dribbble",
-    "jobspresso", "themuse", "indeed", "authenticjobs"
-  ];
+    "jobspresso", "themuse", "indeed", "authentic"
+  ],
+  getData = require("./db/getData.js");
 
 getJobs();
 
@@ -50,10 +50,8 @@ function getJobs(){
       .reduce(reduceCompanies, []);
     fs.writeFile(__dirname + "/db/db.json", JSON.stringify(db));
   }, []);
-  sources.forEach(name => {
-    console.log(require(`./db/${name}.js`));
-    require(`./db/${name}.js`)(pushJobs);
-  });
+  sources.forEach(name => getData(name, pushJobs));
+  // sources.forEach(name => require(`./db/${name}.js`)(pushJobs));
 }
 
 function reduceJobs(arr, jobs){

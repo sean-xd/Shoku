@@ -144,64 +144,6 @@ footer div {transition: .2s all;}
 .more-container {text-align: center;}
 .more {background: lightgrey; color: black;}
 
-.job {
-  background: white;
-  border-bottom: 1px solid rgb(20,20,20);
-  display: block;
-  max-height: 50px;
-  overflow: hidden;
-  position: relative;
-}
-
-.job.big {max-height: 400px;}
-.off .job {border-bottom: 0px solid black; height: 0px;}
-
-.job-info {height: 50px; position: relative;}
-.job-title {
-  box-sizing: border-box;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 16px;
-  max-height: 23px;
-  overflow: hidden;
-  padding: 2px 10px;
-}
-.job-date {font-size: 14px; padding: 0px 10px;}
-.job-location, .job-tags {display: inline-block; position: absolute; right: 0; text-align: right;}
-.job-location {
-  font-size: 14px;
-  padding: 2px 5px;
-  top: 0px;
-}
-.job-tags {
-  bottom: -1px;
-  height: 26px;
-  overflow: hidden;
-  max-width: 75%;
-}
-.job-apply, .job-close, .job-tags div {cursor: pointer; display: inline-block; padding: 4px;}
-.job-apply, .job-close {background: rgb(220,220,220); font-size: 14px; vertical-align: top; transform: translate3d(0,3px,0);}
-.job-tags div {
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
-  border-top: 1px solid black;
-  box-sizing: border-box;
-  font-size: 12px;
-  height: 100%;
-}
-.job-tags div:first-child {
-  border-left: 1px solid black;
-}
-.job-tags div:hover {opacity: 1;}
-.job-description {
-  box-sizing: border-box;
-  font-size: 14px;
-  max-height: 340px;
-  overflow-y: scroll;
-  padding: 5px 40px 20px 40px;
-}
-.job-description img {width: 200px;}
-
 /* Top Nav */
 .title, .menu {color: white; position: fixed; z-index: 4;}
 .title {cursor: default; font: 19px "Yellowtail"; left: 40px; padding: 7px 5px 7px 0px;}
@@ -260,7 +202,7 @@ footer div {transition: .2s all;}
   position: fixed;
   right: 0px;
   transition: .2s all;
-  width: 120px;
+  width: 160px;
   z-index: 3;
 }
 #signin.active {height: 160px; width: 160px; background: black;}
@@ -285,24 +227,88 @@ footer div {transition: .2s all;}
 #signin .link.hide {height: 0px; width: 0px; padding: 0px; opacity: 0; pointer-events: none;}
 #signin .link:hover {background: black;}
 #signin button {width: 100% !important;}
-#signin input {
+#signin input {width: 100%;}
+#signin input, #signout, #name {
+  box-sizing: border-box;
   font: 14px "Segoe UI", "Helvetica Neue", "Roboto";
   height: 40px;
   padding: 10px;
-  width: 100%;
 }
 
-#signout {
-  background: rgb(20,20,20);
-  font: 14px "Segoe UI", "Helvetica Neue", "Roboto";
-  top: 0px;
-  height: 40px;
+#signout {background: rgb(20,20,20); color: white; right: 0px;}
+#signout, #name {
+  cursor: pointer;
   position: fixed;
-  right: 0px;
-  transition: .2s all;
-  width: 120px;
+  text-align: center;
+  top: 0px;
+  width: 80px;
   z-index: 3;
 }
+#name {
+  background: rgb(240,240,240);
+  border-bottom: 1px solid rgb(20,20,20);
+  border-left: 1px solid rgb(20,20,20);
+  color: black;
+  right: 80px;
+}
+
+.job {
+  background: white;
+  border-bottom: 1px solid rgb(20,20,20);
+  display: block;
+  max-height: 50px;
+  overflow: hidden;
+  position: relative;
+}
+
+.job.big {max-height: 400px;}
+.off .job {border-bottom: 0px solid black; height: 0px;}
+
+.job-info {height: 50px; position: relative;}
+.job-title {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  max-height: 23px;
+  overflow: hidden;
+  padding: 2px 10px;
+}
+.job-date {font-size: 14px; padding: 0px 10px;}
+.job-location, .job-tags {display: inline-block; position: absolute; right: 0; text-align: right;}
+.job-location {
+  font-size: 14px;
+  padding: 2px 5px;
+  top: 0px;
+}
+.job-tags {
+  bottom: -1px;
+  height: 26px;
+  overflow: hidden;
+  max-width: 75%;
+}
+.job-apply, .job-close, .job-tags div {cursor: pointer; display: inline-block; padding: 4px;}
+.job-apply, .job-close {background: rgb(220,220,220); font-size: 14px; vertical-align: top; transform: translate3d(0,3px,0);}
+.job-tags div {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  box-sizing: border-box;
+  font-size: 12px;
+  height: 100%;
+}
+.job-tags div:first-child {
+  border-left: 1px solid black;
+}
+.job-tags div:hover {opacity: 1;}
+.job-description {
+  box-sizing: border-box;
+  font-size: 14px;
+  max-height: 340px;
+  overflow-y: scroll;
+  padding: 5px 40px 20px 40px;
+}
+.job-description img {width: 200px;}
 
 #sidebar {
   background: rgb(20,20,20);

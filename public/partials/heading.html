@@ -7,7 +7,8 @@
   <input type="text" ng-model="search" placeholder="Search Jobs">
 </div>
 
-<div id="signout" ng-show="user.name">Signout</div>
+<div id="name" ng-show="user.name">{{user.name}}</div>
+<div id="signout" ng-show="user.name" ng-click="signOut()">Signout</div>
 <form id="signin" ng-class="{active: !!activeSign}" ng-submit="submitSign()" ng-hide="user.name">
   <div class="link" ng-click="activateSign('up')" ng-class="{fill: activeSign === 'up', hide: activeSign === 'in'}">Signup</div>
   <div class="link" ng-click="activateSign('in')" ng-class="{fill: activeSign === 'in', hide: activeSign === 'up'}">Signin</div>

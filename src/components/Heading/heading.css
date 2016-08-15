@@ -56,7 +56,7 @@
   position: fixed;
   right: 0px;
   transition: .2s all;
-  width: 120px;
+  width: 160px;
   z-index: 3;
 }
 #signin.active {height: 160px; width: 160px; background: black;}
@@ -81,21 +81,27 @@
 #signin .link.hide {height: 0px; width: 0px; padding: 0px; opacity: 0; pointer-events: none;}
 #signin .link:hover {background: black;}
 #signin button {width: 100% !important;}
-#signin input {
+#signin input {width: 100%;}
+#signin input, #signout, #name {
+  box-sizing: border-box;
   font: 14px "Segoe UI", "Helvetica Neue", "Roboto";
   height: 40px;
   padding: 10px;
-  width: 100%;
 }
 
-#signout {
-  background: rgb(20,20,20);
-  font: 14px "Segoe UI", "Helvetica Neue", "Roboto";
-  top: 0px;
-  height: 40px;
+#signout {background: rgb(20,20,20); color: white; right: 0px;}
+#signout, #name {
+  cursor: pointer;
   position: fixed;
-  right: 0px;
-  transition: .2s all;
-  width: 120px;
+  text-align: center;
+  top: 0px;
+  width: 80px;
   z-index: 3;
+}
+#name {
+  background: rgb(240,240,240);
+  border-bottom: 1px solid rgb(20,20,20);
+  border-left: 1px solid rgb(20,20,20);
+  color: black;
+  right: 80px;
 }
