@@ -1,6 +1,5 @@
 var request = require("request"),
   parseString = require("xml2js").parseString,
-  getTags = require(__dirname + "/getTags.js"),
   Magic = (num, cb, arr) => data => (arr.length === num - 1) ? cb(arr.concat([data])) : arr.push(data),
   urls = ["1-remote-software-development", "4-remote-design", "6-remote-devops"];
 
@@ -36,3 +35,17 @@ module.exports = function wfhio(magic){
     });
   });
 };
+
+function getTags(obj){
+ var content = obj.content.toLowerCase(),
+   title = obj.title.toLowerCase(),
+   tags = ["javascript", "developer", "designer", "engineer", "aws", "full stack", "ios",
+     "rails", "python", "android", "node", "react", "angular", ".net", "manager", "java"];
+ return tags.filter(tag => {
+   if(tag === "java"){
+     content = content.replace(/javascript/g, "");
+     title = title.replace(/javascript/g, "");
+   }
+   return content.indexOf(tag) > -1 || title.indexOf(tag) > -1;
+ });
+}
