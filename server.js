@@ -50,6 +50,7 @@ function getJobs(){
       .reduce(reduceCompanies, []);
     fs.writeFile(__dirname + "/db/db.json", JSON.stringify(db));
   }, []);
+  console.log(require("./db/authenticjobs.js"));
   sources.forEach(name => require(`${__dirname}/db/${name}.js`)(pushJobs));
 }
 
