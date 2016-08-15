@@ -1,6 +1,6 @@
 var request = require("request"),
   parseString = require("xml2js").parseString,
-  getTags = require("./getTags.js"),
+  getTags = require(__dirname + "/getTags.js"),
   apikey = process.env.INDEED || require("./apikeys.js").indeed;
 
 module.exports = function indeed(magic){

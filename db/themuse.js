@@ -1,6 +1,6 @@
 var request = require("request"),
   Magic = (num, cb, arr) => data => (arr.length === num - 1) ? cb(arr.concat([data])) : arr.push(data),
-  getTags = require("./getTags.js"),
+  getTags = require(__dirname + "/getTags.js"),
   apikey = process.env.THEMUSE || require("./apikeys.js").themuse;
 
 module.exports = function themuse(magic){

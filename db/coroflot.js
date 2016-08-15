@@ -2,7 +2,7 @@ var request = require("request"),
   parseURL = require("rss-parser").parseURL,
   cheerio = require("cheerio"),
   Magic = (num, cb, arr) => data => (arr.length === num - 1) ? cb(arr.concat([data])) : arr.push(data),
-  getTags = require("./getTags.js");
+  getTags = require(__dirname + "/getTags.js");
 
 module.exports = function coroflot(magic){
   parseURL("http://feeds.feedburner.com/coroflot/AllJobs?format=xml", (err, data) => {

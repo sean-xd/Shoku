@@ -1,5 +1,5 @@
 var request = require("request"),
-  getTags = require("./getTags.js");
+  getTags = require(__dirname + "/getTags.js");
 
 module.exports = function remoteok(magic){
   request("https://remoteok.io/index.json", (e, r, body) => {

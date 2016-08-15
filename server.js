@@ -1,6 +1,5 @@
 var fs = require("fs"),
   crypto = require("crypto"),
-  spawn = require('child_process').spawn,
   express = require("express"),
   bodyParser = require("body-parser"),
   jwt = require('jsonwebtoken'),

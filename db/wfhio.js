@@ -1,6 +1,6 @@
 var request = require("request"),
   parseString = require("xml2js").parseString,
-  getTags = require("./getTags.js"),
+  getTags = require(__dirname + "/getTags.js"),
   Magic = (num, cb, arr) => data => (arr.length === num - 1) ? cb(arr.concat([data])) : arr.push(data),
   urls = ["1-remote-software-development", "4-remote-design", "6-remote-devops"];
 

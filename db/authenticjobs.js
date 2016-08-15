@@ -1,5 +1,5 @@
 var request = require("request"),
-  getTags = require("./getTags.js"),
+  getTags = require(__dirname + "/getTags.js"),
   apikey = process.env.AUTHENTIC || require("./apikeys").authenticjobs;
 
 module.exports = function authenticjobs(magic){

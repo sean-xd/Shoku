@@ -1,5 +1,5 @@
 var request = require("request"),
-  getTags = require("./getTags.js");
+  getTags = require(__dirname + "/getTags.js");
 
 module.exports = function github(magic){
   request("https://jobs.github.com/positions.json", (e, r, body) => {

@@ -1,5 +1,5 @@
 var parseURL = require("rss-parser").parseURL,
-  getTags = require("./getTags.js"),
+  getTags = require(__dirname + "/getTags.js"),
   Magic = (num, cb, arr) => data => (arr.length === num - 1) ? cb(arr.concat([data])) : arr.push(data),
   urls = ["1-design", "2-programming"];
 

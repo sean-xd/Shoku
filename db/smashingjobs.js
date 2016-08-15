@@ -1,5 +1,5 @@
 var parseURL = require("rss-parser").parseURL,
-  getTags = require("./getTags.js");
+  getTags = require(__dirname + "/getTags.js");
 
 module.exports = function smashingjobs(magic){
   parseURL("http://jobs.smashingmagazine.com/rss/all/all", (err, data) => {
