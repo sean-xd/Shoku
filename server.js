@@ -8,8 +8,8 @@ var fs = require("fs"),
   request = require("request"),
   jwt = require("jsonwebtoken"),
   app = express(),
-  db = require("./db/db.json"),
-  users = require("./db/users.json"),
+  db = require(__dirname + "/db/db.json"),
+  users = require(__dirname + "/db/users.json"),
   secret = process.env.SECRET || require("./db/apikeys.js").secret,
   timer = {time: 0},
   hash = str => crypto.createHmac("sha256", secret).update(str).digest("base64"),
@@ -49,9 +49,9 @@ function getJobs(){
       .reduce(reduceJobs, [])
       .sort((a, b) => b.date - a.date)
       .reduce(reduceCompanies, []);
-    fs.writeFile("./db/db.json", JSON.stringify(db));
+    fs.writeFile(__dirname + "/db/db.json", JSON.stringify(db));
   }, []);
-  sources.forEach(name => require(`./db/${name}.js`)(pushJobs));
+  sources.forEach(name => require(`${__dirname}/db/${name}.js`)(pushJobs));
 }
 
 function reduceJobs(arr, jobs){
