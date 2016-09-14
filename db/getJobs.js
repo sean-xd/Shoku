@@ -56,6 +56,7 @@ format.coroflot = magic => {
 
 format.dribbble = magic => {
   parseURL("https://dribbble.com/jobs.rss", (err, data) => {
+    if(!data.feed) magic();
     var result = data.feed.entries.map(e => {
       var date = new Date(e.pubDate).getTime(),
         titleReg = e.title.match(/(.+) is hiring an? (.+)/),
