@@ -45,8 +45,9 @@ format.coroflot = magic => {
         source = "coroflot";
       request(url, (err2, response, body) => {
         var $ = cheerio.load(body),
-          content = $("#job_description_public p").html(),
-          tags = getTags({title, content});
+          content = $("#job_description_public p").html();
+        if(!content) return inception();
+        var tags = getTags({title, content});
         inception({date, title, company, location, content, url, source, tags});
       });
     });
