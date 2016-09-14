@@ -33,6 +33,7 @@ format.authentic = magic => {
 
 format.coroflot = magic => {
   parseURL("http://feeds.feedburner.com/coroflot/AllJobs?format=xml", (err, data) => {
+    if(!data || !data.feed || !data.feed.entries) return magic([]);
     var results = data.feed.entries;
       inception = Magic(data.feed.entries.length, magic, []);
     data.feed.entries.map(e => {
@@ -56,7 +57,7 @@ format.coroflot = magic => {
 
 format.dribbble = magic => {
   parseURL("https://dribbble.com/jobs.rss", (err, data) => {
-    if(!data) magic();
+    if(!data || !data.feed || !data.feed.entries) return magic([]);
     var result = data.feed.entries.map(e => {
       var date = new Date(e.pubDate).getTime(),
         titleReg = e.title.match(/(.+) is hiring an? (.+)/),
@@ -154,7 +155,7 @@ format.remoteok = magic => {
 
 format.smashingjobs = magic => {
   parseURL("http://jobs.smashingmagazine.com/rss/all/all", (err, data) => {
-    if(!data) return magic([]);
+    if(!data || !data.feed || !data.feed.entries) return magic([]);
     var result = data.feed.entries.map(e => {
       var date = new Date(e.pubDate).getTime(),
         titleSplit = e.title.split(" - "),
@@ -174,6 +175,7 @@ format.smashingjobs = magic => {
 
 format.stackoverflow = magic => {
   parseURL("https://stackoverflow.com/jobs/feed", (err, data) => {
+    if(!data || !data.feed || !data.feed.entries) return magic([]);
     var result = data.feed.entries.map(e => {
       var loc = !!e.title.split(" at ")[1].split(" (")[1],
         date = new Date(e.pubDate).getTime(),
@@ -219,6 +221,7 @@ format.weworkremotely = magic => {
     inception = Magic(urls.length, data => magic(data.reduce((arr, e) => arr.concat(e), [])), []);
   urls.forEach(path => {
     parseURL(`https://weworkremotely.com/categories/${path}/jobs.rss`, (err, data) => {
+      if(!data || !data.feed || !data.feed.entries) return inception([]);
       var result = data.feed.entries.map(e => {
         var date = new Date(e.pubDate).getTime(),
           title = e.title.split(": ")[1],
