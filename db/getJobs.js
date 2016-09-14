@@ -200,6 +200,7 @@ format.themuse = magic => {
     apikey = process.env.THEMUSE || require("./apikeys").themuse;
   ["1","2","3","4","5"].forEach(i => {
     request(`https://api-v2.themuse.com/jobs?apikey=${apikey}&page=${i}`, (err, res, body) => {
+      if(!body || !JSON.parse(body).results) return inception([]);
       var data = JSON.parse(body).results.map(e => {
         var date = new Date(e.publication_date).getTime(),
           title = e.name,
