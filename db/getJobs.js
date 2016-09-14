@@ -47,7 +47,7 @@ format.coroflot = magic => {
       request(url, (err2, response, body) => {
         var $ = cheerio.load(body),
           content = $("#job_description_public p").html();
-        if(!content) return inception();
+        if(!content) return inception(false);
         var tags = getTags({title, content});
         inception({date, title, company, location, content, url, source, tags});
       });
@@ -245,9 +245,9 @@ format.wfhio = magic => {
   urls.forEach(path => {
     request(`https://www.wfh.io/categories/${path}/jobs.atom`, (err1, response, body) => {
       parseString(body, (err2, result) => {
-        if(!result.feed) magic([]);
-          result = result.feed.entry.map(e => {
-            var date = new Date(e.updated[0]).getTime(),
+        if(!result.feed) inception(false);
+        result = result.feed.entry.map(e => {
+          var date = new Date(e.updated[0]).getTime(),
             url = e.link[0]["$"].href,
             title = e.title[0],
             titleSplit = title.toLowerCase().split(" "),
