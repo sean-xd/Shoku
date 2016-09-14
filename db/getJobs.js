@@ -16,6 +16,7 @@ format.authentic = magic => {
   var apikey = process.env.AUTHENTIC || require("./apikeys").authentic;
 	request(`https://authenticjobs.com/api/?api_key=${apikey}&method=aj.jobs.search&format=json&perpage=10`, (err, res, body) => {
 		var result = JSON.parse(body).listings.listing.map(e => {
+      if(!e.company) return false;
 			var date = new Date(e.post_date).getTime(),
 				title = e.title.split(" @")[0] || e.title,
 				company = e.company.name,
@@ -293,6 +294,7 @@ function getJobs(db){
 }
 
 function reduceJobs(arr, jobs){
+  jobs = jobs.filter(e => !!e);
   jobs.forEach(job => {
     var match = arr.find(e => {
       var company = (job.company.length < 2) ? e.company[0] : e.company,
