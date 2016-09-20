@@ -86,7 +86,6 @@ format.github = magic => {
         url = e.url,
         source = "github",
         tags = getTags({title, content});
-      if(content.indexOf("applytracking") > -1) console.log(content);
       return {date, title, company, content, url, source, tags};
     });
     result = result.filter(e => e.date < Date.now());
