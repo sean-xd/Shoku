@@ -86,6 +86,7 @@ format.github = magic => {
         url = e.url,
         source = "github",
         tags = getTags({title, content});
+      content = content.replace(/applytracking/g, "");
       return {date, title, company, content, url, source, tags};
     });
     result = result.filter(e => e.date < Date.now());
