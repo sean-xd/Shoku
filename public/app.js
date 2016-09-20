@@ -89,6 +89,8 @@ app.filter("upperFirst", () => input => input[0].toUpperCase() + input.substr(1)
 app.config($httpProvider => $httpProvider.interceptors.push('jwtInterceptor'));
 
 app.service('jwtInterceptor', function(){return {request: config => { // angular needs to bind this scope
+  console.log("-- req --");
+  console.log(config);
   if(ls.token) config.headers.Authorization = "Bearer " + ls.token;
   return config;
 }}});
