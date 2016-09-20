@@ -82,11 +82,10 @@ format.github = magic => {
       var date = new Date(e.created_at).getTime(),
         title = e.title,
         company = e.company,
-        content = e.description,
+        content = e.description.replace(/https:\/+w+\.applytracking\.com\/track\.aspx\/[A-z0-9]+/g, ""),
         url = e.url,
         source = "github",
         tags = getTags({title, content});
-      if(content.indexOf("applytracking") > -1) content = content.replace(/applytracking/gi, "");
       if(content.indexOf("applytracking") > -1) console.log(content);
       return {date, title, company, content, url, source, tags};
     });
