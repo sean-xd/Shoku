@@ -14,3 +14,5 @@ app.filter("dateFilter", () => input => {
 });
 
 app.filter('trust', $sce => val => $sce.trustAs("html", val.replace(/<br ?\/?>/g, "")));
+
+app.filter("upperFirst", () => input => input[0].toUpperCase() + input.substr(1));

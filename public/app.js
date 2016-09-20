@@ -1,10 +1,11 @@
 var ls = localStorage,
   app = angular.module("app", []);
 
-app.controller("BodyController", ($scope, $http, TagsService, SignService) => {
+app.controller("BodyController", ($scope, $http, TagsService, SignService, CompanyService) => {
   $scope.open = {};
   TagsService($scope);
   SignService($scope);
+  CompanyService($scope);
 
   $scope.jobFilter = job => {
     var checkSource = checker($scope, job, "sources", "source"),
@@ -13,6 +14,19 @@ app.controller("BodyController", ($scope, $http, TagsService, SignService) => {
   }
 
   $scope.activateJob = job => job.active = !job.active;
+
+  document.addEventListener("scroll", e => {
+    var almostBottom = document.body.scrollTop > document.body.scrollHeight - document.body.clientHeight - 200,
+      topToggle = document.body.scrollTop === 0 || (document.body.scrollTop > 0 && !$scope.isScrolled),
+      atBottom = document.body.scrollTop === document.body.scrollHeight - document.body.clientHeight,
+      notAtBottom = !atBottom && $scope.atBottom,
+      newAtBottom = atBottom && !$scope.atBottom;
+    if(almostBottom && $scope.companyLimit < $scope.companies.length) $scope.companyLimit += 10;
+    if(topToggle) $scope.isScrolled = !$scope.isScrolled;
+    if(notAtBottom) $scope.atBottom = false;
+    if(newAtBottom) $scope.atBottom = true;
+    if(almostBottom || topToggle || notAtBottom || newAtBottom) $scope.$apply();
+  });
 });
 
 function checker($scope, job, prop, x){
@@ -34,6 +48,25 @@ function checker($scope, job, prop, x){
   return check;
 }
 
+// Partials
+app.directive("companylist", () => ({templateUrl: "partials/companylist.html"}));
+app.directive("heading", () => ({templateUrl: "partials/heading.html"}));
+app.directive("joblist", () => ({templateUrl: "partials/joblist.html"}));
+app.directive("sidebar", () => ({templateUrl: "partials/sidebar.html"}));
+
+// Functions
+app.directive('ngRightClick', $parse => {
+  return (scope, element, attrs) => {
+    var fn = $parse(attrs.ngRightClick);
+    element.bind('contextmenu', event => {
+      scope.$apply(() => {
+        event.preventDefault();
+        fn(scope, {$event:event});
+      });
+    });
+  };
+});
+
 app.filter("dateFilter", () => input => {
   var timeSince = Date.now() - input,
     one = {
@@ -51,12 +84,38 @@ app.filter("dateFilter", () => input => {
 
 app.filter('trust', $sce => val => $sce.trustAs("html", val.replace(/<br ?\/?>/g, "")));
 
+app.filter("upperFirst", () => input => input[0].toUpperCase() + input.substr(1));
+
 app.config($httpProvider => $httpProvider.interceptors.push('jwtInterceptor'));
 
 app.service('jwtInterceptor', function(){return {request: config => { // angular needs to bind this scope
   if(ls.token) config.headers.Authorization = "Bearer " + ls.token;
   return config;
 }}});
+
+app.factory("CompanyService", $http => $scope => {
+  $scope.page = 0;
+  $scope.companies = ls.companies ? JSON.parse(ls.companies) : [];
+  $scope.companyLimit = 10;
+  $scope.companyFilter = company => {
+    return company.jobs.reduce((check, job) => {
+      if(!check || !job) return false;
+      var checkSource = checker($scope, job, "sources", "source"),
+        checkContent = checker($scope, job, "tags", "content");
+      return checkSource && checkContent;
+    }, true);
+  };
+  $scope.atBottom = false;
+  $scope.loadMore = () => {
+    $http.get($scope.page ? "/jobs/" + $scope.page : "/jobs").then(data => {
+      $scope.page += 1;
+      $scope.companies = data.data;
+      ls.companies = JSON.stringify($scope.companies);
+      ls.ttl = Date.now() + (1000 * 60 * 5);
+    });
+  };
+  if(!$scope.companies.length || ls.ttl < Date.now()) $scope.loadMore();
+});
 
 app.factory("SignService", $http => $scope => {
   $scope.sign = {};
@@ -139,68 +198,5 @@ app.factory("TagsService", () => $scope => {
       tag.on = false;
     });
     ls[type] = JSON.stringify($scope.filters[type]);
-  };
-});
-
-app.directive("companylist", () => ({
-  templateUrl: "partials/companylist.html",
-  controller: ($scope, CompanyService) => {
-    CompanyService($scope);
-    document.addEventListener("scroll", e => {
-      var almostBottom = document.body.scrollTop > document.body.scrollHeight - document.body.clientHeight - 200,
-        topToggle = document.body.scrollTop === 0 || (document.body.scrollTop > 0 && !$scope.isScrolled),
-        atBottom = document.body.scrollTop === document.body.scrollHeight - document.body.clientHeight,
-        notAtBottom = !atBottom && $scope.atBottom,
-        newAtBottom = atBottom && !$scope.atBottom;
-      if(almostBottom && $scope.companyLimit < $scope.companies.length) $scope.companyLimit += 10;
-      if(topToggle) $scope.isScrolled = !$scope.isScrolled;
-      if(notAtBottom) $scope.atBottom = false;
-      if(newAtBottom) $scope.atBottom = true;
-      if(almostBottom || topToggle || notAtBottom || newAtBottom) $scope.$apply();
-    });
-  }
-}));
-
-app.factory("CompanyService", $http => $scope => {
-  $scope.page = 0;
-  $scope.companies = ls.companies ? JSON.parse(ls.companies) : [];
-  $scope.companyLimit = 10;
-  $scope.companyFilter = company => {
-    return company.jobs.reduce((check, job) => {
-      if(!check || !job) return false;
-      var checkSource = checker($scope, job, "sources", "source"),
-        checkContent = checker($scope, job, "tags", "content");
-      return checkSource && checkContent;
-    }, true);
-  };
-  $scope.atBottom = false;
-  $scope.loadMore = () => {
-    $http.get($scope.page ? "/jobs/" + $scope.page : "/jobs").then(data => {
-      $scope.page += 1;
-      $scope.companies = data.data;
-      ls.companies = JSON.stringify($scope.companies);
-      ls.ttl = Date.now() + (1000 * 60 * 5);
-    });
-  };
-  if(!$scope.companies.length || ls.ttl < Date.now()) $scope.loadMore();
-});
-
-app.directive("heading", () => ({templateUrl: "partials/heading.html"}));
-
-app.directive("joblist", () => ({templateUrl: "partials/joblist.html"}));
-
-app.directive("sidebar", () => ({templateUrl: "partials/sidebar.html"}));
-
-app.filter("upperFirst", () => input => input[0].toUpperCase() + input.substr(1));
-
-app.directive('ngRightClick', $parse => {
-  return (scope, element, attrs) => {
-    var fn = $parse(attrs.ngRightClick);
-    element.bind('contextmenu', event => {
-      scope.$apply(() => {
-        event.preventDefault();
-        fn(scope, {$event:event});
-      });
-    });
   };
 });

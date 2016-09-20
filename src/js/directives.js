@@ -1,7 +1,10 @@
+// Partials
+app.directive("companylist", () => ({templateUrl: "partials/companylist.html"}));
+app.directive("heading", () => ({templateUrl: "partials/heading.html"}));
+app.directive("joblist", () => ({templateUrl: "partials/joblist.html"}));
 app.directive("sidebar", () => ({templateUrl: "partials/sidebar.html"}));
 
-app.filter("upperFirst", () => input => input[0].toUpperCase() + input.substr(1));
-
+// Functions
 app.directive('ngRightClick', $parse => {
   return (scope, element, attrs) => {
     var fn = $parse(attrs.ngRightClick);

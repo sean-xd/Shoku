@@ -3,9 +3,9 @@ var gulp = require("gulp"),
   flatten = require("gulp-flatten"),
   src = {
     html: "src/index.html",
-    partials: ["src/components/**/*.html"],
-    css: ["src/css/fonts.css", "src/css/classes.css", "src/css/main.css", "src/components/**/*.css", "src/css/mediaQueries.css"],
-    js: ["src/js/*.js", "src/components/**/*.js"]
+    partials: "src/partials/*.html",
+    css: ["src/css/fonts.css", "src/css/classes.css", "src/css/*.css", "src/css/mediaQueries.css"],
+    js: ["src/js/*.js"]
   },
   dest = {html: "public/", partials: "public/partials/", css: "public/", js: "public/"};
 

@@ -5,6 +5,30 @@ app.service('jwtInterceptor', function(){return {request: config => { // angular
   return config;
 }}});
 
+app.factory("CompanyService", $http => $scope => {
+  $scope.page = 0;
+  $scope.companies = ls.companies ? JSON.parse(ls.companies) : [];
+  $scope.companyLimit = 10;
+  $scope.companyFilter = company => {
+    return company.jobs.reduce((check, job) => {
+      if(!check || !job) return false;
+      var checkSource = checker($scope, job, "sources", "source"),
+        checkContent = checker($scope, job, "tags", "content");
+      return checkSource && checkContent;
+    }, true);
+  };
+  $scope.atBottom = false;
+  $scope.loadMore = () => {
+    $http.get($scope.page ? "/jobs/" + $scope.page : "/jobs").then(data => {
+      $scope.page += 1;
+      $scope.companies = data.data;
+      ls.companies = JSON.stringify($scope.companies);
+      ls.ttl = Date.now() + (1000 * 60 * 5);
+    });
+  };
+  if(!$scope.companies.length || ls.ttl < Date.now()) $scope.loadMore();
+});
+
 app.factory("SignService", $http => $scope => {
   $scope.sign = {};
   $scope.activeSign = "";
