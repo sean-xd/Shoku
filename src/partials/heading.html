@@ -1,18 +1,16 @@
-<i class="material-icons menu" ng-click="sidebarOpen = !sidebarOpen;">menu</i>
+<i class="menu" ng-click="sidebarOpen = !sidebarOpen;">menu</i>
 <div class="link title">Shoku</div>
 <input class="link search" type="text" ng-model="search" placeholder="Search Jobs">
-<i class="material-icons cancel" ng-show="search" ng-click="search = '';">clear</i>
+<i class="cancel" ng-show="search" ng-click="search = '';">clear</i>
 <div class="heading">Daily Tech Jobs</div>
-<div class="hero">
-  <input type="text" ng-model="search" placeholder="Search Jobs">
-</div>
+<input class="hero" type="text" ng-model="search" placeholder="Search Jobs">
 
 <div id="name" ng-show="user.name">{{user.name}}</div>
 <div id="signout" ng-show="user.name" ng-click="signOut()">Signout</div>
 <form id="signin" ng-class="{active: !!activeSign}" ng-submit="submitSign()" ng-hide="user.name">
   <div class="link" ng-click="activateSign('up')" ng-class="{fill: activeSign === 'up', hide: activeSign === 'in'}">Signup</div>
   <div class="link" ng-click="activateSign('in')" ng-class="{fill: activeSign === 'in', hide: activeSign === 'up'}">Signin</div>
-  <i class="material-icons" ng-click="activeSign = '';" ng-show="!!activeSign">clear</i>
+  <i ng-click="activeSign = '';" ng-show="!!activeSign">clear</i>
   <input type="email" placeholder="Email" ng-model="sign.email" required>
   <input type="password" placeholder="Password" ng-model="sign.password" required>
   <button class="link green" type="submit">Submit</button>

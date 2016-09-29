@@ -3,7 +3,7 @@
   ng-repeat="job in company.jobs | filter: search | filter:jobFilter | orderBy: '-date'"
   ng-class="{big: job.active}">
   <div class="job-info">
-    <div class="job-title" href="{{job.url}}" ng-click="activateJob(job)">{{job.title}}</div>
+    <div class="job-title" ng-click="activateJob(job)">{{job.title}}</div>
     <a class="job-apply" href="{{job.url}}" ng-show="job.active">Apply</a>
     <div class="job-close" ng-click="activateJob(job)" ng-show="job.active">Close</div>
     <div class="job-location">{{job.location || "Remote"}}</div>

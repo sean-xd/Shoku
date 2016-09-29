@@ -1,0 +1,423 @@
+/* Google Material Icons */
+@font-face
+  font-family: 'Material Icons'
+  font-style: normal
+  font-weight: 400
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2')
+i
+  font-family: 'Material Icons'
+  font-weight: normal
+  font-style: normal
+  padding: 10px
+  cursor: pointer
+  font-size: 20px
+  line-height: 1
+  letter-spacing: normal
+  text-transform: none
+  display: inline-block
+  white-space: nowrap
+  word-wrap: normal
+  direction: ltr
+  -webkit-font-feature-settings: 'liga'
+  -webkit-font-smoothing: antialiased
+
+/* Google Fonts */
+@font-face
+  font-family: 'Roboto'
+  font-style: normal
+  font-weight: 400
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v15/CWB0XYA8bzo0kSThX0UTuA.woff2) format('woff2')
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000
+
+@font-face
+  font-family: 'Yellowtail'
+  font-style: normal
+  font-weight: 400
+  src: local('Yellowtail'), url(https://fonts.gstatic.com/s/yellowtail/v6/GcIHC9QEwVkrA19LJU1qlPk_vArhqVIZ0nv9q090hN8.woff2) format('woff2')
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000
+
+/* Colors */
+.red
+  background: rgb(125, 25, 25)
+.green
+  background: rgb(60, 175, 100)
+.blue
+  background: rgb(25, 25, 125)
+.grey
+  background: rgb(80,80,80)
+.darkgrey
+  background: rgb(40,40,40)
+.darkergrey
+  background: rgb(20,20,20)
+.purple
+  background: rgb(125,25,125)
+.orange
+  background: rgb(210, 130, 40)
+.red, .green, .blue, .grey, .darkgrey, .darkergrey, .purple, .orange
+  color: white
+.yellow
+  background: yellow
+.white
+  background: white
+.lightgrey
+  background: lightgrey
+.yellow, .white, .lightgrey
+  color: black
+
+/* Display */
+.opaque
+  opacity: .8
+
+@mixin layer($zindex)
+  position: fixed
+  z-index: $zindex
+
+@mixin topleft($top, $left)
+  top: $top
+  left: $left
+
+@mixin topright($top, $right)
+  top: $top
+  right: $right
+
+@mixin hw($h, $w)
+  height: $h
+  width: $w
+
+/* Shadows */
+%textShadow
+  text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black
+%boxShadow
+  box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5)
+
+/* Classes */
+.link
+  box-sizing: border-box
+  display: inline-block
+  font-size: 16px
+  padding: 10px
+  vertical-align: top
+  cursor: pointer
+  text-align: center
+
+/* Reset */
+html, body
+  @include hw(100%, 100%)
+  margin: 0
+  font-family: "Segoe UI", "Helvetica Neue", "Roboto"
+a
+  text-decoration: none
+input
+  outline: none !important
+  border-bottom: 0
+  border-left: 0
+  border-right: 0
+  border-top: 0
+  box-sizing: border-box
+
+::-webkit-scrollbar
+  display: none
+::-moz-scrollbar
+  display: none
+
+/* Body */
+body
+  background: rgb(40,40,40)
+  overflow-x: hidden
+
+/* Background Image */
+.background
+  @include layer(-1)
+  filter: blur(5px)
+  min-height: 100%
+  min-width: 100%
+  opacity: 0
+  transition: .3s all
+  &.show
+    opacity: .95
+
+/* Main */
+main
+  padding-bottom: 100px
+  transition: .2s all
+  width: 100%
+
+/* Footer */
+footer
+  @extend %boxShadow
+  @extend .darkergrey
+  @include layer(2)
+  @include hw(40px, 100%)
+  bottom: 0
+  box-sizing: border-box
+  font-size: 14px
+  padding: 10px
+  text-align: center
+  transition: .2s all
+  .isScrolled &
+    transform: translate3d(0, 40px, 0)
+  .sidebarOpen &
+    transform: translate3d(110px, 0, 0)
+
+/* Company */
+.company
+  display: block
+  margin: 10px auto
+  max-width: 800px
+  opacity: 1
+  width: 90%
+  &.off
+    opacity: 0.5
+
+.company-name
+  @extend .darkgrey
+  cursor: default
+  font-size: 20px
+  max-height: 27px
+  overflow: hidden
+  padding: 5px 10px
+
+.more-container
+  text-align: center
+.more
+  @extend .lightgrey
+
+/* Top Nav */
+.title, .menu
+  @extend %textShadow
+  @include layer(4)
+  color: white
+.title
+  cursor: default
+  font: 19px "Yellowtail"
+  left: 40px
+  padding: 7px 5px 7px 0px
+.search
+  @extend %boxShadow
+  @include layer(2)
+  @include hw(40px, 100%)
+  @include topright(-41px, 0px)
+  background: white
+  border-left: 95px solid rgb(20,20,20)
+  text-align: left !important
+  transition: .2s all
+  .isScrolled &
+    transform: translate3d(0,40px,0)
+  .sidebarOpen.isScrolled &
+    transform: translate3d(125px,40px,0)
+.cancel
+  @include layer(4)
+  @include topright(0px, 0px)
+  color: black
+
+/* Heading */
+.heading
+  @extend %textShadow
+  color: white
+  font: 700 100px "Yellowtail"
+  padding: 120px 0 40px 0
+  text-align: center
+  transition: .4s all
+.hero
+  @extend %boxShadow
+  background: rgba(245,245,245,.9)
+  display: block
+  font-size: 16px
+  margin: 0 auto
+  max-width: 800px
+  padding: 10px
+  transition: .3s all
+  width: 90%
+.isScrolled
+  .hero, .heading
+    transform: translate3d(0,-340px,0)
+
+/* Sign in */
+#signin
+  @extend .darkergrey
+  @include layer(3)
+  @include hw(40px, 160px)
+  @include topright(0px, 0px)
+  font-size: 0px
+  overflow-y: hidden
+  transition: .2s all
+  &.active
+    @include hw(160px, 160px)
+    background: black
+  i
+    @include topright(0px, 0px)
+    position: absolute
+  button, input
+    @include hw(40px, 100% !important)
+  .link
+    @include hw(40px, 50%)
+    border: 0 !important
+    font-size: 14px
+    padding: 10px 5px
+    text-align: center
+    transition: .2s all
+    &.hide
+      @include hw(0px, 0px)
+      padding: 0px
+      opacity: 0
+      pointer-events: none
+    &:hover
+      background: black
+
+#signin input, #signout, #name
+  box-sizing: border-box
+  font: 14px
+  padding: 10px
+#signout, #name
+  @include layer(3)
+  @include hw(40px, 80px)
+  cursor: pointer
+  text-align: center
+#signout
+  @extend .darkergrey
+  @include topright(0px, 0px)
+#name
+  @extend .lightgrey
+  @include topright(0px, 80px)
+  border-bottom: 1px solid rgb(20,20,20)
+  border-left: 1px solid rgb(20,20,20)
+
+.job
+  @extend .white
+  border-bottom: 1px solid rgb(20,20,20)
+  display: block
+  max-height: 50px
+  overflow: hidden
+  position: relative
+  &.big
+    max-height: 400px
+  .off &
+    border-bottom: 0px solid black
+    height: 0px
+
+.job-info
+  height: 50px
+  position: relative
+.job-title
+  box-sizing: border-box
+  cursor: pointer
+  display: inline-block
+  font-size: 16px
+  max-height: 23px
+  overflow: hidden
+  padding: 2px 10px
+.job-date
+  font-size: 14px
+  padding: 0px 10px
+.job-location, .job-tags
+  display: inline-block
+  position: absolute
+  right: 0
+  text-align: right
+.job-location
+  font-size: 14px
+  padding: 2px 5px
+  top: 0px
+.job-tags
+  bottom: -1px
+  height: 26px
+  overflow: hidden
+  max-width: 75%
+  div
+    border-bottom: 1px solid black
+    border-right: 1px solid black
+    border-top: 1px solid black
+    box-sizing: border-box
+    font-size: 12px
+    height: 100%
+    &:first-child
+      border-left: 1px solid black
+    &:hover
+      opacity: 1
+.job-apply, .job-close, .job-tags div
+  cursor: pointer
+  display: inline-block
+  padding: 4px
+.job-apply, .job-close
+  @extend .lightgrey
+  font-size: 14px
+  vertical-align: top
+  transform: translate3d(0,3px,0)
+.job-description
+  box-sizing: border-box
+  font-size: 14px
+  max-height: 340px
+  overflow-y: scroll
+  padding: 5px 40px 20px 40px
+  img
+    width: 200px
+
+@media(min-width: 1025px)
+  .sidebarOpen
+    &:not(.activeJob) main, .hero, .heading
+      transform: translate3d(110px,0,0)
+    &.isScrolled
+      .hero, .heading
+        transform: translate3d(110px,-370px,0)
+
+@media(max-width: 650px)
+  .heading
+    font-size: 80px
+
+@media(max-width: 500px)
+  .heading
+    font-size: 60px
+  .company-name
+    font-size: 18px
+  .job-title
+    font-size: 14px
+  .job-date
+    font-size: 12px
+
+@media(max-width: 400px)
+  .heading
+    font-size: 50px
+  footer
+    font-size: 12px
+
+#sidebar
+  @extend .darkergrey
+  @extend %boxShadow
+  @include layer(3)
+  @include topleft(0px, -220px)
+  @include hw(100%, 220px)
+  overflow-y: scroll
+  padding: 40px 0 0 0
+  transition: .2s all
+  .sidebarOpen &
+    transform: translate3d(220px,0,0)
+
+.taglink
+  @include hw(40px, 100%)
+  padding: 10px 0px 10px 40px
+  text-align: left
+  &:hover
+    background: black
+.clear-tags
+  @include topright(0px, 0px)
+  @include hw(40px, 50%)
+  position: absolute
+  text-align: right
+.tags
+  max-height: 0px
+  overflow-y: hidden
+  text-align: center
+  transition: .2s all
+  &.open
+    max-height: 351px
+  .link
+    @include hw(39px, 110px)
+    font-size: 14px
+    padding: 10px 0px
+    opacity: .5
+    &.off
+      opacity: .25
+      text-decoration: line-through
+    &.on
+      opacity: 1
+      font-weight: 500

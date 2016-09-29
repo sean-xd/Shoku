@@ -1,0 +1,38 @@
+/* Body */
+body
+  background: rgb(40,40,40)
+  overflow-x: hidden
+
+/* Background Image */
+.background
+  @include layer(-1)
+  filter: blur(5px)
+  min-height: 100%
+  min-width: 100%
+  opacity: 0
+  transition: .3s all
+  &.show
+    opacity: .95
+
+/* Main */
+main
+  padding-bottom: 100px
+  transition: .2s all
+  width: 100%
+
+/* Footer */
+footer
+  @extend %boxShadow
+  @extend .darkergrey
+  @include layer(2)
+  @include hw(40px, 100%)
+  bottom: 0
+  box-sizing: border-box
+  font-size: 14px
+  padding: 10px
+  text-align: center
+  transition: .2s all
+  .isScrolled &
+    transform: translate3d(0, 40px, 0)
+  .sidebarOpen &
+    transform: translate3d(110px, 0, 0)

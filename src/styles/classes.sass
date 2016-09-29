@@ -1,0 +1,63 @@
+/* Colors */
+.red
+  background: rgb(125, 25, 25)
+.green
+  background: rgb(60, 175, 100)
+.blue
+  background: rgb(25, 25, 125)
+.grey
+  background: rgb(80,80,80)
+.darkgrey
+  background: rgb(40,40,40)
+.darkergrey
+  background: rgb(20,20,20)
+.purple
+  background: rgb(125,25,125)
+.orange
+  background: rgb(210, 130, 40)
+.red, .green, .blue, .grey, .darkgrey, .darkergrey, .purple, .orange
+  color: white
+.yellow
+  background: yellow
+.white
+  background: white
+.lightgrey
+  background: lightgrey
+.yellow, .white, .lightgrey
+  color: black
+
+/* Display */
+.opaque
+  opacity: .8
+
+@mixin layer($zindex)
+  position: fixed
+  z-index: $zindex
+
+@mixin topleft($top, $left)
+  top: $top
+  left: $left
+
+@mixin topright($top, $right)
+  top: $top
+  right: $right
+
+@mixin hw($h, $w)
+  height: $h
+  width: $w
+
+/* Shadows */
+%textShadow
+  text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black
+%boxShadow
+  box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5)
+
+/* Classes */
+.link
+  box-sizing: border-box
+  display: inline-block
+  font-size: 16px
+  padding: 10px
+  vertical-align: top
+  cursor: pointer
+  text-align: center

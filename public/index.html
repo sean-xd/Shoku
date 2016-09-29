@@ -5,21 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shoku | Daily Tech Jobs</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="build.css">
   <script src="https://cdn.jsdelivr.net/lodash/4.13.1/lodash.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
   <script src="app.js"></script>
 </head>
 
-<body ng-controller="BodyController" ng-class="{sidebarOpen, isScrolled}">
+<body ng-controller="BodyController" ng-class="{sidebarOpen, isScrolled, trackerOpen}">
   <img class="background" src="https://source.unsplash.com/random" onload="this.classList.add('show')">
   <heading id="heading"></heading>
   <sidebar id="sidebar"></sidebar>
   <main>
     <companylist id="companylist"></companylist>
   </main>
-  <footer>
-    <div>Daily tech job tracker built by <a href="http://sean.mu">Sean.mu</a> in Boulder, CO.</div>
-  </footer>
+  <footer>Daily tech job tracker built by <a href="http://sean.mu">Sean.mu</a> in Boulder, CO.</footer>
 </body>
 </html>
