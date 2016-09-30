@@ -292,7 +292,7 @@ function getJobs(db){
       jobs.forEach(job => {
         var noJob = !job || job.company.length < 2,
           olderThan30 = Date.now() - job.date > 1000 * 60 * 60 * 24 * 30,
-          jobHash = job.title.replace(/[\- ]/g, "") + job.company;
+          jobHash = (job.title || "").replace(/[\- ]/g, "") + job.company;
         if(noJob || olderThan30 || hash[jobHash]) return;
         hash[jobHash] = true;
         var company = arr.find(e => e.name === job.company) || {name: job.company, jobs: [], latest: 0};
