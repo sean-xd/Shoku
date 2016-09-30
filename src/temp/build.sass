@@ -84,6 +84,9 @@ i
   height: $h
   width: $w
 
+@mixin textshadow($color)
+  text-shadow: 1px 1px $color, 1px -1px $color, -1px 1px $color, -1px -1px $color
+
 /* Shadows */
 %textShadow
   text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black
@@ -122,7 +125,7 @@ input
 
 /* Body */
 body
-  background: rgb(40,40,40)
+  background: rgb(20,20,20)
   overflow-x: hidden
 
 /* Background Image */
@@ -158,22 +161,27 @@ footer
     transform: translate3d(0, 40px, 0)
   .sidebarOpen &
     transform: translate3d(110px, 0, 0)
+  .isScrolled.sidebarOpen &
+    transform: translate3d(110px, 40px, 0)
 
 /* Company */
-.company
+#companylist
   display: block
+  transition: .5s all
+  .trackerOpen &
+    height: 100vh
+    overflow: hidden
+    transform: translate3d(100vw,0,0) !important
+
+.company
   margin: 10px auto
   max-width: 800px
-  opacity: 1
   width: 90%
-  &.off
-    opacity: 0.5
 
 .company-name
   @extend .darkgrey
   cursor: default
   font-size: 20px
-  max-height: 27px
   overflow: hidden
   padding: 5px 10px
 
@@ -205,10 +213,6 @@ footer
     transform: translate3d(0,40px,0)
   .sidebarOpen.isScrolled &
     transform: translate3d(125px,40px,0)
-.cancel
-  @include layer(4)
-  @include topright(0px, 0px)
-  color: black
 
 /* Heading */
 .heading
@@ -297,7 +301,9 @@ footer
 
 .job-info
   height: 50px
+  margin: 0 auto
   position: relative
+  width: 90%
 .job-title
   box-sizing: border-box
   cursor: pointer
@@ -346,19 +352,41 @@ footer
 .job-description
   box-sizing: border-box
   font-size: 14px
+  margin: 0 auto
   max-height: 340px
   overflow-y: scroll
-  padding: 5px 40px 20px 40px
+  padding: 5px 10px 20px 10px
+  width: 90%
   img
     width: 200px
 
+.job-track, .job-ban
+  font-size: 25px
+  padding-top: 13px
+  position: absolute
+.job-track
+  @include textshadow(rgb(80,80,40))
+  @include topleft(0px, 0px)
+  color: white
+  padding-left: 1%
+  &:hover, &.tracked
+    color: rgb(230, 230, 100)
+.job-ban
+  @include topright(0px, 0px)
+  color: rgb(160, 80, 80)
+  padding-right: 1%
+  &:hover
+    color: rgb(180,60,60)
+
 @media(min-width: 1025px)
   .sidebarOpen
-    &:not(.activeJob) main, .hero, .heading
+    #companylist, .heading
       transform: translate3d(110px,0,0)
     &.isScrolled
-      .hero, .heading
+      .heading
         transform: translate3d(110px,-370px,0)
+    &.trackerOpen #tracker
+      transform: translate3d(calc(100vw + 110px),0,0)
 
 @media(max-width: 650px)
   .heading
@@ -396,8 +424,13 @@ footer
   @include hw(40px, 100%)
   padding: 10px 0px 10px 40px
   text-align: left
+  transition: .2s all
   &:hover
     background: black
+  .trackerOpen &:first-child
+    @extend .lightgrey
+    &:hover
+      background: white
 .clear-tags
   @include topright(0px, 0px)
   @include hw(40px, 50%)
@@ -409,7 +442,7 @@ footer
   text-align: center
   transition: .2s all
   &.open
-    max-height: 351px
+    max-height: 585px
   .link
     @include hw(39px, 110px)
     font-size: 14px
@@ -421,3 +454,19 @@ footer
     &.on
       opacity: 1
       font-weight: 500
+
+/* Company */
+#tracker
+  @include topleft(0px, -100vw)
+  display: block
+  padding-top: 300px
+  position: absolute
+  transition: .5s all
+  width: 100vw
+  .trackerOpen &
+    transform: translate3d(100vw,0,0)
+
+.tracker
+  margin: 10px auto
+  max-width: 800px
+  width: 90%

@@ -23,7 +23,7 @@ app.get("/jobs", sendJobs);
 app.get("/jobs/:page", sendJobs);
 
 function sendJobs(req, res){
-  var page = req.params.page || 0, mult = 100;
+  var page = req.params.page || 0, mult = 500;
   if(db.ttl < Date.now()) getJobs(db);
   res.send(JSON.stringify(db.jobs.slice(page * mult, (page * mult) + mult)));
 }
@@ -51,14 +51,25 @@ function createUser(req, res){
 }
 
 function authUser(user, req, res){
-  res.json({user: {name: user.name}, token: jwt.sign({data: user.email}, "lazysecret")});
+  res.json({user: {name: user.name, tracked: user.tracked}, token: jwt.sign({data: user.email}, "lazysecret")});
 }
 
 app.get("/signToken", (req, res) => {
   jwt.verify(req.token, "lazysecret", (err, decoded) => {
     if(err) return res.send({user: false});
     var user = users.find(u => u.email === decoded.data);
-    res.json({user: {name: user.name}});
+    authUser(user, req, res);
+  });
+});
+
+app.post("/track", (req, res) => {
+  jwt.verify(req.body.token, "lazysecret", (err, decoded) => {
+    if(!err){
+      var user = users.find(u => u.email === decoded.data);
+      user.tracked = req.body.tracked;
+      fs.writeFile("./db/users.json", JSON.stringify(users));
+    }
+    res.end();
   });
 });
 

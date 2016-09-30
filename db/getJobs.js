@@ -285,41 +285,27 @@ function getTags(obj){
 }
 
 function getJobs(db){
-  console.log("--- Get Jobs > ---");
   db.ttl = Date.now() + (1000 * 60 * 15);
-
   var pushJobs = Magic(sources.length, data => {
-    console.log(`--- > Get Jobs ---`);
-    db.jobs = data
-      .reduce(reduceJobs, [])
-      .sort((a, b) => b.date - a.date)
-      .reduce(reduceCompanies, []);
+    var hash = {};
+    db.jobs = data.reduce((arr, jobs) => {
+      jobs.forEach(job => {
+        var noJob = !job || job.company.length < 2,
+          olderThan30 = Date.now() - job.date > 1000 * 60 * 60 * 24 * 30,
+          jobHash = job.title.replace(/[\- ]/g, "") + job.company;
+        if(noJob || olderThan30 || hash[jobHash]) return;
+        hash[jobHash] = true;
+        var company = arr.find(e => e.name === job.company) || {name: job.company, jobs: [], latest: 0};
+        if(!company.latest) arr.push(company);
+        if(job.date > company.latest) company.latest = job.date;
+        company.jobs.push(job);
+        if(company.jobs.length > 1) company.jobs.sort((a, b) => b.date - a.date);
+      });
+      return arr.sort((a, b) => b.latest - a.latest);
+    }, []);
     fs.writeFile(__dirname + "/db.json", JSON.stringify(db));
   }, []);
   sources.forEach(name => format[name](pushJobs));
-}
-
-function reduceJobs(arr, jobs){
-  jobs = jobs.filter(e => !!e);
-  jobs.forEach(job => {
-    var match = arr.find(e => {
-      var company = (job.company.length < 2) ? e.company[0] : e.company,
-        companyCheck = company === job.company,
-        titleCheck = e.title === job.title;
-      return companyCheck && titleCheck;
-    });
-    if(!match && Date.now() - job.date < (1000 * 60 * 60 * 24 * 14)) arr.push(job);
-  });
-  return arr;
-}
-
-function reduceCompanies(arr, job){
-  var company = arr.find(e => e.name === job.company) || {name: job.company, jobs: [], latest: 0},
-    isntDupe = !company.jobs.find(e => e.title.indexOf(job.title) > -1 || job.title.indexOf(e.title) > -1);
-  if(!company.latest) arr.push(company);
-  if(job.date > company.latest) company.latest = job.date;
-  if(isntDupe) company.jobs.push(job);
-  return arr;
 }
 
 module.exports = getJobs;

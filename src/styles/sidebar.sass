@@ -14,8 +14,13 @@
   @include hw(40px, 100%)
   padding: 10px 0px 10px 40px
   text-align: left
+  transition: .2s all
   &:hover
     background: black
+  .trackerOpen &:first-child
+    @extend .lightgrey
+    &:hover
+      background: white
 .clear-tags
   @include topright(0px, 0px)
   @include hw(40px, 50%)
@@ -27,7 +32,7 @@
   text-align: center
   transition: .2s all
   &.open
-    max-height: 351px
+    max-height: 585px
   .link
     @include hw(39px, 110px)
     font-size: 14px

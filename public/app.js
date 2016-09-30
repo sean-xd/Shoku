@@ -1,7 +1,9 @@
 "use strict";
 
 var ls = localStorage,
-    app = angular.module("app", []);
+    app = angular.module("app", []),
+    _u,
+    _c;
 
 app.controller("BodyController", function ($scope, $http, TagsService, SignService, CompanyService) {
   $scope.open = {};
@@ -9,58 +11,13 @@ app.controller("BodyController", function ($scope, $http, TagsService, SignServi
   SignService($scope);
   CompanyService($scope);
 
-  $scope.jobFilter = function (job) {
-    var checkSource = checker($scope, job, "sources", "source"),
-        checkContent = checker($scope, job, "tags", "content");
-    return checkSource && checkContent;
+  _u = function _u() {
+    return $scope.user;
   };
-
-  $scope.activateJob = function (job) {
-    return job.active = !job.active;
+  _c = function _c() {
+    return $scope.lists;
   };
-
-  document.addEventListener("scroll", function (e) {
-    var almostBottom = document.body.scrollTop > document.body.scrollHeight - document.body.clientHeight - 200,
-        topToggle = document.body.scrollTop === 0 || document.body.scrollTop > 0 && !$scope.isScrolled,
-        atBottom = document.body.scrollTop === document.body.scrollHeight - document.body.clientHeight,
-        notAtBottom = !atBottom && $scope.atBottom,
-        newAtBottom = atBottom && !$scope.atBottom;
-    if (almostBottom && $scope.companyLimit < $scope.companies.length) $scope.companyLimit += 10;
-    if (topToggle) $scope.isScrolled = !$scope.isScrolled;
-    if (notAtBottom) $scope.atBottom = false;
-    if (newAtBottom) $scope.atBottom = true;
-    if (almostBottom || topToggle || notAtBottom || newAtBottom) $scope.$apply();
-  });
 });
-
-function checker($scope, job, prop, x) {
-  var offs = $scope.filters[prop].filter(function (e) {
-    return e.off;
-  }).map(function (e) {
-    return e.name;
-  }),
-      ons = $scope.filters[prop].filter(function (e) {
-    return e.on;
-  }).map(function (e) {
-    return e.name;
-  }),
-      check = !ons.length,
-      buildChecker = function buildChecker(result) {
-    return function (name) {
-      var jobProp = name === "java" ? job[x].replace(/javascript/g, "") : job[x];
-      if (jobProp.toLowerCase().indexOf(name) > -1) check = result;
-    };
-  };
-  if (!check) ons.forEach(function (name) {
-    var jobProp = name === "java" ? job[x].replace(/javascript/g, "") : job[x];
-    if (jobProp.toLowerCase().indexOf(name) > -1) check = true;
-  });
-  offs.forEach(function (name) {
-    var jobProp = name === "java" ? job[x].replace(/javascript/g, "") : job[x];
-    if (jobProp.toLowerCase().indexOf(name) > -1) check = false;
-  });
-  return check;
-}
 
 // Partials
 app.directive("companylist", function () {
@@ -74,6 +31,9 @@ app.directive("joblist", function () {
 });
 app.directive("sidebar", function () {
   return { templateUrl: "partials/sidebar.html" };
+});
+app.directive("tracker", function () {
+  return { templateUrl: "partials/tracker.html" };
 });
 
 // Functions
@@ -124,7 +84,6 @@ app.config(function ($httpProvider) {
 
 app.service('jwtInterceptor', function () {
   return { request: function request(config) {
-      // angular needs to bind this scope
       if (ls.token) config.headers.Authorization = "Bearer " + ls.token;
       return config;
     } };
@@ -133,26 +92,72 @@ app.service('jwtInterceptor', function () {
 app.factory("CompanyService", function ($http) {
   return function ($scope) {
     $scope.page = 0;
-    $scope.companies = ls.companies ? JSON.parse(ls.companies) : [];
+    $scope.lists = {
+      active: "companies",
+      tracked: ls.tracked ? JSON.parse(ls.tracked) : [],
+      companies: ls.companies ? JSON.parse(ls.companies) : []
+    };
     $scope.companyLimit = 10;
+    $scope.jobFilter = function (job) {
+      return checker($scope, job, ["source", "content", "title"]);
+    };
     $scope.companyFilter = function (company) {
       return company.jobs.reduce(function (check, job) {
-        if (!check || !job) return false;
-        var checkSource = checker($scope, job, "sources", "source"),
-            checkContent = checker($scope, job, "tags", "content");
-        return checkSource && checkContent;
-      }, true);
+        return check || $scope.jobFilter(job);
+      }, false);
     };
-    $scope.atBottom = false;
+    $scope.activateJob = function (job) {
+      return job.active = !job.active;
+    };
+
+    $scope.isJobTracked = function (job) {
+      if (!$scope.lists.tracked) return false;
+      return !!$scope.lists.tracked.find(function (e) {
+        return e.company + e.title === job.company + job.title;
+      });
+    };
+
+    $scope.trackJob = function (job) {
+      var companyTitle = function companyTitle(x) {
+        return function (e) {
+          return (e.company + e.title === job.company + job.title) - x;
+        };
+      },
+          isTracked = $scope.lists.tracked.find(companyTitle(0));
+      if (isTracked) $scope.lists.tracked = $scope.lists.tracked.filter(companyTitle(1));else $scope.lists.tracked.push(job);
+      ls.tracked = JSON.stringify($scope.lists.tracked);
+      $http.post("/track", JSON.stringify({ token: ls.token, tracked: ls.tracked }));
+    };
+
+    $scope.trackerToggle = function () {
+      console.log($scope.trackerOpen);
+      $scope.lists.active = $scope.lists.active === "tracked" ? "companies" : "tracked";
+      $scope.trackerOpen = !$scope.trackerOpen;
+    };
+
     $scope.loadMore = function () {
       $http.get($scope.page ? "/jobs/" + $scope.page : "/jobs").then(function (data) {
         $scope.page += 1;
-        $scope.companies = data.data;
-        ls.companies = JSON.stringify($scope.companies);
+        $scope.lists.companies = data.data;
+        ls.companies = JSON.stringify($scope.lists.companies);
         ls.ttl = Date.now() + 1000 * 60 * 5;
       });
     };
-    if (!$scope.companies.length || ls.ttl < Date.now()) $scope.loadMore();
+    if (!$scope.lists.companies.length || ls.ttl < Date.now()) $scope.loadMore();
+
+    $scope.atBottom = false;
+    document.addEventListener("scroll", function (e) {
+      var almostBottom = document.body.scrollTop > document.body.scrollHeight - document.body.clientHeight - 200,
+          topToggle = document.body.scrollTop === 0 || document.body.scrollTop > 0 && !$scope.isScrolled,
+          atBottom = document.body.scrollTop === document.body.scrollHeight - document.body.clientHeight,
+          notAtBottom = !atBottom && $scope.atBottom,
+          newAtBottom = atBottom && !$scope.atBottom;
+      if (almostBottom && $scope.companyLimit < $scope.lists[$scope.lists.active].length) $scope.companyLimit += 10;
+      if (topToggle) $scope.isScrolled = !$scope.isScrolled;
+      if (notAtBottom) $scope.atBottom = false;
+      if (newAtBottom) $scope.atBottom = true;
+      if (almostBottom || topToggle || notAtBottom || newAtBottom) $scope.$apply();
+    });
   };
 });
 
@@ -160,14 +165,17 @@ app.factory("SignService", function ($http) {
   return function ($scope) {
     $scope.sign = {};
     $scope.activeSign = "";
+    $scope.loadUser = function (data) {
+      if (!data.data.user) return;
+      ls.token = data.data.token;
+      $scope.user = { name: data.data.user.name };
+      $scope.lists.tracked = JSON.parse(data.data.user.tracked);
+    };
     $scope.activateSign = function (type) {
       return $scope.activeSign = $scope.activeSign === type ? "" : type;
     };
     $scope.submitSign = function () {
-      $http.post("/sign" + $scope.activeSign, JSON.stringify($scope.sign)).then(function (data) {
-        ls.token = data.data.token;
-        $scope.user = data.data.user;
-      });
+      $http.post("/sign" + $scope.activeSign, JSON.stringify($scope.sign)).then($scope.loadUser);
       $scope.sign = {};
       $scope.activeSign = "";
     };
@@ -175,47 +183,55 @@ app.factory("SignService", function ($http) {
       $scope.user = false;
       ls.token = false;
     };
-
-    $http.get("/signToken").then(function (data) {
-      $scope.user = data.data.user;
-    });
+    $http.get("/signToken").then($scope.loadUser);
   };
 });
 
-app.factory("TagsService", function () {
+app.factory("TagsService", function (filters) {
   return function ($scope) {
     $scope.searchFor = function (tag) {
       return $scope.search = tag;
-    };
-    $scope.filters = {
-      sources: ls.sources ? JSON.parse(ls.sources) : [{ name: "wfhio", color: "darkgrey", off: false, on: false }, { name: "weworkremotely", color: "white", off: false, on: false }, { name: "remoteok", color: "blue", off: false, on: false }, { name: "stackoverflow", color: "white", off: false, on: false }, { name: "github", color: "darkgrey", off: false, on: false }, { name: "indeed", color: "blue", off: false, on: false }, { name: "themuse", color: "white", off: false, on: false }, { name: "coroflot", color: "darkgrey", off: false, on: false }, { name: "smashingjobs", color: "orange", off: false, on: false }, { name: "dribbble", color: "green", off: false, on: false }, { name: "jobspresso", color: "orange", off: false, on: false }, { name: "authenticjobs", color: "darkgrey", off: false, on: false }],
-      tags: ls.tags ? JSON.parse(ls.tags) : [{ name: "node", color: "green", off: false, on: false }, { name: "rails", color: "red", off: false, on: false }, { name: "python", color: "blue", off: false, on: false }, { name: "javascript", color: "yellow", off: false, on: false }, { name: ".net", color: "grey", off: false, on: false }, { name: "java", color: "orange", off: false, on: false }, { name: "angular", color: "red", off: false, on: false }, { name: "react", color: "blue", off: false, on: false }, { name: "android", color: "green", off: false, on: false }, { name: "ios", color: "white", off: false, on: false }, { name: "aws", color: "darkgrey", off: false, on: false }, { name: "full stack", color: "grey", off: false, on: false }, { name: "frontend", color: "white", off: false, on: false }, { name: "backend", color: "darkgrey", off: false, on: false }, { name: "developer", color: "yellow", off: false, on: false }, { name: "designer", color: "purple", off: false, on: false }, { name: "engineer", color: "blue", off: false, on: false }, { name: "manager", color: "red", off: false, on: false }]
-    };
+    }; // change this to append
+    $scope.filters = filters;
     $scope.getColor = function (name) {
-      var findSource = $scope.filters.sources.find(function (e) {
+      return $scope.filters.find(function (e) {
         return e.name === name;
-      }),
-          findTag = $scope.filters.tags.find(function (e) {
-        return e.name === name;
-      });
-      if (findSource || findTag) return (findSource || findTag).color;
+      }).color;
     };
-    $scope.tagOn = function (tag, type) {
-      tag.on = !tag.on;
-      tag.off = false;
-      ls[type] = JSON.stringify($scope.filters[type]);
-    };
-    $scope.tagOff = function (tag, type) {
-      tag.off = !tag.off;
-      tag.on = false;
-      ls[type] = JSON.stringify($scope.filters[type]);
+    $scope.tagChange = function (tag, change) {
+      var other = change === "on" ? "off" : "on";
+      tag[change] = !tag[change];
+      tag[other] = false;
+      ls.filters = JSON.stringify($scope.filters);
     };
     $scope.clearTags = function (type) {
-      $scope.filters[type].forEach(function (tag) {
-        tag.off = false;
-        tag.on = false;
+      $scope.filters.forEach(function (tag) {
+        tag.off = false;tag.on = false;
       });
-      ls[type] = JSON.stringify($scope.filters[type]);
+      ls.filters = JSON.stringify($scope.filters);
     };
   };
 });
+
+function checker($scope, job, props) {
+  var tags = $scope.filters.reduce(function (obj, e) {
+    return e.off ? obj.off.push(e.name) : e.on ? obj.on.push(e.name) : 0, obj;
+  }, { on: [], off: [] }),
+      check = !tags.on.length,
+      tagger = function tagger(result) {
+    return function (name) {
+      for (var i = 0; i < props.length; i++) {
+        var jobProp = name === "java" ? job[props[i]].replace(/[jJ]+avascript/g, "") : job[props[i]];
+        if (jobProp.toLowerCase().indexOf(name) > -1) {
+          check = result;
+          i = props.length;
+        }
+      }
+    };
+  };
+  if (tags.on.length) tags.on.forEach(tagger(true));
+  tags.off.forEach(tagger(false));
+  return check;
+}
+
+app.value("filters", ls.filters ? JSON.parse(ls.filters) : [{ name: "wfhio", color: "darkgrey", off: false, on: false }, { name: "weworkremotely", color: "white", off: false, on: false }, { name: "remoteok", color: "blue", off: false, on: false }, { name: "stackoverflow", color: "white", off: false, on: false }, { name: "github", color: "darkgrey", off: false, on: false }, { name: "indeed", color: "blue", off: false, on: false }, { name: "themuse", color: "white", off: false, on: false }, { name: "coroflot", color: "darkgrey", off: false, on: false }, { name: "smashingjobs", color: "orange", off: false, on: false }, { name: "dribbble", color: "green", off: false, on: false }, { name: "jobspresso", color: "orange", off: false, on: false }, { name: "authenticjobs", color: "darkgrey", off: false, on: false }, { name: "node", color: "green", off: false, on: false }, { name: "rails", color: "red", off: false, on: false }, { name: "python", color: "blue", off: false, on: false }, { name: "javascript", color: "yellow", off: false, on: false }, { name: ".net", color: "grey", off: false, on: false }, { name: "java", color: "orange", off: false, on: false }, { name: "angular", color: "red", off: false, on: false }, { name: "react", color: "blue", off: false, on: false }, { name: "android", color: "green", off: false, on: false }, { name: "ios", color: "white", off: false, on: false }, { name: "aws", color: "darkgrey", off: false, on: false }, { name: "full stack", color: "grey", off: false, on: false }, { name: "frontend", color: "white", off: false, on: false }, { name: "backend", color: "darkgrey", off: false, on: false }, { name: "developer", color: "yellow", off: false, on: false }, { name: "designer", color: "purple", off: false, on: false }, { name: "engineer", color: "blue", off: false, on: false }, { name: "manager", color: "red", off: false, on: false }]);

@@ -1,18 +1,21 @@
 /* Company */
-.company
+#companylist
   display: block
+  transition: .5s all
+  .trackerOpen &
+    height: 100vh
+    overflow: hidden
+    transform: translate3d(100vw,0,0) !important
+
+.company
   margin: 10px auto
   max-width: 800px
-  opacity: 1
   width: 90%
-  &.off
-    opacity: 0.5
 
 .company-name
   @extend .darkgrey
   cursor: default
   font-size: 20px
-  max-height: 27px
   overflow: hidden
   padding: 5px 10px
 

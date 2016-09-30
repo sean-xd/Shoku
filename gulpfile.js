@@ -58,8 +58,8 @@ gulp.task("default", ["html", "partials", "js", "css"]);
 // Dev Tasks
 gulp.task("nodemon", cb => {
   var started = false;
-  return nodemon({script: "server.js", watch: "server.js"}).on("start", () => {
-    cb();
+  return nodemon({script: "server.js", watch: ["server.js", "db/*.js"]}).on("start", () => {
+    if(!started) cb();
     started = true;
   });
 });

@@ -2,6 +2,8 @@
   class="job"
   ng-repeat="job in company.jobs | filter: search | filter:jobFilter | orderBy: '-date'"
   ng-class="{big: job.active}">
+  <i class="job-track" ng-click="trackJob(job)" ng-class="{tracked: isJobTracked(job)}">grade</i>
+  <i class="job-ban">clear</i>
   <div class="job-info">
     <div class="job-title" ng-click="activateJob(job)">{{job.title}}</div>
     <a class="job-apply" href="{{job.url}}" ng-show="job.active">Apply</a>

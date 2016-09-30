@@ -3,6 +3,7 @@ app.directive("companylist", () => ({templateUrl: "partials/companylist.html"}))
 app.directive("heading", () => ({templateUrl: "partials/heading.html"}));
 app.directive("joblist", () => ({templateUrl: "partials/joblist.html"}));
 app.directive("sidebar", () => ({templateUrl: "partials/sidebar.html"}));
+app.directive("tracker", () => ({templateUrl: "partials/tracker.html"}));
 
 // Functions
 app.directive('ngRightClick', $parse => {

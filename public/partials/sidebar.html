@@ -1,11 +1,15 @@
-<div class="tag-group" ng-repeat="(type, list) in filters">
-  <div class="link taglink" ng-click="open[type] = !open[type];">{{type | upperFirst}}</div>
-  <div class="link clear-tags" ng-click="clearTags(type);" ng-show="open[type]">Clear</div>
-  <div class="tags" ng-class="{open: open[type]}">
-    <div ng-repeat="tag in list"
+<div class="tag-group">
+
+  <div class="link taglink" ng-show="user" ng-click="trackerToggle()" ng-class="{trackerOpen}">Tracked Jobs</div>
+
+  <div class="link taglink" ng-click="open.filters = !open.filters;">Filters</div>
+  <div class="link clear-tags" ng-click="clearTags();" ng-show="open.filters">Clear</div>
+  <div class="tags" ng-class="{open: open.filters}">
+    <div ng-repeat="tag in filters"
       class="link {{tag.color}}"
       ng-class="{off: tag.off, on: tag.on}"
-      ng-click="tagOn(tag, type)"
-      ng-right-click="tagOff(tag, type)">{{tag.name}}</div>
+      ng-click="tagChange(tag, 'on')"
+      ng-right-click="tagChange(tag, 'off')">{{tag.name}}</div>
   </div>
+
 </div>

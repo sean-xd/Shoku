@@ -13,7 +13,9 @@
 
 .job-info
   height: 50px
+  margin: 0 auto
   position: relative
+  width: 90%
 .job-title
   box-sizing: border-box
   cursor: pointer
@@ -62,8 +64,28 @@
 .job-description
   box-sizing: border-box
   font-size: 14px
+  margin: 0 auto
   max-height: 340px
   overflow-y: scroll
-  padding: 5px 40px 20px 40px
+  padding: 5px 10px 20px 10px
+  width: 90%
   img
     width: 200px
+
+.job-track, .job-ban
+  font-size: 25px
+  padding-top: 13px
+  position: absolute
+.job-track
+  @include textshadow(rgb(80,80,40))
+  @include topleft(0px, 0px)
+  color: white
+  padding-left: 1%
+  &:hover, &.tracked
+    color: rgb(230, 230, 100)
+.job-ban
+  @include topright(0px, 0px)
+  color: rgb(160, 80, 80)
+  padding-right: 1%
+  &:hover
+    color: rgb(180,60,60)
