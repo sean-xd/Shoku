@@ -1,5 +1,6 @@
 <i class="menu" ng-click="sidebarOpen = !sidebarOpen;">menu</i>
-<div class="link title">Shoku</div>
+<div class="link title" ng-click="trackerOpen = false;">Shoku</div>
+<div class="link tracker-link" ng-click="trackerOpen = true;" ng-show="!sidebarOpen">Tracker</div>
 <input class="link search" type="text" ng-model="search" placeholder="Search Jobs">
 <div class="heading">Daily Tech Jobs</div>
 
