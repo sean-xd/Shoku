@@ -69,6 +69,7 @@ app.post("/track", (req, res) => {
       user.tracked = req.body.tracked;
       fs.writeFile("./db/users.json", JSON.stringify(users));
     }
+    res.sendStatus(200);
   });
 });
 
