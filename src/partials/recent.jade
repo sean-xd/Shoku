@@ -1,4 +1,4 @@
-.heading Daily Tech Jobs
+.heading Recent Tech Jobs
 input.hero(type="text" ng-model="search[0]" placeholder="Search Recent Jobs")
 .company(ng-repeat="company in lists.companies | filter:search[0] | filter:companyFilter | orderBy: '-latest' | limitTo:companyLimit" ng-class="{off: company.off}")
   .company-name(ng-click="company.off = !company.off")

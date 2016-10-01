@@ -42,7 +42,7 @@
   padding-bottom: 100px
   transition: .3s all
   .trackerOpen &
-    height: calc(100vh - 296px)
+    height: calc(100vh)
     overflow: hidden
     transform: translate3d(100vw,0,0) !important
 
@@ -151,8 +151,11 @@
   @include topleft(0px, 0px)
   color: white
   padding-left: 1%
+  z-index: 1
+  &:hover
+    opacity: .8
   &:hover, &.tracked
-    color: rgb(230, 230, 100)
+    color: yellow
 .job-ban
   @include topright(0px, 0px)
   color: rgb(160, 80, 80)
