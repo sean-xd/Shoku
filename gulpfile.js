@@ -2,10 +2,9 @@
 var gulp = require("gulp"),
   concat = require("gulp-concat"),
   flatten = require("gulp-flatten"),
+  jade = require("gulp-jade"),
   babel = require("gulp-babel"),
-  minify = require("gulp-minify"),
   sass = require('gulp-ruby-sass'),
-  eslint = require('gulp-eslint'),
   autoprefixer = require('gulp-autoprefixer'),
   cleanCSS = require("gulp-clean-css"),
   browserSync = require("browser-sync"),
@@ -13,9 +12,9 @@ var gulp = require("gulp"),
 
 // Files
 var src = {
-    html: "src/index.html",
-    partials: "src/partials/*.html",
-    sass: ["src/styles/fonts.sass", "src/styles/classes.sass", "src/styles/reset.sass", "src/styles/*.sass", "src/styles/mediaQueries.sass"],
+    html: "src/index.jade",
+    partials: "src/partials/*.jade",
+    sass: ["mixins", "reset", "fonts", "classes", "base", "components/*", "media"].map(e => `src/styles/${e}.sass`),
     css: "src/temp/build.sass",
     js: "src/scripts/*.js"
   },
@@ -24,11 +23,13 @@ var src = {
 // Build Tasks
 gulp.task("html", () => {
   return gulp.src(src.html)
+    .pipe(jade())
     .pipe(gulp.dest(dest.public));
 });
 
 gulp.task("partials", () => {
   return gulp.src(src.partials)
+    .pipe(jade())
     .pipe(flatten())
     .pipe(gulp.dest(dest.partials));
 });

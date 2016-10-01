@@ -1,0 +1,29 @@
+/* Mixins */
+@mixin layer($zindex)
+  position: fixed
+  z-index: $zindex
+
+@mixin topleft($top, $left)
+  top: $top
+  left: $left
+
+@mixin topright($top, $right)
+  top: $top
+  right: $right
+
+@mixin hw($h, $w)
+  height: $h
+  width: $w
+
+@mixin bsbbpad($pad)
+  box-sizing: border-box
+  padding: $pad
+
+@mixin textshadow($color)
+  text-shadow: 1px 1px $color, 1px -1px $color, -1px 1px $color, -1px -1px $color
+
+/* Shadows */
+%textShadow
+  text-shadow: 1px 1px black, 1px -1px black, -1px 1px black, -1px -1px black
+%boxShadow
+  box-shadow: 0px 0px 20px 2px rgba(0,0,0,.5)

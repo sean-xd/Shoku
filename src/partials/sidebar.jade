@@ -1,0 +1,9 @@
+.side-tracker(ng-show="user" ng-click="trackerToggle()" ng-class="{trackerOpen}") Tracker
+.side-filters(ng-click="filtersOpen = !filtersOpen;") Filters
+.side-clear(ng-click="clearTags();") Clear
+.filters
+  .filter(ng-repeat="tag in filters"
+    class="{{tag.color}}"
+    ng-class="{off: tag.off, on: tag.on}"
+    ng-click="tagChange(tag, 'on')"
+    ng-right-click="tagChange(tag, 'off')") {{tag.name}}

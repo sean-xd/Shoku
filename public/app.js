@@ -6,7 +6,7 @@ var ls = localStorage,
     _c;
 
 app.controller("BodyController", function ($scope, $http, TagsService, SignService, CompanyService) {
-  $scope.open = {};
+  $scope.search = ["", ""];
   TagsService($scope);
   SignService($scope);
   CompanyService($scope);
@@ -20,14 +20,11 @@ app.controller("BodyController", function ($scope, $http, TagsService, SignServi
 });
 
 // Partials
-app.directive("companylist", function () {
-  return { templateUrl: "partials/companylist.html" };
+app.directive("recent", function () {
+  return { templateUrl: "partials/recent.html" };
 });
-app.directive("heading", function () {
-  return { templateUrl: "partials/heading.html" };
-});
-app.directive("joblist", function () {
-  return { templateUrl: "partials/joblist.html" };
+app.directive("auth", function () {
+  return { templateUrl: "partials/auth.html" };
 });
 app.directive("sidebar", function () {
   return { templateUrl: "partials/sidebar.html" };

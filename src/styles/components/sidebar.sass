@@ -1,0 +1,70 @@
+/* Sidebar */
+#sidebar
+  @extend .darkergrey
+  @extend %boxShadow
+  @include layer(3)
+  @include topleft(0px, -220px)
+  @include hw(100%, 220px)
+  overflow-y: scroll
+  padding: 40px 0 0 0
+  transition: .2s all
+  .sidebarOpen &
+    transform: translate3d(220px,0,0)
+
+.side-tracker, .side-filters
+  @include bsbbpad(10px 0px 10px 40px)
+
+.side-tracker, .side-filters, .side-clear
+  cursor: pointer
+  font-size: 16px
+  transition: .2s all
+.side-tracker, .side-filters
+  &:hover
+    background: black
+
+.trackerOpen .side-tracker
+  @extend .lightgrey
+  &:hover
+    background: white
+
+.side-filters, .side-clear
+  display: inline-block
+.side-filters
+  width: 100%
+.side-clear
+  @include hw(40px, 0px)
+  @include bsbbpad(10px 0px)
+  @extend .lightgrey
+  box-shadow: inset 5px 1px 15px -5px black
+  overflow: hidden
+  position: absolute
+  text-align: center
+  &:hover
+    background: white
+
+.filtersOpen
+  .side-filters
+    width: 75%
+  .side-clear
+    width: 25%
+
+.filters
+  height: 0px
+  overflow-y: hidden
+  text-align: center
+  transition: .2s all
+  .filtersOpen &
+    height: 625px
+
+.filter
+  @include hw(39px, 110px)
+  @include bsbbpad(10px 0px)
+  display: inline-block
+  font-size: 14px
+  opacity: .5
+  &.off
+    opacity: .25
+    text-decoration: line-through
+  &.on
+    opacity: 1
+    font-weight: 500

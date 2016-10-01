@@ -1,0 +1,24 @@
+doctype html
+html(lang="en" ng-app="app")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    title Shoku | Daily Tech Jobs
+    link(rel="stylesheet" href="build.css")
+    script(src="https://cdn.jsdelivr.net/lodash/4.13.1/lodash.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js")
+    script(src="app.js")
+
+  body(ng-controller="BodyController" ng-class="{sidebarOpen, isScrolled, trackerOpen, filtersOpen}")
+    img.background(src="https://source.unsplash.com/random" onload="this.classList.add('show')")
+    nav
+      i.menu(ng-click="sidebarOpen = !sidebarOpen;") menu
+      .logo(ng-click="trackerOpen = false;") Shoku
+      .nav-tracker(ng-click="trackerOpen = true;" ng-show="!sidebarOpen && !isScrolled && user") Tracker
+    input.search(type="text" ng-model="search[trackerOpen]" placeholder="Search {{trackerOpen ? 'Tracked' : 'Recent'}} Jobs")
+    auth#auth
+    sidebar#sidebar
+    main
+      tracker#tracker
+      recent#recent
+    footer Daily tech job tracker built by <a href="http://sean.mu">Sean.mu</a> in Boulder, CO.

@@ -1,0 +1,45 @@
+/* Sign in */
+.sign, .sign-out, .sign-name
+  @include layer(3)
+.sign
+  @extend .darkergrey
+  @include hw(40px, 160px)
+  @include topright(0px, 0px)
+  display: block
+  font-size: 0px
+  overflow-y: hidden
+  transition: .2s all
+  &.active
+    @include hw(160px, 160px)
+    background: black
+  input
+    font-size: 14px
+  button
+    border: none
+    font-size: 16px
+  button, input
+    @include hw(40px, 100%)
+    @include bsbbpad(10px)
+
+.sign-clear
+  @include topright(0px, 0px)
+  position: absolute
+
+.sign-in, .sign-up, .sign-out, .sign-name
+  @include hw(40px, 80px)
+  @include bsbbpad(10px)
+  cursor: pointer
+  display: inline-block
+  font-size: 14px
+  text-align: center
+
+.sign-out
+  @extend .darkergrey
+  @include topright(0px, 0px)
+.sign-name
+  @extend .lightgrey
+  @include topright(0px, 80px)
+  border-bottom: 1px solid rgb(20,20,20)
+  border-left: 1px solid rgb(20,20,20)
+  &:hover
+    background: white

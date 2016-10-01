@@ -1,0 +1,13 @@
+input.hero(type="text" ng-model="search[1]" placeholder="Search Tracked Jobs")
+
+.tracker
+  .job(ng-repeat="job in lists.tracked | filter: search[1] | filter:jobFilter | orderBy: '-date'" ng-class="{big: job.active}")
+    i.job-track(ng-click="trackJob(job)" ng-class="{tracked: isJobTracked(job)}") grade
+    .job-info
+      .job-title(ng-click="activateJob(job)") {{job.title}}
+      a.job-apply(href="{{job.url}}" ng-show="job.active") Apply
+      .job-location {{job.location || "Remote"}}
+      .job-tags
+        div(ng-repeat="tag in job.tags" ng-click="searchFor(tag);" class="{{getColor(tag)}} opaque") {{tag}}
+        .job-date {{job.date | dateFilter}}
+    .job-description(ng-bind-html="job.content | trust")

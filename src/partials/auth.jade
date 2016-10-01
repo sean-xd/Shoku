@@ -1,0 +1,9 @@
+.sign-name(ng-show="user.name") {{user.name}}
+.sign-out(ng-show="user.name" ng-click="signOut()") Signout
+form.sign(ng-class="{active: !!activeSign}" ng-submit="submitSign()" ng-hide="user.name")
+  .sign-up(ng-click="activateSign('up')" ng-hide="activeSign === 'in'") Signup
+  .sign-in(ng-click="activateSign('in')" ng-hide="activeSign === 'up'") Signin
+  i.sign-clear(ng-click="activeSign = '';" ng-show="!!activeSign") clear
+  input(type="email" placeholder="Email" ng-model="sign.email" required)
+  input(type="password" placeholder="Password" ng-model="sign.password" required)
+  button.sign-submit.green(type="submit") Submit

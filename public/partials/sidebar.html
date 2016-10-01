@@ -1,15 +1,1 @@
-<div class="tag-group">
-
-  <div class="link taglink" ng-show="user" ng-click="trackerToggle()" ng-class="{trackerOpen}">Tracker</div>
-
-  <div class="link taglink" ng-click="open.filters = !open.filters;">Filters</div>
-  <div class="link clear-tags" ng-click="clearTags();" ng-show="open.filters">Clear</div>
-  <div class="tags" ng-class="{open: open.filters}">
-    <div ng-repeat="tag in filters"
-      class="link {{tag.color}}"
-      ng-class="{off: tag.off, on: tag.on}"
-      ng-click="tagChange(tag, 'on')"
-      ng-right-click="tagChange(tag, 'off')">{{tag.name}}</div>
-  </div>
-
-</div>
+<div ng-show="user" ng-click="trackerToggle()" ng-class="{trackerOpen}" class="side-tracker">Tracker</div><div ng-click="filtersOpen = !filtersOpen;" class="side-filters">Filters</div><div ng-click="clearTags();" class="side-clear">Clear</div><div class="filters"><div ng-repeat="tag in filters" ng-class="{off: tag.off, on: tag.on}" ng-click="tagChange(tag, 'on')" ng-right-click="tagChange(tag, 'off')" class="filter {{tag.color}}">{{tag.name}}</div></div>

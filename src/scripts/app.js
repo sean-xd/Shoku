@@ -3,7 +3,7 @@ var ls = localStorage,
   _u, _c;
 
 app.controller("BodyController", ($scope, $http, TagsService, SignService, CompanyService) => {
-  $scope.open = {};
+  $scope.search = ["", ""];
   TagsService($scope);
   SignService($scope);
   CompanyService($scope);
