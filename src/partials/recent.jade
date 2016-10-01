@@ -1,6 +1,6 @@
 .heading Recent Tech Jobs
 input.hero(type="text" ng-model="search[0]" placeholder="Search Recent Jobs")
-.company(ng-repeat="company in lists.companies | filter:search[0] | filter:companyFilter | orderBy: '-latest' | limitTo:companyLimit" ng-class="{off: company.off}")
+.company(ng-repeat="company in lists.recent | filter:search[0] | filter:companyFilter | orderBy: '-latest' | limitTo:companyLimit" ng-class="{off: company.off}")
   .company-name(ng-click="company.off = !company.off")
     strong {{company.name}}
   .job(ng-repeat="job in company.jobs | filter: search[0] | filter:jobFilter | orderBy: '-date'" ng-class="{big: job.active}")

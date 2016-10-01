@@ -5,12 +5,17 @@ app.service('jwtInterceptor', function(){return {request: config => {
   return config;
 }}});
 
+function route(url, leaveHistory){
+  if(leaveHistory) window.history.pushState({}, "", url);
+  else window.history.replaceState({}, "", url);
+}
+
 app.factory("CompanyService", $http => $scope => {
   $scope.page = 0;
   $scope.lists = {
-    active: "companies",
+    active: "recent",
     tracked: ls.tracked ? JSON.parse(ls.tracked) : [],
-    companies: ls.companies ? JSON.parse(ls.companies) : []
+    recent: ls.recent ? JSON.parse(ls.recent) : []
   }
   $scope.companyLimit = 10;
   $scope.jobFilter = job => checker($scope, job, ["source", "content", "title"]);
@@ -31,21 +36,24 @@ app.factory("CompanyService", $http => $scope => {
     $http.post("/track", JSON.stringify({token: ls.token, tracked: ls.tracked}));
   };
 
-  $scope.trackerToggle = () => {
-    console.log($scope.trackerOpen);
-    $scope.lists.active = $scope.lists.active === "tracked" ? "companies" : "tracked";
-    $scope.trackerOpen = !$scope.trackerOpen;
+  $scope.trackerToggle = action => {
+    var actionActive = action === "show" ? "tracked" : "recent",
+      listActive = $scope.lists.active === "tracked" ? "recent" : "tracked",
+      active = action ? actionActive : listActive;
+    $scope.lists.active = active;
+    $scope.trackerOpen = active === "tracked";
+    window.history.replaceState({}, "", $scope.trackerOpen ? "/tracker/" : "/");
   };
 
   $scope.loadMore = () => {
     $http.get($scope.page ? "/jobs/" + $scope.page : "/jobs").then(data => {
       $scope.page += 1;
-      $scope.lists.companies = data.data;
-      ls.companies = JSON.stringify($scope.lists.companies);
+      $scope.lists.recent = data.data;
+      ls.recent = JSON.stringify($scope.lists.recent);
       ls.ttl = Date.now() + (1000 * 60 * 5);
     });
   };
-  if(!$scope.lists.companies.length || ls.ttl < Date.now()) $scope.loadMore();
+  if(!$scope.lists.recent.length || ls.ttl < Date.now()) $scope.loadMore();
 
   $scope.atBottom = false;
   document.addEventListener("scroll", e => {

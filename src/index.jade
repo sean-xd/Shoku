@@ -13,8 +13,8 @@ html(lang="en" ng-app="app")
     img.background(src="https://source.unsplash.com/random" onload="this.classList.add('show')")
     nav
       i.menu(ng-click="sidebarOpen = !sidebarOpen;") menu
-      .logo(ng-click="trackerOpen = false;") Shoku
-      .nav-tracker(ng-click="trackerOpen = true;" ng-show="!sidebarOpen && !isScrolled && user") Tracker
+      .logo(ng-click="trackerToggle('hide');") Shoku
+      .nav-tracker(ng-click="trackerToggle('show');" ng-show="!sidebarOpen && !isScrolled && user") Tracker
     input.search(type="text" ng-model="search[trackerOpen]" placeholder="Search {{trackerOpen ? 'Tracked' : 'Recent'}} Jobs")
     auth#auth
     sidebar#sidebar

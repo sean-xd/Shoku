@@ -8,6 +8,8 @@ app.controller("BodyController", ($scope, $http, TagsService, SignService, Compa
   SignService($scope);
   CompanyService($scope);
 
+  if(window.location.pathname === "/tracker/") $scope.trackerOpen = true;
+
   _u = () => $scope.user;
   _c = () => $scope.lists;
 });

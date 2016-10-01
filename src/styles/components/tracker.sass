@@ -1,12 +1,12 @@
 /* Company */
 #tracker
-  @include topleft(0px, -100vw)
+  @include topleft(0px, 100vw)
   display: block
   position: absolute
   transition: .3s all
   width: 100vw
   .trackerOpen &
-    transform: translate3d(100vw,0,0)
+    transform: translate3d(-100vw,0,0)
 
 .tracker
   @extend %boxShadow

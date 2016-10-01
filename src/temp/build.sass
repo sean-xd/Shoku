@@ -142,7 +142,7 @@ body
 .logo
   left: 35px
 .nav-tracker
-  left: 100px
+  left: 90px
 
 /* Main */
 main
@@ -260,7 +260,7 @@ footer
   .trackerOpen &
     height: calc(100vh)
     overflow: hidden
-    transform: translate3d(100vw,0,0) !important
+    transform: translate3d(-100vw,0,0) !important
 
 .company
   margin: 10px auto
@@ -452,13 +452,13 @@ footer
 
 /* Company */
 #tracker
-  @include topleft(0px, -100vw)
+  @include topleft(0px, 100vw)
   display: block
   position: absolute
   transition: .3s all
   width: 100vw
   .trackerOpen &
-    transform: translate3d(100vw,0,0)
+    transform: translate3d(-100vw,0,0)
 
 .tracker
   @extend %boxShadow
@@ -471,7 +471,7 @@ footer
     #recent
       transform: translate3d(110px,0,0)
     &.trackerOpen #tracker
-      transform: translate3d(calc(100vw + 110px),0,0)
+      transform: translate3d(calc(-100vw + 110px),0,0)
 
 @media(max-width: 650px)
   .heading
