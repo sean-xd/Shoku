@@ -146,6 +146,7 @@ body
 
 /* Main */
 main
+  overflow-x: hidden
   transition: .2s all
   width: 100%
 
@@ -454,6 +455,7 @@ footer
 #tracker
   @include topleft(0px, 100vw)
   display: block
+  padding-bottom: 100px
   position: absolute
   transition: .3s all
   width: 100vw
@@ -474,6 +476,9 @@ footer
       transform: translate3d(calc(-100vw + 110px),0,0)
 
 @media(max-width: 650px)
+  .isScrolled
+    .hero, .heading
+      transform: translate3d(0,0,0)
   .heading
     font-size: 80px
 
