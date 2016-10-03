@@ -5,13 +5,17 @@ var ls = localStorage,
     _u,
     _c;
 
-app.controller("BodyController", function ($scope, $http, TagsService, SignService, CompanyService) {
+app.controller("BodyController", function ($scope, $http, TagsService, SignService, CompanyService, ScrollService) {
   $scope.search = ["", ""];
   TagsService($scope);
   SignService($scope);
   CompanyService($scope);
+  ScrollService($scope);
 
-  if (window.location.pathname === "/tracker/") $scope.trackerOpen = true;
+  if (window.location.pathname === "/tracker/") {
+    $scope.trackerOpen = true;
+    $scope.lists.active = "tracker";
+  }
 
   _u = function _u() {
     return $scope.user;
@@ -142,7 +146,6 @@ app.factory("CompanyService", function ($http) {
     };
 
     $scope.loadMore = function () {
-      console.log("loading more");
       $http.get($scope.page ? "/jobs/" + $scope.page : "/jobs").then(function (data) {
         $scope.page += 1;
         $scope.lists.recent = data.data;
@@ -151,22 +154,27 @@ app.factory("CompanyService", function ($http) {
       });
     };
     if (!$scope.lists.recent.length || ls.ttl < Date.now()) $scope.loadMore();
+  };
+});
 
+app.factory("ScrollService", function () {
+  return function ($scope) {
     $scope.atBottom = false;
     document.addEventListener("scroll", function (e) {
-      console.log("ugh");
-      var almostBottom = document.body.scrollTop > document.body.scrollHeight - document.body.clientHeight - 200,
-          topToggle = document.body.scrollTop === 0 || document.body.scrollTop > 0 && !$scope.isScrolled,
-          atBottom = document.body.scrollTop === document.body.scrollHeight - document.body.clientHeight,
-          notAtBottom = !atBottom && $scope.atBottom,
-          newAtBottom = atBottom && !$scope.atBottom,
-          recentActive = $scope.lists.active === "recent",
-          addMoreCompanies = recentActive && almostBottom && $scope.companyLimit < $scope.lists.recent.length;
-      if (addMoreCompanies) $scope.companyLimit += 10;
-      if (topToggle) $scope.isScrolled = !$scope.isScrolled;
-      if (notAtBottom) $scope.atBottom = false;
-      if (newAtBottom) $scope.atBottom = true;
-      if (addMoreCompanies || topToggle || notAtBottom || newAtBottom) $scope.$apply();
+      // Heading Animation
+      if (document.body.scrollTop === 0 || document.body.scrollTop > 0 && !$scope.isScrolled) {
+        console.log("heading ani");
+        $scope.isScrolled = !$scope.isScrolled;
+        return $scope.$apply();
+      }
+      // Load More Companies
+      if ($scope.lists.active !== "recent") return;
+      if ($scope.companyLimit > 490) return;
+      if (document.body.scrollTop > document.body.scrollHeight - document.body.clientHeight - 200) {
+        console.log("company limit ++");
+        $scope.companyLimit += 10;
+        $scope.$apply();
+      }
     });
   };
 });
