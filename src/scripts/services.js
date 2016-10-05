@@ -1,22 +1,40 @@
+// HTTP Interceptor for JSON Web Token Authentication
 app.config($httpProvider => $httpProvider.interceptors.push('jwtInterceptor'));
+app.service('jwtInterceptor', function(){ // No arrow because Angular needs to bind the "this".
+  return {
+    request: config => {
+      if(ls.token) config.headers.Authorization = "Bearer " + ls.token;
+      return config;
+    }
+  }
+});
 
-app.service('jwtInterceptor', function(){return {request: config => {
-  if(ls.token) config.headers.Authorization = "Bearer " + ls.token;
-  return config;
-}}});
-
+// Url Manipulation
 function route(url, leaveHistory){
   if(leaveHistory) window.history.pushState({}, "", url);
   else window.history.replaceState({}, "", url);
 }
 
+// app.factory("CompanyService", $http => {
+//   var companies = {
+//     page: 0,
+//     lists: {
+//       active:
+//     }
+//   };
+//
+//   return companies;
+// });
+
 app.factory("CompanyService", $http => $scope => {
+  $scope.search = ["", ""];
   $scope.page = 0;
   $scope.lists = {
-    active: "recent",
+    active: window.location.pathname === "/tracker/" ? "tracked" : "recent",
     tracked: ls.tracked ? JSON.parse(ls.tracked) : [],
     recent: ls.recent ? JSON.parse(ls.recent) : []
   }
+  $scope.trackerOpen = $scope.lists.active === "tracked";
   $scope.companyLimit = 10;
   $scope.jobFilter = job => checker($scope, job, ["source", "content", "title"]);
   $scope.companyFilter = company => company.jobs.reduce((check, job) => check || $scope.jobFilter(job), false);
@@ -57,7 +75,6 @@ app.factory("CompanyService", $http => $scope => {
 });
 
 app.factory("ScrollService", () => $scope => {
-  $scope.atBottom = false;
   document.addEventListener("scroll", e => {
     // Heading Animation
     if(document.body.scrollTop === 0 || (document.body.scrollTop > 0 && !$scope.isScrolled)){

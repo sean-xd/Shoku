@@ -6,16 +6,10 @@ var ls = localStorage,
     _c;
 
 app.controller("BodyController", function ($scope, $http, TagsService, SignService, CompanyService, ScrollService) {
-  $scope.search = ["", ""];
   TagsService($scope);
   SignService($scope);
   CompanyService($scope);
   ScrollService($scope);
-
-  if (window.location.pathname === "/tracker/") {
-    $scope.trackerOpen = true;
-    $scope.lists.active = "tracker";
-  }
 
   _u = function _u() {
     return $scope.user;
@@ -26,11 +20,11 @@ app.controller("BodyController", function ($scope, $http, TagsService, SignServi
 });
 
 // Partials
-app.directive("recent", function () {
-  return { templateUrl: "partials/recent.html" };
-});
 app.directive("auth", function () {
   return { templateUrl: "partials/auth.html" };
+});
+app.directive("recent", function () {
+  return { templateUrl: "partials/recent.html" };
 });
 app.directive("sidebar", function () {
   return { templateUrl: "partials/sidebar.html" };
@@ -81,29 +75,46 @@ app.filter("upperFirst", function () {
   };
 });
 
+// HTTP Interceptor for JSON Web Token Authentication
 app.config(function ($httpProvider) {
   return $httpProvider.interceptors.push('jwtInterceptor');
 });
-
 app.service('jwtInterceptor', function () {
-  return { request: function request(config) {
+  // No arrow because Angular needs to bind the "this".
+  return {
+    request: function request(config) {
       if (ls.token) config.headers.Authorization = "Bearer " + ls.token;
       return config;
-    } };
+    }
+  };
 });
 
+// Url Manipulation
 function route(url, leaveHistory) {
   if (leaveHistory) window.history.pushState({}, "", url);else window.history.replaceState({}, "", url);
 }
 
+// app.factory("CompanyService", $http => {
+//   var companies = {
+//     page: 0,
+//     lists: {
+//       active:
+//     }
+//   };
+//
+//   return companies;
+// });
+
 app.factory("CompanyService", function ($http) {
   return function ($scope) {
+    $scope.search = ["", ""];
     $scope.page = 0;
     $scope.lists = {
-      active: "recent",
+      active: window.location.pathname === "/tracker/" ? "tracked" : "recent",
       tracked: ls.tracked ? JSON.parse(ls.tracked) : [],
       recent: ls.recent ? JSON.parse(ls.recent) : []
     };
+    $scope.trackerOpen = $scope.lists.active === "tracked";
     $scope.companyLimit = 10;
     $scope.jobFilter = function (job) {
       return checker($scope, job, ["source", "content", "title"]);
@@ -159,7 +170,6 @@ app.factory("CompanyService", function ($http) {
 
 app.factory("ScrollService", function () {
   return function ($scope) {
-    $scope.atBottom = false;
     document.addEventListener("scroll", function (e) {
       // Heading Animation
       if (document.body.scrollTop === 0 || document.body.scrollTop > 0 && !$scope.isScrolled) {

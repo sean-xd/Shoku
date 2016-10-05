@@ -12,6 +12,28 @@ var fs = require("fs"),
   ],
   format = {};
 
+// format.dice = magic => {
+//   var urls = ["1-design", "2-programming"],
+//     inception = Magic(urls.length, data => magic(data.reduce((arr, e) => arr.concat(e), [])), []);
+//   urls.forEach(path => {
+//     parseURL(`https://weworkremotely.com/categories/${path}/jobs.rss`, (err, data) => {
+//       if(!data || !data.feed || !data.feed.entries) return inception([]);
+//       var result = data.feed.entries.map(e => {
+//         var date = new Date(e.pubDate).getTime(),
+//           title = e.title.split(": ")[1],
+//           company = e.title.split(": ")[0],
+//           content = e.content,
+//           url = e.link,
+//           source = "weworkremotely",
+//           tags = getTags({title, content});
+//         if(company.length > 50) company = company.slice(0,50) + "...";
+//         return {date, title, company, content, url, source, tags};
+//       });
+//       inception(result);
+//     });
+//   });
+// };
+
 format.authentic = magic => {
   var apikey = process.env.AUTHENTIC || require("./apikeys").authentic;
 	request(`https://authenticjobs.com/api/?api_key=${apikey}&method=aj.jobs.search&format=json&perpage=10`, (err, res, body) => {

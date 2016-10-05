@@ -1,7 +1,7 @@
 .heading Tracked Jobs
 input.hero(type="text" ng-model="search[1]" placeholder="Search Tracked Jobs")
 .tracker
-  .job(ng-repeat="job in lists.tracked | filter: search[1] | filter:jobFilter | orderBy: '-date'" ng-class="{big: job.active}")
+  .job(ng-repeat="job in lists.tracked | filter: search[1] | filter:jobFilter | orderBy: '-date' track by $index" ng-class="{big: job.active}")
     i.job-track.tracked(ng-click="trackJob(job)") grade
     .job-info
       .job-title(ng-click="activateJob(job)") {{job.title}} @ {{job.company}}
