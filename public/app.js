@@ -19,6 +19,11 @@ app.controller("BodyController", function ($scope, $http, TagsService, SignServi
   };
 });
 
+// Url Manipulation
+function route(url, leaveHistory) {
+  if (leaveHistory) window.history.pushState({}, "", url);else window.history.replaceState({}, "", url);
+}
+
 // Partials
 app.directive("auth", function () {
   return { templateUrl: "partials/auth.html" };
@@ -80,30 +85,13 @@ app.config(function ($httpProvider) {
   return $httpProvider.interceptors.push('jwtInterceptor');
 });
 app.service('jwtInterceptor', function () {
-  // No arrow because Angular needs to bind the "this".
-  return {
+  return { // No arrow because Angular needs to bind the "this".
     request: function request(config) {
       if (ls.token) config.headers.Authorization = "Bearer " + ls.token;
       return config;
     }
   };
 });
-
-// Url Manipulation
-function route(url, leaveHistory) {
-  if (leaveHistory) window.history.pushState({}, "", url);else window.history.replaceState({}, "", url);
-}
-
-// app.factory("CompanyService", $http => {
-//   var companies = {
-//     page: 0,
-//     lists: {
-//       active:
-//     }
-//   };
-//
-//   return companies;
-// });
 
 app.factory("CompanyService", function ($http) {
   return function ($scope) {

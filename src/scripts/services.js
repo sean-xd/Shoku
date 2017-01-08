@@ -1,30 +1,11 @@
 // HTTP Interceptor for JSON Web Token Authentication
 app.config($httpProvider => $httpProvider.interceptors.push('jwtInterceptor'));
-app.service('jwtInterceptor', function(){ // No arrow because Angular needs to bind the "this".
-  return {
-    request: config => {
-      if(ls.token) config.headers.Authorization = "Bearer " + ls.token;
-      return config;
-    }
+app.service('jwtInterceptor', function(){return { // No arrow because Angular needs to bind the "this".
+  request: config => {
+    if(ls.token) config.headers.Authorization = "Bearer " + ls.token;
+    return config;
   }
-});
-
-// Url Manipulation
-function route(url, leaveHistory){
-  if(leaveHistory) window.history.pushState({}, "", url);
-  else window.history.replaceState({}, "", url);
-}
-
-// app.factory("CompanyService", $http => {
-//   var companies = {
-//     page: 0,
-//     lists: {
-//       active:
-//     }
-//   };
-//
-//   return companies;
-// });
+}});
 
 app.factory("CompanyService", $http => $scope => {
   $scope.search = ["", ""];

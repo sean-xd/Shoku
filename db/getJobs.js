@@ -154,7 +154,7 @@ format.jobspresso = magic => {
 };
 
 format.remoteok = magic => {
-  request("https://remoteok.io/index.json", (e, r, body) => {
+  request("https://remoteok.io/remote-jobs.json", (e, r, body) => {
     var result = JSON.parse(body).map(obj => {
       var date = new Date(obj.date).getTime(),
         title = obj.position,

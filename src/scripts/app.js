@@ -11,3 +11,9 @@ app.controller("BodyController", ($scope, $http, TagsService, SignService, Compa
   _u = () => $scope.user;
   _c = () => $scope.lists;
 });
+
+// Url Manipulation
+function route(url, leaveHistory){
+  if(leaveHistory) window.history.pushState({}, "", url);
+  else window.history.replaceState({}, "", url);
+}
