@@ -5,14 +5,13 @@ module.exports = {get: coroflotGet, parse: coroflotParse};
  * @param {Function} cb
  */
 function coroflotGet(cb){
-  var parseURL = parseURL || require("rss-parser").parseURL,
-    request = request || require("request"),
-    cheerio = cheerio || require("cheerio"),
-    Magic = Magic || require("_magic"),
+  var parseURL = require("rss-parser").parseURL,
+    request = require("request"),
+    cheerio = require("cheerio"),
     url = "http://feeds.feedburner.com/coroflot/AllJobs?format=xml";
   parseURL(url, (err, data) => {
     if(!data || !data.feed || !data.feed.entries) return cb(new Error("No Data Entries"));
-    var done = Magic(data.feed.entries.length, cb, []);
+    var done = Wait(data.feed.entries.length, cb, []);
     data.feed.entries.forEach(job => {
       request(job.guid, (err2, res, body) => {
         job.content = cheerio.load(body)("#job_description_public p").html();
@@ -41,4 +40,8 @@ function coroflotParse(data){
     if(company.length < 2 || Date.now() - date > 1000 * 60 * 60 * 24 * 30) return list;
     return list.concat([{company, content, date, location, source, title, url}]);
   }, []);
+}
+
+function Wait(num, cb, args){
+  return data => (args.length === num - 1) ? cb(args.concat([data])) : args.push(data);
 }

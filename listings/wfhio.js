@@ -8,8 +8,7 @@ function wfhioGet(cb){
   var request = require("request"),
     parseString = require("xml2js").parseString,
     parseURL = require("rss-parser").parseURL,
-    Magic = Magic || require("_magic"),
-    done = Magic(3, data => cb(data.reduce((arr, e) => arr.concat(e), [])), []);
+    done = Wait(3, data => cb(data.reduce((arr, e) => arr.concat(e), [])), []);
   ["1-remote-software-development", "4-remote-design", "6-remote-devops"].forEach(e => {
     var url = `https://www.wfh.io/categories/${e}/jobs.atom`;
     request(url, (err, res, body) => {
@@ -44,4 +43,8 @@ function wfhioParse(data){
     if(company.length < 2 || Date.now() - date > 1000 * 60 * 60 * 24 * 30 || date > Date.now()) return list;
     return list.concat([{company, content, date, location, source, title, url}]);
   }, []);
+}
+
+function Wait(num, cb, args){
+  return data => (args.length === num - 1) ? cb(args.concat([data])) : args.push(data);
 }

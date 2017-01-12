@@ -6,8 +6,7 @@ module.exports = {get: weworkremotelyGet, parse: weworkremotelyParse};
  */
 function weworkremotelyGet(cb){
   var parseURL = parseURL || require("rss-parser").parseURL,
-    Magic = Magic || require("_magic"),
-    done = Magic(2, data => cb(data[0].feed.entries.concat(data[1].feed.entries)), []);
+    done = Wait(2, data => cb(data[0].feed.entries.concat(data[1].feed.entries)), []);
   ["1-design", "2-programming"].forEach(e => {
     var url = `https://weworkremotely.com/categories/${e}/jobs.rss`;
     parseURL(url, (err, data) => done(err || data || new Error("No Data")));
@@ -33,4 +32,8 @@ function weworkremotelyParse(data){
     if(company.length < 2 || Date.now() - date > 1000 * 60 * 60 * 24 * 30 || date > Date.now()) return list;
     return list.concat([{company, content, date, location, source, title, url}]);
   }, []);
+}
+
+function Wait(num, cb, args){
+  return data => (args.length === num - 1) ? cb(args.concat([data])) : args.push(data);
 }

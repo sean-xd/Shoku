@@ -1,7 +1,7 @@
 var expect = require("chai").expect,
   weworkremotely = require("../listings/weworkremotely");
 
-describe("We Work Remotely", function(){
+xdescribe("We Work Remotely", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);

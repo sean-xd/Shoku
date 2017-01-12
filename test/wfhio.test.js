@@ -1,7 +1,7 @@
 var expect = require("chai").expect,
   wfhio = require("../listings/wfhio");
 
-describe("Wfh.io", function(){
+xdescribe("Wfh.io", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
