@@ -1,7 +1,7 @@
 var expect = require("chai").expect,
   dribbble = require("../listings/dribbble");
 
-xdescribe("Dribbble", function(){
+describe("Dribbble", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);

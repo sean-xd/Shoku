@@ -1,7 +1,7 @@
 var expect = require("chai").expect,
   remoteok = require("../listings/remoteok");
 
-xdescribe("Remoteok", function(){
+describe("Remoteok", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);

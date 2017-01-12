@@ -1,7 +1,7 @@
 var expect = require("chai").expect,
   github = require("../listings/github");
 
-xdescribe("Github", function(){
+describe("Github", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);

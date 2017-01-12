@@ -1,7 +1,7 @@
 var expect = require("chai").expect,
   authentic = require("../listings/authentic");
 
-xdescribe("Authentic Jobs", function(){
+describe("Authentic Jobs", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);

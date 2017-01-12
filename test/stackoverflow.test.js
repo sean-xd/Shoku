@@ -1,7 +1,7 @@
 var expect = require("chai").expect,
   stackoverflow = require("../listings/stackoverflow");
 
-xdescribe("Stack Overflow", function(){
+describe("Stack Overflow", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);

@@ -1,7 +1,7 @@
 var expect = require("chai").expect,
   coroflot = require("../listings/coroflot");
 
-xdescribe("Coroflot", function(){
+describe("Coroflot", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);

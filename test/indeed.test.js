@@ -1,7 +1,7 @@
 var expect = require("chai").expect,
   indeed = require("../listings/indeed");
 
-xdescribe("Indeed", function(){
+describe("Indeed", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);

@@ -1,7 +1,7 @@
 var expect = require("chai").expect,
   smashingjobs = require("../listings/smashingjobs");
 
-xdescribe("Smashing Jobs", function(){
+describe("Smashing Jobs", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
