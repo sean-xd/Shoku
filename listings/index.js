@@ -1,18 +1,17 @@
 /** @module listings */
-module.exports = {get: getListings, parse: parseListings, update: updateListings};
+module.exports = updateListings;
 
 /**
  * Passes results of get and parse to database.
  * @param {Object} db
  */
- function updateListings(db){
-   var fs = require("fs");
-   db.ttl = Date.now() + (1000 * 60 * 15);
-   getListings(data => {
-     db.jobs = parseListings(data);
-     fs.writeFile("../db.json", JSON.stringify(db));
-   });
- }
+function updateListings(db, cb){
+  db.ttl = Date.now() + (1000 * 60 * 15);
+  getListings(data => {
+    db.companies = parseListings(data);
+    if(cb) cb();
+  });
+}
 
 /**
  * Passes listings to callback.
@@ -21,8 +20,7 @@ module.exports = {get: getListings, parse: parseListings, update: updateListings
 function getListings(cb){
   var sources = ["authentic", "coroflot", "dribbble", "github", "indeed",
     "remoteok", "smashingjobs", "stackoverflow", "weworkremotely", "wfhio"],
-    Magic = require("_magic"),
-    done = Magic(sources.length, cb, []);
+    done = Wait(sources.length, cb, []);
   sources.forEach(name => {
     var lib = require(`./${name}.js`);
     lib.get(data => done(lib.parse(data)));
@@ -36,16 +34,12 @@ function getListings(cb){
  */
 function parseListings(data){
   var hash = {};
-  return data.reduce((companies, jobs) => {
-    jobs.forEach(job => {
-      var jobHash = job.title.replace(/[\- ]/g, "") + job.company;
-      if(hash[jobHash]) return;
-      hash[jobHash] = true;
-      addTagsToJob(job);
-      addJobToCompany(job, companies);
-    });
-    return companies;
-  }, []).sort((a, b) => b.latest - a.latest);
+  return data.reduce((companies, jobs) => jobs.reduce((companies, job) => {
+    var jobHash = job.title.replace(/[\- ]/g, "") + job.company;
+    if(hash[jobHash]) return companies;
+    hash[jobHash] = true;
+    return addJobToCompany(companies, addTagsToJob(job));
+  }, companies), []).sort((a, b) => b.latest - a.latest);
 }
 
 /**
@@ -64,17 +58,23 @@ function addTagsToJob(job){
     }
     return content.indexOf(tag) > -1 || title.indexOf(tag) > -1;
   });
+  return job;
 }
 
 /**
  * Pushes job to company object in companies array.
- * @param {Object} job
  * @param {Array} companies
+ * @param {Object} job
  */
-function addJobToCompany(job, companies){
+function addJobToCompany(companies, job){
   var company = companies.find(e => e.name === job.company) || {name: job.company, jobs: [], latest: 0};
   if(!company.latest) companies.push(company);
   if(job.date > company.latest) company.latest = job.date;
   company.jobs.push(job);
   if(company.jobs.length > 1) company.jobs.sort((a, b) => b.date - a.date);
+  return companies;
+}
+
+function Wait(num, cb, args){
+  return data => (args.length === num - 1) ? cb(args.concat([data])) : args.push(data);
 }
