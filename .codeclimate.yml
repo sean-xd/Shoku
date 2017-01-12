@@ -1,0 +1,21 @@
+engines:
+  nodesecurity:
+    enabled: true
+  eslint:
+    enabled: true
+  duplication:
+    enabled: true
+  scss-lint:
+    enabled: true
+ratings:
+  paths:
+    - "routes/"
+    - "listings/"
+    - "src/scripts/"
+    - "src/styles/"
+    - "src/"
+exclude_paths:
+  - "test/"
+  - "public/"
+  - "docs/"
+  - "db/"

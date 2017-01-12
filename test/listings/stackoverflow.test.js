@@ -1,23 +1,26 @@
 var expect = require("chai").expect,
-  wfhio = require("../listings/wfhio");
+  stackoverflow = require("../../listings/stackoverflow");
 
-describe("Wfh.io", function(){
+describe("Stack Overflow", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
-    wfhio.get(data => {
+    stackoverflow.get(data => {
       raw = data;
-      parsed = wfhio.parse(data);
+      parsed = stackoverflow.parse(data);
       done();
     });
   });
 
-  describe("Request to Wfh.io RSS", function(){
-    it("should be an array", function(){
-      expect(Array.isArray(raw)).to.be.true;
+  describe("Request to Stackoverflow XML", function(){
+    it("should be an object", function(){
+      expect(raw).to.be.a("object");
     });
-    it("should contain job objects", function(){
-      expect(raw[0]).to.be.a("object");
+    it("should have deep property feed.entries", function(){
+      expect(raw).to.have.deep.property("feed.entries");
+    });
+    it("should contain array of entries", function(){
+      expect(Array.isArray(raw.feed.entries)).to.be.true;
     });
   });
 

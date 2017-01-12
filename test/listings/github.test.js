@@ -1,26 +1,26 @@
 var expect = require("chai").expect,
-  stackoverflow = require("../listings/stackoverflow");
+  github = require("../../listings/github");
 
-describe("Stack Overflow", function(){
+describe("Github", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
-    stackoverflow.get(data => {
+    github.get(data => {
       raw = data;
-      parsed = stackoverflow.parse(data);
+      parsed = github.parse(data);
       done();
     });
   });
 
-  describe("Request to Stackoverflow XML", function(){
-    it("should be an object", function(){
-      expect(raw).to.be.a("object");
+  describe("Request to Github JSON", function(){
+    it("should be a string", function(){
+      expect(raw).to.be.a("string");
     });
-    it("should have deep property feed.entries", function(){
-      expect(raw).to.have.deep.property("feed.entries");
+    it("should be a valid JSON array", function(){
+      expect(Array.isArray(JSON.parse(raw))).to.be.true;
     });
-    it("should contain array of entries", function(){
-      expect(Array.isArray(raw.feed.entries)).to.be.true;
+    it("should contain 50 entries", function(){
+      expect(JSON.parse(raw)).to.have.lengthOf(50);
     });
   });
 

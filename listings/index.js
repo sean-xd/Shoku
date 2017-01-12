@@ -1,5 +1,18 @@
 /** @module listings */
-module.exports = {get: getListings, parse: parseListings};
+module.exports = {get: getListings, parse: parseListings, update: updateListings};
+
+/**
+ * Passes results of get and parse to database.
+ * @param {Object} db
+ */
+ function updateListings(db){
+   var fs = require("fs");
+   db.ttl = Date.now() + (1000 * 60 * 15);
+   getListings(data => {
+     db.jobs = parseListings(data);
+     fs.writeFile("../db.json", JSON.stringify(db));
+   });
+ }
 
 /**
  * Passes listings to callback.

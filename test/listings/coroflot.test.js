@@ -1,26 +1,26 @@
 var expect = require("chai").expect,
-  github = require("../listings/github");
+  coroflot = require("../../listings/coroflot");
 
-describe("Github", function(){
+describe("Coroflot", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
-    github.get(data => {
+    coroflot.get(data => {
       raw = data;
-      parsed = github.parse(data);
+      parsed = coroflot.parse(data);
       done();
     });
   });
 
-  describe("Request to Github JSON", function(){
-    it("should be a string", function(){
-      expect(raw).to.be.a("string");
+  describe("Request to Coroflot Feedburner XML", function(){
+    it("should be an array", function(){
+      expect(Array.isArray(raw)).to.be.true;
     });
-    it("should be a valid JSON array", function(){
-      expect(Array.isArray(JSON.parse(raw))).to.be.true;
+    it("should contain job objects", function(){
+      expect(raw[0]).to.be.a("object");
     });
-    it("should contain 50 entries", function(){
-      expect(JSON.parse(raw)).to.have.lengthOf(50);
+    it("should have jobs with added content property", function(){
+      expect(raw[0]).to.have.property("content");
     });
   });
 

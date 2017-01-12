@@ -1,27 +1,23 @@
 var expect = require("chai").expect,
-  dribbble = require("../listings/dribbble");
+  wfhio = require("../../listings/wfhio");
 
-describe("Dribbble", function(){
+describe("Wfh.io", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
-    dribbble.get(data => {
+    wfhio.get(data => {
       raw = data;
-      parsed = dribbble.parse(data);
+      parsed = wfhio.parse(data);
       done();
     });
   });
 
-  describe("Request to Dribbble RSS", function(){
-    it("should return an object", function(){
-      expect(raw).to.be.a("object");
+  describe("Request to Wfh.io RSS", function(){
+    it("should be an array", function(){
+      expect(Array.isArray(raw)).to.be.true;
     });
-    it("should have deep property feed.entries", function(){
-      expect(raw).to.have.property("feed");
-      expect(raw.feed).to.have.property("entries");
-    });
-    it("should contain array of jobs in entries", function(){
-      expect(Array.isArray(raw.feed.entries)).to.be.true;
+    it("should contain job objects", function(){
+      expect(raw[0]).to.be.a("object");
     });
   });
 

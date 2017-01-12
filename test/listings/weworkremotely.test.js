@@ -1,30 +1,27 @@
 var expect = require("chai").expect,
-  authentic = require("../listings/authentic");
+  weworkremotely = require("../../listings/weworkremotely");
 
-describe("Authentic Jobs", function(){
+describe("We Work Remotely", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
-    authentic.get(data => {
+    weworkremotely.get(data => {
       raw = data;
-      parsed = authentic.parse(data);
+      parsed = weworkremotely.parse(data);
       done();
     });
   });
 
-  describe("Request to Authentic API", function(){
-    it("should get jobs as a string", function(){
-      expect(raw).to.be.a("string");
+  describe("Request to We Work Remotely XML", function(){
+    it("should be an array", function(){
+      expect(Array.isArray(raw)).to.be.true;
     });
-    it("should be string of JSON", function(){
-      expect(JSON.parse(raw)).to.be.a("object");
-    });
-    it("should have listings", function(){
-      expect(JSON.parse(raw)).to.have.property("listings");
+    it("should contain job objects", function(){
+      expect(raw[0]).to.be.a("object");
     });
   });
 
-  describe("Parsing Authentic Jobs JSON", function(){
+  describe("Parsing results of request", function(){
     it("should be an array", function(){
       expect(Array.isArray(parsed)).to.be.true;
     });

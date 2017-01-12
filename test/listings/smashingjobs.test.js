@@ -1,23 +1,26 @@
 var expect = require("chai").expect,
-  remoteok = require("../listings/remoteok");
+  smashingjobs = require("../../listings/smashingjobs");
 
-describe("Remoteok", function(){
+describe("Smashing Jobs", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
-    remoteok.get(data => {
+    smashingjobs.get(data => {
       raw = data;
-      parsed = remoteok.parse(data);
+      parsed = smashingjobs.parse(data);
       done();
     });
   });
 
-  describe("Request to Remoteok JSON", function(){
-    it("should be a string", function(){
-      expect(raw).to.be.a("string");
+  describe("Request Smashing Jobs XML", function(){
+    it("should be an object", function(){
+      expect(raw).to.be.a("object");
     });
-    it("should be a valid JSON array", function(){
-      expect(Array.isArray(JSON.parse(raw))).to.be.true;
+    it("should have deep property feed.entries", function(){
+      expect(raw).to.have.deep.property("feed.entries");
+    });
+    it("should contain array of entries", function(){
+      expect(Array.isArray(raw.feed.entries)).to.be.true;
     });
   });
 

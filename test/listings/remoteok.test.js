@@ -1,26 +1,23 @@
 var expect = require("chai").expect,
-  indeed = require("../listings/indeed");
+  remoteok = require("../../listings/remoteok");
 
-describe("Indeed", function(){
+describe("Remoteok", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
-    indeed.get(data => {
+    remoteok.get(data => {
       raw = data;
-      parsed = indeed.parse(data);
+      parsed = remoteok.parse(data);
       done();
     });
   });
 
-  describe("Request to Indeed API", function(){
-    it("should be an object", function(){
-      expect(raw).to.be.a("object");
+  describe("Request to Remoteok JSON", function(){
+    it("should be a string", function(){
+      expect(raw).to.be.a("string");
     });
-    it("should have a deep result property", function(){
-      expect(raw).to.have.deep.property("response.results[0].result");
-    });
-    it("should contain array in result", function(){
-      expect(Array.isArray(raw.response.results[0].result)).to.be.true;
+    it("should be a valid JSON array", function(){
+      expect(Array.isArray(JSON.parse(raw))).to.be.true;
     });
   });
 

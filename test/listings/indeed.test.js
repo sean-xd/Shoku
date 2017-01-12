@@ -1,26 +1,26 @@
 var expect = require("chai").expect,
-  coroflot = require("../listings/coroflot");
+  indeed = require("../../listings/indeed");
 
-describe("Coroflot", function(){
+describe("Indeed", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
-    coroflot.get(data => {
+    indeed.get(data => {
       raw = data;
-      parsed = coroflot.parse(data);
+      parsed = indeed.parse(data);
       done();
     });
   });
 
-  describe("Request to Coroflot Feedburner XML", function(){
-    it("should be an array", function(){
-      expect(Array.isArray(raw)).to.be.true;
+  describe("Request to Indeed API", function(){
+    it("should be an object", function(){
+      expect(raw).to.be.a("object");
     });
-    it("should contain job objects", function(){
-      expect(raw[0]).to.be.a("object");
+    it("should have a deep result property", function(){
+      expect(raw).to.have.deep.property("response.results[0].result");
     });
-    it("should have jobs with added content property", function(){
-      expect(raw[0]).to.have.property("content");
+    it("should contain array in result", function(){
+      expect(Array.isArray(raw.response.results[0].result)).to.be.true;
     });
   });
 

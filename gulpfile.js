@@ -9,7 +9,6 @@ var gulp = require("gulp"),
   cleanCSS = require("gulp-clean-css"),
   browserSync = require("browser-sync"),
   nodemon = require("gulp-nodemon"),
-  // jsdoc = require("gulp-jsdoc"),
   exec = require("child_process").exec;
 
 // Files

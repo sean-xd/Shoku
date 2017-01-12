@@ -1,23 +1,27 @@
 var expect = require("chai").expect,
-  weworkremotely = require("../listings/weworkremotely");
+  dribbble = require("../../listings/dribbble");
 
-describe("We Work Remotely", function(){
+describe("Dribbble", function(){
   var raw, parsed;
   before(function(done){
     this.timeout(0);
-    weworkremotely.get(data => {
+    dribbble.get(data => {
       raw = data;
-      parsed = weworkremotely.parse(data);
+      parsed = dribbble.parse(data);
       done();
     });
   });
 
-  describe("Request to We Work Remotely XML", function(){
-    it("should be an array", function(){
-      expect(Array.isArray(raw)).to.be.true;
+  describe("Request to Dribbble RSS", function(){
+    it("should return an object", function(){
+      expect(raw).to.be.a("object");
     });
-    it("should contain job objects", function(){
-      expect(raw[0]).to.be.a("object");
+    it("should have deep property feed.entries", function(){
+      expect(raw).to.have.property("feed");
+      expect(raw.feed).to.have.property("entries");
+    });
+    it("should contain array of jobs in entries", function(){
+      expect(Array.isArray(raw.feed.entries)).to.be.true;
     });
   });
 
