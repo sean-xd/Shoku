@@ -1,3 +1,7 @@
+var parseURL = require("rss-parser").parseURL,
+  request = require("request"),
+  cheerio = require("cheerio");
+
 /** @module coroflot */
 module.exports = {get: coroflotGet, parse: coroflotParse};
 
@@ -6,10 +10,7 @@ module.exports = {get: coroflotGet, parse: coroflotParse};
  * @param {Function} cb
  */
 function coroflotGet(cb){
-  var parseURL = require("rss-parser").parseURL,
-    request = require("request"),
-    cheerio = require("cheerio"),
-    url = "http://feeds.feedburner.com/coroflot/AllJobs?format=xml";
+  var url = "http://feeds.feedburner.com/coroflot/AllJobs?format=xml";
   parseURL(url, (err, data) => {
     if(!data || !data.feed || !data.feed.entries) return cb(new Error("No Data Entries"));
     var done = Wait(data.feed.entries.length, cb, []);
