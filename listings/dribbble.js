@@ -1,3 +1,4 @@
+/** @module dribbble */
 module.exports = {get: dribbbleGet, parse: dribbbleParse};
 
 /**

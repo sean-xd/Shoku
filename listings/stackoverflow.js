@@ -1,3 +1,4 @@
+/** @module stackoverflow */
 module.exports = {get: stackoverflowGet, parse: stackoverflowParse};
 
 /**

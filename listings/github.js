@@ -1,3 +1,4 @@
+/** @module github */
 module.exports = {get: githubGet, parse: githubParse};
 
 /**

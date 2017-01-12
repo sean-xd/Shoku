@@ -8,7 +8,9 @@ var gulp = require("gulp"),
   autoprefixer = require('gulp-autoprefixer'),
   cleanCSS = require("gulp-clean-css"),
   browserSync = require("browser-sync"),
-  nodemon = require("gulp-nodemon");
+  nodemon = require("gulp-nodemon"),
+  // jsdoc = require("gulp-jsdoc"),
+  exec = require("child_process").exec;
 
 // Files
 var src = {
@@ -57,6 +59,8 @@ gulp.task("js", () => {
 gulp.task("default", ["html", "partials", "js", "css"]);
 
 // Dev Tasks
+gulp.task("docs", () => exec("jsdoc listings -r -d docs"));
+
 gulp.task("nodemon", cb => {
   var started = false;
   return nodemon({script: "server.js", watch: ["server.js", "db/*.js"]}).on("start", () => {

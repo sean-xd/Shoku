@@ -1,3 +1,4 @@
+/** @module remoteok */
 module.exports = {get: remoteokGet, parse: remoteokParse};
 
 /**

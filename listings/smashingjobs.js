@@ -1,3 +1,4 @@
+/** @module smashingjobs */
 module.exports = {get: smashingjobsGet, parse: smashingjobsParse};
 
 /**

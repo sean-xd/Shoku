@@ -1,3 +1,4 @@
+/** @module weworkremotely */
 module.exports = {get: weworkremotelyGet, parse: weworkremotelyParse};
 
 /**

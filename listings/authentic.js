@@ -1,3 +1,4 @@
+/** @module authentic */
 module.exports = {get: authenticGet, parse: authenticParse};
 
 /**

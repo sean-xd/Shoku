@@ -1,3 +1,4 @@
+/** @module coroflot */
 module.exports = {get: coroflotGet, parse: coroflotParse};
 
 /**

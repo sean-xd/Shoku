@@ -1,3 +1,4 @@
+/** @module wfhio */
 module.exports = {get: wfhioGet, parse: wfhioParse};
 
 /**

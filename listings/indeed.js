@@ -1,3 +1,6 @@
+/** @module indeed */
+module.exports = {get: indeedGet, parse: indeedParse};
+
 /**
  * Passes API response to callback.
  * @param {Function} cb
@@ -29,5 +32,3 @@ function indeedParse(data){
     return list.concat([{company, content, date, location, source, title, url}]);
   }, []);
 }
-
-module.exports = {get: indeedGet, parse: indeedParse};
