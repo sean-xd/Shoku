@@ -2,3 +2,5 @@ node_modules
 apikeys.js
 gist.js
 .sass-cache
+coverage
+docs

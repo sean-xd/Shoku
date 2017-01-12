@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/sean-xd/Shoku.svg?branch=master)](https://travis-ci.org/sean-xd/Shoku)
 [![Code Climate](https://codeclimate.com/github/sean-xd/Shoku/badges/gpa.svg)](https://codeclimate.com/github/sean-xd/Shoku)
+[![Test Coverage](https://codeclimate.com/github/sean-xd/Shoku/badges/coverage.svg)](https://codeclimate.com/github/sean-xd/Shoku/coverage)
 
 Shoku is a tech job aggregator. It currently gets jobs from:
 
