@@ -1,6 +1,7 @@
 #Shoku - Daily Tech Jobs
 
 [![Build Status](https://travis-ci.org/sean-xd/Shoku.svg?branch=master)](https://travis-ci.org/sean-xd/Shoku)
+[![Code Climate](https://codeclimate.com/github/sean-xd/Shoku/badges/gpa.svg)](https://codeclimate.com/github/sean-xd/Shoku)
 
 Shoku is a tech job aggregator. It currently gets jobs from:
 
