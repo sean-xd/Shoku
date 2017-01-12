@@ -5,7 +5,7 @@ engines:
     enabled: true
   duplication:
     enabled: true
-  scss-lint:
+  markdownlint:
     enabled: true
 ratings:
   paths:
@@ -13,7 +13,7 @@ ratings:
     - "listings/"
     - "src/scripts/"
     - "src/styles/"
-    - "src/"
+    - "**.md"
 exclude_paths:
   - "test/"
   - "public/"
