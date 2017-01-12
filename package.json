@@ -14,7 +14,7 @@
     "xml2js": "^0.4.17"
   },
   "scripts": {
-    "test": "mocha --recursive"
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- test/**/*.js"
   },
   "description": "Daily Tech Job Aggregator",
   "devDependencies": {
