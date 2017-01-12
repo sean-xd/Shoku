@@ -1,23 +1,38 @@
 var expect = require("chai").expect,
   coroflot = require("../listings/coroflot");
 
-describe("Coroflot", function(){
-  var cache;
+xdescribe("Coroflot", function(){
+  var raw, parsed;
   before(function(done){
     this.timeout(0);
-    coroflot.get(data => {cache = data; done();});
+    coroflot.get(data => {
+      raw = data;
+      parsed = coroflot.parse(data);
+      done();
+    });
   });
 
-  it("should get jobs as array of objects from parsing XML", function(){
-    expect(Array.isArray(cache)).to.be.true;
-    expect(cache[0]).to.be.a("object");
-    expect(cache[0]).to.have.property("content");
+  describe("Request to Coroflot Feedburner XML", function(){
+    it("should be an array", function(){
+      expect(Array.isArray(raw)).to.be.true;
+    });
+    it("should contain job objects", function(){
+      expect(raw[0]).to.be.a("object");
+    });
+    it("should have jobs with added content property", function(){
+      expect(raw[0]).to.have.property("content");
+    });
   });
 
-  it("should format jobs into array of objects", function(){
-    var result = coroflot.parse(cache);
-    expect(Array.isArray(result)).to.be.true;
-    expect(result[0]).to.be.a("object");
-    expect(result[0]).to.have.all.keys("company", "content", "date", "location", "source", "title", "url");
+  describe("Parsing results of request", function(){
+    it("should be an array", function(){
+      expect(Array.isArray(parsed)).to.be.true;
+    });
+    it("should contain job objects", function(){
+      expect(parsed[0]).to.be.a("object");
+    });
+    it("should have jobs with consistent properties", function(){
+      expect(parsed[0]).to.have.all.keys("company", "content", "date", "location", "source", "title", "url");
+    });
   });
 });

@@ -1,3 +1,9 @@
+module.exports = {get: weworkremotelyGet, parse: weworkremotelyParse};
+
+/**
+ * Passes RSS response to callback.
+ * @param {Function} cb
+ */
 function weworkremotelyGet(cb){
   var parseURL = parseURL || require("rss-parser").parseURL,
     Magic = Magic || require("_magic"),
@@ -8,20 +14,23 @@ function weworkremotelyGet(cb){
   });
 }
 
+/**
+ * Parses RSS array into job list.
+ * @param {Array} data
+ * @returns {Array}
+ */
 function weworkremotelyParse(data){
-  return data.map(e => {
-    var company = e.title.split(": ")[0];
+  return data.reduce((list, job) => {
+    var company = job.title.split(": ")[0],
+      content = job.content,
+      date = new Date(job.pubDate).getTime(),
+      location = "Remote",
+      source = "weworkremotely",
+      title = job.title.split(": ")[1],
+      url = job.link;
     if(company.length > 50) company = company.slice(0,50) + "...";
-    return {
-      company: company,
-      content: e.content,
-      date: new Date(e.pubDate).getTime(),
-      location: "Remote",
-      source: "weworkremotely",
-      title: e.title.split(": ")[1],
-      url: e.link,
-    };
-  });
+    if(!company || !content || !date || !location || !source || !title || !url) return list;
+    if(company.length < 2 || Date.now() - date > 1000 * 60 * 60 * 24 * 30 || date > Date.now()) return list;
+    return list.concat([{company, content, date, location, source, title, url}]);
+  }, []);
 }
-
-module.exports = {get: weworkremotelyGet, parse: weworkremotelyParse};

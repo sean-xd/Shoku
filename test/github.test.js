@@ -1,24 +1,38 @@
 var expect = require("chai").expect,
   github = require("../listings/github");
 
-describe("Github", function(){
-  var cache;
+xdescribe("Github", function(){
+  var raw, parsed;
   before(function(done){
     this.timeout(0);
-    github.get(data => {cache = data; done();});
+    github.get(data => {
+      raw = data;
+      parsed = github.parse(data);
+      done();
+    });
   });
 
-  it("should get jobs as a JSON array", function(){
-    var arr = JSON.parse(cache);
-    expect(cache).to.be.a("string");
-    expect(Array.isArray(arr)).to.be.true;
-    expect(arr).to.have.lengthOf(50);
+  describe("Request to Github JSON", function(){
+    it("should be a string", function(){
+      expect(raw).to.be.a("string");
+    });
+    it("should be a valid JSON array", function(){
+      expect(Array.isArray(JSON.parse(raw))).to.be.true;
+    });
+    it("should contain 50 entries", function(){
+      expect(JSON.parse(raw)).to.have.lengthOf(50);
+    });
   });
 
-  it("should format jobs into array of objects", function(){
-    var result = github.parse(cache);
-    expect(Array.isArray(result)).to.be.true;
-    expect(result[0]).to.be.a("object");
-    expect(result[0]).to.have.all.keys("company", "content", "date", /*"location",*/ "source", "title", "url");
+  describe("Parsing results of request", function(){
+    it("should be an array", function(){
+      expect(Array.isArray(parsed)).to.be.true;
+    });
+    it("should contain job objects", function(){
+      expect(parsed[0]).to.be.a("object");
+    });
+    it("should have jobs with consistent properties", function(){
+      expect(parsed[0]).to.have.all.keys("company", "content", "date", "location", "source", "title", "url");
+    });
   });
 });

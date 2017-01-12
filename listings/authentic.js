@@ -1,3 +1,9 @@
+module.exports = {get: authenticGet, parse: authenticParse};
+
+/**
+ * Passes JSON response to callback.
+ * @param {Function} cb
+ */
 function authenticGet(cb){
   var request = request || require("request"),
     apikey = process.env.AUTHENTIC || require("../db/apikeys").authentic,
@@ -5,19 +11,22 @@ function authenticGet(cb){
   request(url, (err, res, body) => cb(err || body));
 }
 
+/**
+ * Parses JSON into job list.
+ * @param {String} data
+ * @returns {Array}
+ */
 function authenticParse(data){
-  return JSON.parse(data).listings.listing.map(e => {
-    if(!e.company) return false;
-    return {
-      company: e.company.name,
-      content: e.description,
-      date: new Date(e.post_date).getTime(),
-      location: e.telecommuting ? "Remote" : e.company.location.name,
-      source: "authenticjobs",
-      title: e.title.split(" @")[0] || e.title,
-      url: e.url
-    };
-  });
+  return JSON.parse(data).listings.listing.reduce((list, job) => {
+    var company = job.company.name,
+      content = job.description,
+      date = new Date(job.post_date).getTime(),
+      location = job.telecommuting ? "Remote" : job.company.location.name,
+      source = "authenticjobs",
+      title = job.title.split(" @")[0] || job.title,
+      url = job.url;
+    if(!company || !content || !date || !location || !source || !title || !url) return list;
+    if(company.length < 2 || Date.now() - date > 1000 * 60 * 60 * 24 * 30) return list;
+    return list.concat([{company, content, date, location, source, title, url}]);
+  }, []);
 }
-
-module.exports = {get: authenticGet, parse: authenticParse};

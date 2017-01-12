@@ -1,6 +1,13 @@
+module.exports = {get: wfhioGet, parse: wfhioParse};
+
+/**
+ * Passes XML response to callback.
+ * @param {Function} cb
+ */
 function wfhioGet(cb){
   var request = require("request"),
     parseString = require("xml2js").parseString,
+    parseURL = require("rss-parser").parseURL,
     Magic = Magic || require("_magic"),
     done = Magic(3, data => cb(data.reduce((arr, e) => arr.concat(e), [])), []);
   ["1-remote-software-development", "4-remote-design", "6-remote-devops"].forEach(e => {
@@ -11,11 +18,16 @@ function wfhioGet(cb){
   });
 }
 
+/**
+ * Parses array into job list.
+ * @param {Array} data
+ * @returns {Array}
+ */
 function wfhioParse(data){
-  return data.map(e => {
-    var date = new Date(e.updated[0]).getTime(),
-      url = e.link[0]["$"].href,
-      title = e.title[0],
+  return data.reduce((list, job) => {
+    var date = new Date(job.updated[0]).getTime(),
+      url = job.link[0]["$"].href,
+      title = job.title[0],
       titleSplit = title.toLowerCase().split(" "),
       company = url.match(/\w+\/\d+-(.+)/)[1].replace("(", "").replace(")", "").split("-")
         .reduce((arr, str) => {
@@ -25,11 +37,11 @@ function wfhioParse(data){
         }, [])
         .map(str => str[0].toUpperCase() + str.slice(1))
         .join(" "),
-      content = e.content[0]["_"],
+      content = job.content[0]["_"],
       source = "wfhio",
       location = "Remote";
-    return {company, content, date, location, source, title, url};
-  });
+    if(!company || !content || !date || !location || !source || !title || !url) return list;
+    if(company.length < 2 || Date.now() - date > 1000 * 60 * 60 * 24 * 30 || date > Date.now()) return list;
+    return list.concat([{company, content, date, location, source, title, url}]);
+  }, []);
 }
-
-module.exports = {get: wfhioGet, parse: wfhioParse};

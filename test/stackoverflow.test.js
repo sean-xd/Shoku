@@ -1,24 +1,38 @@
 var expect = require("chai").expect,
   stackoverflow = require("../listings/stackoverflow");
 
-describe("Stack Overflow", function(){
-  var cache;
+xdescribe("Stack Overflow", function(){
+  var raw, parsed;
   before(function(done){
     this.timeout(0);
-    stackoverflow.get(data => {cache = data; done();});
+    stackoverflow.get(data => {
+      raw = data;
+      parsed = stackoverflow.parse(data);
+      done();
+    });
   });
 
-  it("should get jobs as an XML parsed object", function(){
-    expect(cache).to.be.a("object");
-    expect(cache).to.have.property("feed");
-    expect(cache.feed).to.have.property("entries");
-    expect(Array.isArray(cache.feed.entries)).to.be.true;
+  describe("Request to Stackoverflow XML", function(){
+    it("should be an object", function(){
+      expect(raw).to.be.a("object");
+    });
+    it("should have deep property feed.entries", function(){
+      expect(raw).to.have.deep.property("feed.entries");
+    });
+    it("should contain array of entries", function(){
+      expect(Array.isArray(raw.feed.entries)).to.be.true;
+    });
   });
 
-  it("should format jobs into array of objects", function(){
-    var result = stackoverflow.parse(cache);
-    expect(Array.isArray(result)).to.be.true;
-    expect(result[0]).to.be.a("object");
-    expect(result[0]).to.have.all.keys("company", "content", "date", "location", "source", "title", "url");
+  describe("Parsing results of request", function(){
+    it("should be an array", function(){
+      expect(Array.isArray(parsed)).to.be.true;
+    });
+    it("should contain job objects", function(){
+      expect(parsed[0]).to.be.a("object");
+    });
+    it("should have jobs with consistent properties", function(){
+      expect(parsed[0]).to.have.all.keys("company", "content", "date", "location", "source", "title", "url");
+    });
   });
 });
