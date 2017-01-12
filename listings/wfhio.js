@@ -1,6 +1,8 @@
 var request = require("request"),
   parseString = require("xml2js").parseString,
-  parseURL = require("rss-parser").parseURL;
+  parseURL = require("rss-parser").parseURL,
+  Wait = require("../util/Wait"),
+  jobChecker = require("./jobChecker");
 
 /** @module wfhio */
 module.exports = {get: wfhioGet, parse: data => data.reduce(wfhioReducer, [])};
@@ -40,11 +42,5 @@ function wfhioReducer(list, job){
     content = job.content[0]["_"],
     source = "wfhio",
     location = "Remote";
-  if(!company || !content || !date || !location || !source || !title || !url) return list;
-  if(company.length < 2 || Date.now() - date > 1000 * 60 * 60 * 24 * 30 || date > Date.now()) return list;
-  return list.concat([{company, content, date, location, source, title, url}]);
-}
-
-function Wait(num, cb, args){
-  return data => (args.length === num - 1) ? cb(args.concat([data])) : args.push(data);
+  return jobChecker({company, content, date, location, source, title, url}, list);
 }

@@ -1,3 +1,5 @@
+var Wait = require("../util/Wait");
+
 /** @module listings */
 module.exports = updateListings;
 
@@ -34,12 +36,15 @@ function getListings(cb){
  */
 function parseListings(data){
   var hash = {};
-  return data.reduce((companies, jobs) => jobs.reduce((companies, job) => {
-    var jobHash = job.title.replace(/[\- ]/g, "") + job.company;
-    if(hash[jobHash]) return companies;
-    hash[jobHash] = true;
-    return addJobToCompany(companies, addTagsToJob(job));
-  }, companies), []).sort((a, b) => b.latest - a.latest);
+  return data.reduce((companies, jobs) => {
+    jobs.forEach(job => {
+      var jobHash = job.title.replace(/[\- ]/g, "") + job.company;
+      if(hash[jobHash]) return companies;
+      hash[jobHash] = true;
+      return addJobToCompany(companies, addTagsToJob(job));
+    });
+    return companies;
+  }, []).sort((a, b) => b.latest - a.latest);
 }
 
 /**
@@ -73,8 +78,4 @@ function addJobToCompany(companies, job){
   company.jobs.push(job);
   if(company.jobs.length > 1) company.jobs.sort((a, b) => b.date - a.date);
   return companies;
-}
-
-function Wait(num, cb, args){
-  return data => (args.length === num - 1) ? cb(args.concat([data])) : args.push(data);
 }
