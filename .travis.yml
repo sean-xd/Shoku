@@ -10,5 +10,10 @@ env:
 addons:
   code_climate:
     repo_token: f16cbb3c3202ee9f72e0ac789746118cf168f067e1cf52d943f68b76a801cac5
+
 after_success:
   - codeclimate-test-reporter < coverage/lcov.info
+
+notifications:
+  email:
+    on_success: never
