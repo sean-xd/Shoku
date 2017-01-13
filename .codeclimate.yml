@@ -13,6 +13,9 @@ engines:
         javascript:
   markdownlint:
     enabled: true
+    checks:
+      MD013:
+        enabled: false
 ratings:
   paths:
     - "routes/"
