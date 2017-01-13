@@ -7,17 +7,20 @@ describe("We Work Remotely", function(){
     this.timeout(0);
     weworkremotely.get(data => {
       raw = data;
-      parsed = weworkremotely.parse(data);
+      parsed = data.reduce(weworkremotely.parser, []);
       done();
     });
   });
 
   describe("Request to We Work Remotely XML", function(){
-    it("should be an array", function(){
+    it("should get jobs as an array", function(){
       expect(Array.isArray(raw)).to.be.true;
     });
-    it("should contain job objects", function(){
+    it("should be array of objects", function(){
       expect(raw[0]).to.be.a("object");
+    });
+    it("should have consistent properties", function(){
+      expect(raw[0]).to.contain.all.keys("content", "pubDate", "title", "link");
     });
   });
 

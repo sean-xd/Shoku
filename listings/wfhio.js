@@ -5,7 +5,10 @@ var request = require("request"),
   jobChecker = require("./jobChecker");
 
 /** @module wfhio */
-module.exports = {get: wfhioGet, parse: data => data.reduce(wfhioReducer, [])};
+module.exports = {
+  get: wfhioGet,
+  parser: wfhioReduce
+};
 
 /**
  * Passes XML response to callback.
@@ -26,21 +29,24 @@ function wfhioGet(cb){
  * @param {Object} job
  * @returns {Array}
  */
-function wfhioReducer(list, job){
-  var date = new Date(job.updated[0]).getTime(),
+function wfhioReduce(list, job){
+  var title = job.title[0],
     url = job.link[0]["$"].href,
-    title = job.title[0],
     titleSplit = title.toLowerCase().split(" "),
-    company = url.match(/\w+\/\d+-(.+)/)[1].replace("(", "").replace(")", "").split("-")
-      .reduce((arr, str) => {
-        var index = titleSplit.indexOf(str), isTitle = index > -1;
-        if(isTitle) titleSplit.splice(index, 1);
-        return isTitle ? arr : arr.concat([str]);
-      }, [])
-      .map(str => str[0].toUpperCase() + str.slice(1))
-      .join(" "),
-    content = job.content[0]["_"],
-    source = "wfhio",
-    location = "Remote";
-  return jobChecker({company, content, date, location, source, title, url}, list);
+    newJob = {
+      content: job.content[0]["_"],
+      date: new Date(job.updated[0]).getTime(),
+      location: "Remote",
+      source: "wfhio",
+      title, url
+    };
+  newJob.company = url.match(/\w+\/\d+-(.+)/)[1].replace(/[\(\)]/g, "").split("-")
+    .reduce((arr, str) => {
+      var index = titleSplit.indexOf(str), isTitle = index > -1;
+      if(isTitle) titleSplit.splice(index, 1);
+      return isTitle ? arr : arr.concat([str]);
+    }, [])
+    .map(str => str[0].toUpperCase() + str.slice(1))
+    .join(" ");
+  return jobChecker(newJob, list);
 }

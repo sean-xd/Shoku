@@ -7,20 +7,20 @@ describe("Stack Overflow", function(){
     this.timeout(0);
     stackoverflow.get(data => {
       raw = data;
-      parsed = stackoverflow.parse(data);
+      parsed = data.reduce(stackoverflow.parser, []);
       done();
     });
   });
 
   describe("Request to Stackoverflow XML", function(){
-    it("should be an object", function(){
-      expect(raw).to.be.a("object");
+    it("should get jobs as an array", function(){
+      expect(Array.isArray(raw)).to.be.true;
     });
-    it("should have deep property feed.entries", function(){
-      expect(raw).to.have.deep.property("feed.entries");
+    it("should be array of objects", function(){
+      expect(raw[0]).to.be.a("object");
     });
-    it("should contain array of entries", function(){
-      expect(Array.isArray(raw.feed.entries)).to.be.true;
+    it("should have consistent properties", function(){
+      expect(raw[0]).to.contain.all.keys("content", "pubDate", "title", "link");
     });
   });
 

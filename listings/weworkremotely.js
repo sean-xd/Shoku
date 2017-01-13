@@ -1,40 +1,42 @@
+var parseURL = require("rss-parser").parseURL,
+  Wait = require("../util/Wait"),
+  jobChecker = require("./jobChecker");
+
 /** @module weworkremotely */
-module.exports = {get: weworkremotelyGet, parse: weworkremotelyParse};
+module.exports = {
+  get: weworkremotelyGet,
+  parser: weworkremotelyReduce
+};
 
 /**
  * Passes RSS response to callback.
  * @param {Function} cb
  */
 function weworkremotelyGet(cb){
-  var parseURL = parseURL || require("rss-parser").parseURL,
-    done = Wait(2, data => cb(data[0].feed.entries.concat(data[1].feed.entries)), []);
+  var done = Wait(2, data => cb(data[0].feed.entries.concat(data[1].feed.entries)), []);
   ["1-design", "2-programming"].forEach(e => {
     var url = `https://weworkremotely.com/categories/${e}/jobs.rss`;
-    parseURL(url, (err, data) => done(err || data || new Error("No Data")));
+    parseURL(url, (err, data) => done(err || data));
   });
 }
 
 /**
- * Parses RSS array into job list.
- * @param {Array} data
+ * Parses response into job list.
+ * @param {Array} list
+ * @param {Object} job
  * @returns {Array}
  */
-function weworkremotelyParse(data){
-  return data.reduce((list, job) => {
-    var company = job.title.split(": ")[0],
-      content = job.content,
-      date = new Date(job.pubDate).getTime(),
-      location = "Remote",
-      source = "weworkremotely",
-      title = job.title.split(": ")[1],
-      url = job.link;
-    if(company.length > 50) company = company.slice(0,50) + "...";
-    if(!company || !content || !date || !location || !source || !title || !url) return list;
-    if(company.length < 2 || Date.now() - date > 1000 * 60 * 60 * 24 * 30 || date > Date.now()) return list;
-    return list.concat([{company, content, date, location, source, title, url}]);
-  }, []);
-}
-
-function Wait(num, cb, args){
-  return data => (args.length === num - 1) ? cb(args.concat([data])) : args.push(data);
+function weworkremotelyReduce(list, job){
+  var company = job.title.split(": ")[0];
+  if(company.length > 50) company = company.slice(0,50) + "...";
+  var newJob = {
+    company,
+    content: job.content,
+    date: new Date(job.pubDate).getTime(),
+    location: "Remote",
+    source: "weworkremotely",
+    title: job.title.split(": ")[1],
+    url: job.link
+  };
+  return jobChecker(newJob, list);
 }

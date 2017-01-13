@@ -7,20 +7,20 @@ describe("Github", function(){
     this.timeout(0);
     github.get(data => {
       raw = data;
-      parsed = github.parse(data);
+      parsed = data.reduce(github.parser, []);
       done();
     });
   });
 
   describe("Request to Github JSON", function(){
-    it("should be a string", function(){
-      expect(raw).to.be.a("string");
+    it("should get jobs as an array", function(){
+      expect(Array.isArray(raw)).to.be.true;
     });
-    it("should be a valid JSON array", function(){
-      expect(Array.isArray(JSON.parse(raw))).to.be.true;
+    it("should be array of objects", function(){
+      expect(raw[0]).to.be.a("object");
     });
-    it("should contain 50 entries", function(){
-      expect(JSON.parse(raw)).to.have.lengthOf(50);
+    it("should have consistent properties", function(){
+      expect(raw[0]).to.contain.all.keys("company", "description", "created_at", "location", "title", "url");
     });
   });
 

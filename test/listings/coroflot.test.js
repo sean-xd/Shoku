@@ -7,20 +7,20 @@ describe("Coroflot", function(){
     this.timeout(0);
     coroflot.get(data => {
       raw = data;
-      parsed = coroflot.parse(data);
+      parsed = data.reduce(coroflot.parser, []);
       done();
     });
   });
 
   describe("Request to Coroflot Feedburner XML", function(){
-    it("should be an array", function(){
+    it("should get jobs as an array", function(){
       expect(Array.isArray(raw)).to.be.true;
     });
-    it("should contain job objects", function(){
+    it("should be array of objects", function(){
       expect(raw[0]).to.be.a("object");
     });
-    it("should have jobs with added content property", function(){
-      expect(raw[0]).to.have.property("content");
+    it("should have consistent properties", function(){
+      expect(raw[0]).to.contain.all.keys("content", "pubDate", "title", "contentSnippet", "guid");
     });
   });
 

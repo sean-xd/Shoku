@@ -1,35 +1,39 @@
+var request = require("request"),
+  jobChecker = require("./jobChecker");
+
 /** @module remoteok */
-module.exports = {get: remoteokGet, parse: remoteokParse};
+module.exports = {
+  get: remoteokGet,
+  parser: remoteokReduce
+};
 
 /**
  * Passes JSON response to callback.
  * @param {Function} cb
  */
 function remoteokGet(cb){
-  var request = request || require("request"),
-    url = "https://remoteok.io/remote-jobs.json";
-  request(url, (err, res, body) => cb(err || body));
+  request("https://remoteok.io/remote-jobs.json", (err, res, body) => cb(err || JSON.parse(body)));
 }
 
 /**
- * Parses JSON into job list.
- * @param {String} data
+ * Parses response into job list.
+ * @param {Array} list
+ * @param {Object} job
  * @returns {Array}
  */
-function remoteokParse(data){
-  return JSON.parse(data).reduce((list, job) => {
-    var urlSplit = job.url.split("/");
-    urlSplit[urlSplit.length - 2] = "l";
-    var company = job.company[0] ? job.company[0].toUpperCase() + job.company.slice(1) : "?",
-      content = job.description,
-      date = new Date(job.date).getTime(),
-      location = "Remote",
-      source = "remoteok",
-      title = job.position,
-      url = urlSplit.join("/");
-    if(company.length > 50) company = company.slice(0,50) + "...";
-    if(!company || !content || !date || !location || !source || !title || !url) return list;
-    if(company.length < 2 || Date.now() - date > 1000 * 60 * 60 * 24 * 30 || date > Date.now()) return list;
-    return list.concat([{company, content, date, location, source, title, url}]);
-  }, []);
+function remoteokReduce(list, job){
+  var company = job.company[0] ? job.company[0].toUpperCase() + job.company.slice(1) : "?",
+    urlSplit = job.url.split("/");
+  urlSplit[urlSplit.length - 2] = "l";
+  if(company.length > 50) company = company.slice(0,50) + "...";
+  var newJob = {
+    company,
+    content: job.description,
+    date: new Date(job.date).getTime(),
+    location: "Remote",
+    source: "remoteok",
+    title: job.position,
+    url: urlSplit.join("/")
+  };
+  return jobChecker(newJob, list);
 }

@@ -7,20 +7,20 @@ describe("Indeed", function(){
     this.timeout(0);
     indeed.get(data => {
       raw = data;
-      parsed = indeed.parse(data);
+      parsed = data.reduce(indeed.parser, []);
       done();
     });
   });
 
   describe("Request to Indeed API", function(){
-    it("should be an object", function(){
-      expect(raw).to.be.a("object");
+    it("should get jobs as an array", function(){
+      expect(Array.isArray(raw)).to.be.true;
     });
-    it("should have a deep result property", function(){
-      expect(raw).to.have.deep.property("response.results[0].result");
+    it("should be array of objects", function(){
+      expect(raw[0]).to.be.a("object");
     });
-    it("should contain array in result", function(){
-      expect(Array.isArray(raw.response.results[0].result)).to.be.true;
+    it("should have consistent properties", function(){
+      expect(raw[0]).to.contain.all.keys("company", "snippet", "date", "formattedLocationFull", "jobtitle", "url");
     });
   });
 

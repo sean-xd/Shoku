@@ -7,20 +7,20 @@ describe("Authentic Jobs", function(){
     this.timeout(0);
     authentic.get(data => {
       raw = data;
-      parsed = authentic.parse(data);
+      parsed = data.reduce(authentic.parser, []);
       done();
     });
   });
 
   describe("Request to Authentic API", function(){
-    it("should get jobs as a string", function(){
-      expect(raw).to.be.a("string");
+    it("should get jobs as an array", function(){
+      expect(Array.isArray(raw)).to.be.true;
     });
-    it("should be string of JSON", function(){
-      expect(JSON.parse(raw)).to.be.a("object");
+    it("should be array of objects", function(){
+      expect(raw[0]).to.be.a("object");
     });
-    it("should have listings", function(){
-      expect(JSON.parse(raw)).to.have.property("listings");
+    it("should have consistent properties", function(){
+      expect(raw[0]).to.contain.all.keys("company", "description", "post_date", "telecommuting", "title", "url");
     });
   });
 
