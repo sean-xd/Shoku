@@ -1,5 +1,5 @@
 var request = require("request"),
-  apikey = process.env.AUTHENTIC || require("../db/apikeys").authentic, // eslint-disable-line no-use-before-define
+  apikey = process.env.AUTHENTIC || require("../db/apikeys").authentic,
   jobChecker = require("./jobChecker");
 
 /** @module authentic */

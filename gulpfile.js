@@ -63,7 +63,7 @@ gulp.task("docs", () => exec("jsdoc listings -r -d docs"));
 gulp.task("nodemon", cb => {
   var started = false;
   return nodemon({script: "server.js", watch: ["server.js", "db/*.js"]}).on("start", () => {
-    if(!started) cb(); // eslint-disable-line no-use-before-define
+    if(!started) cb();
     started = true;
   });
 });

@@ -1,6 +1,11 @@
 engines:
   eslint:
     enabled: true
+    checks:
+      global-require:
+        enabled: false
+      no-path-concat:
+        enabled: false
   duplication:
     enabled: true
     config:

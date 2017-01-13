@@ -1,6 +1,6 @@
 var request = require("request"),
   parseString = require("xml2js").parseString,
-  apikey = process.env.INDEED || require("../db/apikeys").indeed, // eslint-disable-line no-use-before-define
+  apikey = process.env.INDEED || require("../db/apikeys").indeed,
   jobChecker = require("./jobChecker");
 
 /** @module indeed */

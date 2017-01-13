@@ -24,7 +24,7 @@ function getListings(cb){
     "remoteok", "smashingjobs", "stackoverflow", "weworkremotely", "wfhio"],
     done = Wait(sources.length, cb, []);
   sources.forEach(name => {
-    var lib = require(`./${name}.js`); // eslint-disable-line no-use-before-define
+    var lib = require(`./${name}.js`);
     lib.get(data => done(data.reduce(lib.parser, [])));
   });
 }
