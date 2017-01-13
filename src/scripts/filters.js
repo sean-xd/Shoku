@@ -8,8 +8,8 @@ app.filter("dateFilter", () => input => {
     },
     type = timeSince > one.day ? "day" : timeSince > one.hour ? "hour" : timeSince > one.minute ? "minute" : false;
   if(!type) return "just now";
-  var num = Math.floor(timeSince / one[type]),
-    type = num === 1 ? type : type + "s";
+  var num = Math.floor(timeSince / one[type]);
+  type = num === 1 ? type : type + "s";
   return `${num} ${type} ago`;
 });
 

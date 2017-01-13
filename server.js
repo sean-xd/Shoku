@@ -8,8 +8,8 @@ var fs = require("fs"),
 
 updateListings(db);
 
-app.use(express.static(__dirname + "/public"));
-app.use("/tracker", express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/public")); // eslint-disable-line no-use-before-define
+app.use("/tracker", express.static(__dirname + "/public")); // eslint-disable-line no-use-before-define
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(bearerToken());
