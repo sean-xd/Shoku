@@ -25,7 +25,8 @@ module.exports = app => {
 
   function signIn(req, res){
     var user = users.find(u => u.email === req.body.email);
-    (user && user.hash === hash(req.body.password)) ? authUser(user, req, res) : res.json({user: false});
+    if(user && user.hash === hash(req.body.password)) authUser(user, req, res);
+    else res.json({user: false});
   }
 
   function signToken(req, res){
