@@ -1,4 +1,4 @@
-var parseURL = parseURL || require("rss-parser").parseURL,
+var parseURL = require("rss-parser").parseURL,
   jobChecker = require("./jobChecker");
 
 /** @module dribbble */

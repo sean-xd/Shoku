@@ -63,7 +63,7 @@ gulp.task("docs", () => exec("jsdoc listings -r -d docs"));
 gulp.task("nodemon", cb => {
   var started = false;
   return nodemon({script: "server.js", watch: ["server.js", "db/*.js"]}).on("start", () => {
-    if(!started) cb();
+    if(!started) cb(); // eslint-disable-line no-use-before-define
     started = true;
   });
 });
@@ -73,7 +73,7 @@ gulp.task("browser-sync", ["nodemon"], () => {
 		proxy: "http://localhost:4259",
     files: ["public/**/*.*"],
     browser: "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
-    port: 3000,
+    port: 3000
 	});
 });
 

@@ -11,7 +11,7 @@ function updateListings(db, cb){
   db.ttl = Date.now() + (1000 * 60 * 15);
   getListings(data => {
     db.companies = parseListings(data);
-    if(cb) cb();
+    if(cb) return cb();
   });
 }
 

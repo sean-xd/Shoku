@@ -1,10 +1,10 @@
-module.exports = app => {
-  var fs = require("fs"),
-    crypto = require("crypto"),
-    hash = str => crypto.createHmac("sha256", "ohwow").update(str).digest("base64"),
-    jwt = require('jsonwebtoken'),
-    users = require("../db/users.json");
+var fs = require("fs"),
+  crypto = require("crypto"),
+  hash = str => crypto.createHmac("sha256", "ohwow").update(str).digest("base64"),
+  jwt = require('jsonwebtoken'),
+  users = require("../db/users.json");
 
+module.exports = app => {
   app.post("/signup", signUp);
   app.post("/signin", signIn);
   app.get("/signToken", signToken);
