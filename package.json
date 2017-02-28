@@ -30,6 +30,8 @@
     "gulp-jade": "^1.1.0",
     "gulp-nodemon": "^2.1.0",
     "gulp-ruby-sass": "^2.1.0",
+    "gulp-spawn-mocha": "^3.1.0",
+    "istanbul": "^0.4.5",
     "mocha": "^3.2.0"
   }
 }

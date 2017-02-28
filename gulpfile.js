@@ -7,6 +7,7 @@ var gulp = require("gulp"),
   sass = require('gulp-ruby-sass'),
   autoprefixer = require('gulp-autoprefixer'),
   cleanCSS = require("gulp-clean-css"),
+  mocha = require("gulp-spawn-mocha"),
   browserSync = require("browser-sync"),
   nodemon = require("gulp-nodemon"),
   exec = require("child_process").exec;
@@ -46,6 +47,11 @@ gulp.task("css", ["sass"], () => {
     .pipe(autoprefixer({browsers: ["last 2 versions"]}))
     .pipe(cleanCSS())
     .pipe(gulp.dest(dest.public));
+});
+
+gulp.task("test", ["js"], () => {
+  return gulp.src(["test/**/*.js"])
+    .pipe(mocha({istanbul: true}));
 });
 
 gulp.task("js", () => {

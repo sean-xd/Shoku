@@ -12,7 +12,10 @@ module.exports = {
  * @param {Function} cb
  */
 function remoteokGet(cb){
-  request("https://remoteok.io/remote-jobs.json", (err, res, body) => cb(err || JSON.parse(body)));
+  request("https://remoteok.io/remote-jobs.json", (err, res, body) => {
+    if(body.indexOf("Fatal error") > -1) return cb([]);
+    cb(JSON.parse(body));
+  });
 }
 
 /**
